@@ -8,10 +8,10 @@ const schema = z.object({
   meetingDate: z.coerce.date({
     errorMap: () => ({ message: "Укажите дату *" })
   }),
-  meetingStart: z.coerce.date({
+  meetingStart: z.coerce.string({
     errorMap: () => ({ message: "Укажите время *" })
   }),
-  meetingEnd: z.coerce.date({
+  meetingEnd: z.coerce.string({
     errorMap: () => ({ message: "Укажите время *" })
   }),
   isRegNeeded: z.string(),
