@@ -11,18 +11,24 @@
   font-family: inherit;
   height: 44px;
   padding: 9px 11px;
-  border: 1px solid #cccccc;
+  border: 1px solid $gray;
   border-radius: 5px;
 
   &:focus {
     outline: none;
-    border: 1px solid #2684ff;
-    box-shadow: 0 0 0 1px #2684ff;
+    border: 1px solid $light-blue;
+    box-shadow: 0 0 0 1px $light-blue;
+  }
+
+  &:-moz-read-only:focus {
+    outline: none;
+    border: 1px solid $gray;
+    box-shadow: none;
   }
 
   &:read-only:focus {
     outline: none;
-    border: 1px solid #cccccc;
+    border: 1px solid $gray;
     box-shadow: none;
   }
 }
@@ -31,11 +37,13 @@
   display: flex;
   justify-content: center;
   align-items: center;
+  -webkit-appearance: none;
+  -moz-appearance: none;
   appearance: none;
   position: relative;
   width: 24px;
   height: 24px;
-  background-color: #ffffff;
+  background-color: $white;
   cursor: pointer;
 
   &:checked::before {
@@ -43,7 +51,7 @@
     position: absolute;
     height: 16px;
     width: 16px;
-    background-color: #cccccc;
+    background-color: $gray;
     border-radius: 2px;
   }
 }
@@ -51,15 +59,15 @@
 .label {
   font-size: 14px;
   font-weight: 400;
-  color: var(--color-input-label);
+  color: $input-label;
 }
 
 .error {
   height: 15px;
-  color: red;
+  color: $red;
 }
 
 .readOnly {
-  background-color: #f8f8f8;
-  color: #cccccc;
+  background-color: $grayish-white;
+  color: $gray;
 }

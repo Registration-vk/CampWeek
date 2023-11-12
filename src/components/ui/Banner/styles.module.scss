@@ -6,7 +6,7 @@
   padding: 32px;
 
   border-radius: 16px;
-  background-color: var(--color-white, #fff);
+  background-color: $white;
 }
 
 .Banner__header {
@@ -20,6 +20,8 @@
   display: flex;
   flex-grow: 1;
 
+  -moz-column-gap: 8px;
+
   column-gap: 8px;
   padding-block: 24px;
 }
@@ -30,7 +32,7 @@
   font-weight: 500;
   line-height: 24px;
 
-  color: var(--color-dark, #1d2023);
+  color: $dark;
 }
 
 .Banner__title {
@@ -39,12 +41,14 @@
   font-weight: 700;
   line-height: 32px;
 
-  color: var(--color-dark, #1d2023);
+  color: $dark;
 }
 
 .Banner__footer {
   display: flex;
   align-items: center;
+
+  -moz-column-gap: 24px;
 
   column-gap: 24px;
 }
@@ -52,6 +56,8 @@
 .Banner__item {
   display: flex;
   align-items: center;
+
+  -moz-column-gap: 8px;
 
   column-gap: 8px;
 
@@ -65,6 +71,6 @@
     font-weight: 500;
     line-height: 24px;
 
-    color: var(--color-dark, #1d2023);
+    color: $dark;
   }
 }

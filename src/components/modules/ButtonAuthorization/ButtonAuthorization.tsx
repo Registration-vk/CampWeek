@@ -5,7 +5,7 @@ import { useRouter } from "next/navigation";
 import { Button } from "@/components/ui";
 import { API_BASE_URL, API_VERSION } from "@/core/constants";
 
-import styles from "./styles.module.css";
+import styles from "./styles.module.scss";
 
 export const ButtonAuthorization = () => {
   const router = useRouter();

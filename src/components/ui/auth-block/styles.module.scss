@@ -8,9 +8,9 @@
   margin-top: 0px;
   margin-bottom: 20px;
   padding: 20px;
-  background-color: #4fc54c;
+  background-color: $green;
   border-radius: 15px;
-  color: #fff;
+  color: $white;
 }
 
 .infoAuth {
@@ -25,7 +25,7 @@
 }
 
 .orgAuthLink {
-  color: #d1d1d1;
+  color: $light-gray;
 }
 
 .checkLink {
@@ -34,8 +34,8 @@
   align-items: center;
   height: 40px;
   width: 120px;
-  background-color: #4fc54c;
-  color: #fff;
+  background-color: $green;
+  color: $white;
   border-radius: 5px;
   text-decoration: none;
 }

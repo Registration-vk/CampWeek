@@ -15,19 +15,19 @@
 
   cursor: pointer;
 
-  color: var(--color-white, #fff);
+  color: $white;
   border: none;
   border-radius: 5px;
   background-color: transparent;
 }
 
 .Button__primary {
-  background-color: #007cff;
+  background-color: $blue;
 
   &:hover:not(.Button__loading) {
     transition: background-color 0.3s;
 
-    background-color: #006fe5;
+    background-color: $dark-blue;
   }
 }
 
@@ -44,14 +44,25 @@
     height: 16px;
 
     content: " ";
+    -webkit-animation: spin 2s infinite linear;
     animation: spin 2s infinite linear;
 
-    background: url("data:image/svg+xml;charset=utf-8,%3Csvg viewBox='0 0 20 20' xmlns='http://www.w3.org/2000/svg'%3E%3Ccircle cx='10' cy='10' r='8.5' fill='none' stroke='%23FFFFFF' stroke-width='3' stroke-dasharray='45' stroke-linecap='round'/%3E%3C/svg%3E") center center no-repeat;
+    background: url("data:image/svg+xml;charset=utf-8,%3Csvg viewBox='0 0 20 20' xmlns='http://www.w3.org/2000/svg'%3E%3Ccircle cx='10' cy='10' r='8.5' fill='none' stroke='%23FFFFFF' stroke-width='3' stroke-dasharray='45' stroke-linecap='round'/%3E%3C/svg%3E")
+      center center no-repeat;
   }
 }
 
 .Button__fluid {
   width: 100%;
+}
+
+@-webkit-keyframes spin {
+  0% {
+    transform: rotate(0deg);
+  }
+  100% {
+    transform: rotate(359deg);
+  }
 }
 
 @keyframes spin {

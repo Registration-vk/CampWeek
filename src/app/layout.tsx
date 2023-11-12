@@ -7,8 +7,8 @@ import { Manrope } from "next/font/google";
 import { Aside } from "@/components/ui/Aside/Aside";
 import { QueryProvider } from "@/core/providers";
 
-import "@/assets/index.scss";
 import styles from "./styles.module.scss";
+import "@/assets/styles/global.scss";
 
 const manrope = Manrope({ subsets: ["latin"] });
 

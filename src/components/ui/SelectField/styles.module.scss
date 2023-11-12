@@ -8,10 +8,10 @@
 .label {
   font-size: 14px;
   font-weight: 400;
-  color: var(--color-input-label);
+  color: $input-label;
 }
 
 .error {
   height: 15px;
-  color: red;
+  color: $red;
 }
