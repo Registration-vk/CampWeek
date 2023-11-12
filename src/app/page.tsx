@@ -13,7 +13,7 @@ export default function Home() {
       />
       <Banner
         subtitle={"24.04.2023 в 20:20"}
-        title={"Тестовый эвент"}
+        title={"Тестовый эвент2"}
         fullName={"Иванов Иван Иванович"}
         typeEvent={"Начинающие вожатые"}
       />
