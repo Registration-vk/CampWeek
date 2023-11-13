@@ -2,7 +2,7 @@
 const nextConfig = {
   output: "standalone",
   sassOptions: {
-    additionalData: `@import "src/assets/styles/variables.scss";`,
+    additionalData: `@import "src/app/styles/variables.scss";`,
   },
 };
 
