@@ -8,7 +8,7 @@ import { Aside } from "@/components/ui/Aside/Aside";
 import { QueryProvider } from "@/core/providers";
 
 import styles from "./styles.module.scss";
-import "@/assets/styles/global.scss";
+import "./styles/global.scss";
 
 const manrope = Manrope({ subsets: ["latin"] });
 
