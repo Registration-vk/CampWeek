@@ -9,6 +9,7 @@ import { QueryProvider } from "@/core/providers";
 
 import styles from "./styles.module.scss";
 import "@/assets/styles/global.scss";
+import { Header } from "@/components/ui/Header/Header";
 
 const manrope = Manrope({ subsets: ["latin"] });
 
@@ -21,6 +22,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
   return (
     <html lang="ru">
       <body className={manrope.className}>
+        <Header/>
         <QueryProvider>
           <div className={styles.Container}>
             {children}
