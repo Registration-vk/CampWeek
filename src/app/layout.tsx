@@ -5,6 +5,7 @@ import React from "react";
 import { Manrope } from "next/font/google";
 
 import { Aside } from "@/components/ui/Aside/Aside";
+import { Header } from "@/components/ui/Header/Header";
 import { QueryProvider } from "@/core/providers";
 
 import styles from "./styles.module.scss";
@@ -21,6 +22,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
   return (
     <html lang="ru">
       <body className={manrope.className}>
+        <Header />
         <QueryProvider>
           <div className={styles.Container}>
             {children}
