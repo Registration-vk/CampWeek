@@ -5,7 +5,6 @@ export const ControlStyles = {
   height: "44px",
   border: "1px solid #cccccc",
   borderRadius: "5px",
-  overflow: "scroll",
 };
 
 export const ChipStyles = {
