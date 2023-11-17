@@ -2,7 +2,7 @@ export const ControlStyles = {
   fontWeight: "400",
   fontSize: "12px",
   fontFamily: "inherit",
-  height: "44px",
+  height: "auto",
   border: "1px solid #cccccc",
   borderRadius: "5px",
 };
