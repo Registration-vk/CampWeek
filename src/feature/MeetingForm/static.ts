@@ -26,4 +26,12 @@ const opinionLeaders = [
   { value: "Третьяк", label: "Третьяк Т.Ю." },
 ];
 
+const regions = [
+  { id: 1, name: "Онлайн" },
+  { id: 2, name: "Москва" },
+  { id: 3, name: "Рязань" },
+  { id: 4, name: "Псков" },
+  { id: 5, name: "Оренбург" },
+];
+
 export { optionsRoles, opinionLeaders };

@@ -4,7 +4,6 @@ import React from "react";
 
 import { Manrope } from "next/font/google";
 
-import { Aside } from "@/components/ui/Aside/Aside";
 import { Header } from "@/components/ui/Header/Header";
 import { QueryProvider } from "@/core/providers";
 
@@ -24,10 +23,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
       <body className={manrope.className}>
         <Header />
         <QueryProvider>
-          <div className={styles.Container}>
-            {children}
-            <Aside />
-          </div>
+          <div className={styles.Container}>{children}</div>
         </QueryProvider>
       </body>
     </html>

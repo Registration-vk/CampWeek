@@ -9,6 +9,8 @@ type Props = {
 export default function AuthBlock(props: Props) {
   const { isSignedIn } = props;
 
+  console.log("auth-status", isSignedIn);
+
   let AuthText;
   let AuthLink;
 

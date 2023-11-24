@@ -1,7 +1,7 @@
 "use client";
 
 import { ElementType } from "react";
-import { Control, FieldErrors, FieldValues, useForm } from "react-hook-form";
+import { Control, FieldErrors, FieldValues, UseFormRegister, useForm } from "react-hook-form";
 
 import { zodResolver } from "@hookform/resolvers/zod";
 import { z } from "zod";
@@ -13,6 +13,7 @@ import classes from "./styles.module.scss";
 export interface WrappedComponentProps<TFieldsValues extends FieldValues = FieldValues> {
   control: Control<TFieldsValues>;
   errors: FieldErrors<FieldValues>;
+  register: UseFormRegister<TFieldsValues>;
 }
 
 export interface WithFormProps {
@@ -35,6 +36,7 @@ const withForm =
       control,
       handleSubmit,
       formState: { errors },
+      register,
     } = useForm<FormFields>({
       resolver: zodResolver(resolver),
     });
@@ -45,7 +47,7 @@ const withForm =
 
     return (
       <form className={classes.form} onSubmit={handleSubmit(onSubmit)}>
-        <WrappedComponent errors={errors} control={control} />
+        <WrappedComponent errors={errors} control={control} register={register} />
         <div className={classes.button}>
           <Button type={"submit"}>{buttonText}</Button>
         </div>

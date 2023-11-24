@@ -4,5 +4,12 @@ export const ROUTES = {
     users: {
       path: "/users",
     },
+    event: {
+      path: "/event",
+    },
+    registration: {
+      path: "/registration",
+      
+    }
   },
 };

@@ -23,8 +23,8 @@ export abstract class ApiBase<T> {
     return data;
   }
 
-  async create(entity: T): Promise<T> {
-    const { data }: AxiosResponse<T> = await this.axiosInstance.post(
+  async create<T, K>(entity: T): Promise<K> {
+    const { data }: AxiosResponse<K> = await this.axiosInstance.post(
       this.baseUrl,
       entity,
     );

@@ -1,3 +1,5 @@
+import { useState } from "react";
+
 import { InputField, MultipleSelectField } from "@/components/ui/form";
 import { withForm, WrappedComponentProps } from "@/core/hoc";
 
@@ -7,6 +9,8 @@ import { opinionLeaders, optionsRoles } from "./static";
 import classes from "./styles.module.scss";
 
 export function Index(props: WrappedComponentProps) {
+  const [isChecked, setIsChecked] = useState(false);
+  console.log(isChecked);
   return (
     <section className={classes.form}>
       <div className={classes.containerRow}>
@@ -14,6 +18,7 @@ export function Index(props: WrappedComponentProps) {
           control={props.control}
           inputName={"meetingName"}
           inputLabel={"Название мероприятия"}
+          defaultValue={""}
         />
         <InputField
           control={props.control}
@@ -52,13 +57,15 @@ export function Index(props: WrappedComponentProps) {
           inputName={"meetingAddLink"}
           inputLabel={"Ссылка на доп.регистрацию"}
           defaultValue={""}
+          readOnly={!isChecked}
         />
         <InputField
           control={props.control}
           inputName={"isRegNeeded"}
           inputLabel={"Требуется регистрация"}
           inputType={"checkbox"}
-          defaultValue={""}
+          defaultValue={false}
+          {...props.control.register}
         />
       </div>
       <InputField
@@ -79,7 +86,7 @@ export function Index(props: WrappedComponentProps) {
         <MultipleSelectField
           control={props.control}
           selectName={"meetingSpeakers"}
-          selectLabel={"Спикеры"}
+          selectLabel={"Локация"}
           selectOptions={opinionLeaders}
         />
         <MultipleSelectField
