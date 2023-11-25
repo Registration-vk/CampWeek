@@ -1,8 +1,7 @@
 import { Banner, Link } from "@/components/ui";
-
 import styles from "./styles.module.scss";
 
-export default function Home() {
+export default function Home() { 
   return (
     <main className={styles.Main}>
       <Banner

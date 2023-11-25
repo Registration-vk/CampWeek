@@ -1,7 +1,8 @@
 .authorization {
   display: flex;
-  flex-basis: 30%;
   flex-direction: column;
+  align-items: center;
+  justify-content: flex-start;
 }
 
 .infoNoAuth {
@@ -41,5 +42,44 @@
 }
 
 .checkLinkBox {
+  display: flex;
+  justify-content: center;
+  align-items: center;
   margin-bottom: 20px;
+}
+
+.buttonLogin {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin: 10px;
+  height: 40px;
+  width: 250px;
+  background-color: $light-blue;
+  color: $white;
+  border-radius: 5px;
+  text-decoration: none;
+  cursor: pointer;
+
+  &:hover {
+    background-color: $dark-blue;
+  }
+}
+
+.buttonLogout {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin: 10px;
+  height: 40px;
+  width: 250px;
+  background-color: $red;
+  color: $white;
+  border-radius: 5px;
+  text-decoration: none;
+  cursor: pointer;
+
+  &:hover {
+    background-color: rgb(206, 23, 23);
+  }
 }

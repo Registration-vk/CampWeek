@@ -1,4 +1,5 @@
 "use client";
+import { useUserId } from '@/app/context/context';
 
 import { InputField, MultipleSelectField, SingleSelectField } from "@/components/ui/form";
 import { withForm, WrappedComponentProps } from "@/core/hoc";
@@ -8,7 +9,9 @@ import { schema } from "./schema";
 import { optionsMeetings, optionsRoles } from "./static";
 
 export function Index(props: WrappedComponentProps) {
-  const { data: user, isLoading, isError } = useUserById(1);
+  
+  const { userId } = useUserId()
+  const { data: user, isLoading, isError } = useUserById(Number(userId));
 
   return (
     <>
@@ -55,14 +58,14 @@ export function Index(props: WrappedComponentProps) {
           <MultipleSelectField
             control={props.control}
             selectName={"roles"}
-            selectLabel={"Роль"}
+            selectLabel={"Роль в мероприятии"}
             selectOptions={optionsRoles}
             defaultValue={["counselor", "designer"]}
           />
           <MultipleSelectField
             control={props.control}
             selectName={"meetings"}
-            selectLabel={"Мероприятия"}
+            selectLabel={"Регион мероприятия"}
             selectOptions={optionsMeetings}
             defaultValue={["game"]}
           />

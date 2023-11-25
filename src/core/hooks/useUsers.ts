@@ -15,7 +15,7 @@ export const useUsersAll = () => {
 export const useUserById = (userId: number) => {
   return useQuery({
     queryKey: ["users/getById", userId],
-    queryFn: () => userRepository.getUserById(userId),
+    queryFn: () => userId > 0 ? userRepository.getUserById(userId) : null,
   });
 };
 
