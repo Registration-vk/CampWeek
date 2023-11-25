@@ -1,4 +1,4 @@
-import { AxiosInstance, AxiosResponse } from "axios";
+import { AxiosInstance } from "axios";
 
 import { ApiBase } from "@/services/ApiBase";
 import { Event, EventFormData } from '@/services/events';

@@ -29,8 +29,9 @@ export default function MeetingPage() {
       description: formData.meetingDsc,
       add_info: formData.meetingAddInfo,
       notes: formData.meetingNotes,
-      region_id: 1,
-      creator_id: 1,
+      roles: formData.meetingTarget.join(";"),
+      region_id: Number(formData.meetingLocation),
+      creator_id: 1, // Здесь передаем id авторизованного пользователя
     });
     console.log(formData);
     setIsQueryEnabled(true);

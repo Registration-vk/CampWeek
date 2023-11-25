@@ -10,3 +10,9 @@ export const filterOptions = (
 
   return options.filter((option) => selectedValues.includes(option.value));
 };
+
+
+export const registerForEvent = (isEnabled: boolean) => {
+  
+  window.location.reload();
+}
