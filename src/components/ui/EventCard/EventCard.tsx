@@ -1,7 +1,11 @@
 "use client";
+import { regions } from "@/feature/MeetingForm/static";
 import dayjs from "dayjs";
+import Link from "next/link";
 
-import { useEventById } from "@/core/hooks";
+import { useEventById, useUsersAll } from "@/core/hooks";
+import { useSpeakersAll } from "@/core/hooks/useSpeakers";
+import { useVisitorsAll } from "@/core/hooks/useVisitors";
 
 import styles from "./styles.module.scss";
 
@@ -9,50 +13,83 @@ type Props = {
   eventId: number;
 };
 export const EventCard = (props: Props) => {
-  const { data } = useEventById(props.eventId);
+  const { event } = useEventById(props.eventId);
+  const { speakers } = useSpeakersAll();
+  const { visitors } = useVisitorsAll();
+  const { data } = useUsersAll();
+
   console.log(data);
 
+  const matchedLocation = regions.find((region) => Number(region.value) === event?.region_id);
+
+  const speakersIds = speakers
+    ?.filter((speaker) => speaker.event_id === props.eventId)
+    .map((v) => v.speaker_id);
+
+  const matchedSpeakers = data?.flatMap((user) => {
+    if (speakersIds?.includes(user.id)) {
+      return `${user.first_name} ${user.last_name}`;
+    }
+    return [];
+  });
+
+  console.log(matchedSpeakers);
+
   return (
-    data && (
+    event && (
       <table className={styles.card}>
         <tbody>
           <tr>
             <td>Название мероприятия</td>
-            <td>{data.name}</td>
+            <td>{event.name}</td>
+          </tr>
+          <tr>
+            <td>Целевая аудитория</td>
+            <td>{event.roles.split(";").join(", ")}</td>
           </tr>
           <tr>
             <td>Ссылка на мероприятие</td>
-            <td>{data.link}</td>
+            <td>
+              <Link href={event.link}>{event.link}</Link>
+            </td>
           </tr>
           <tr>
             <td>Дата мероприятия</td>
-            <td>{dayjs(data.date_time).format("DD.MM.YYYY")}</td>
+            <td>{dayjs(event.date_time).format("DD.MM.YYYY")}</td>
           </tr>
           <tr>
             <td>Время проведения</td>
-            <td>{`с ${data.time_start} по ${data.time_end}`}</td>
+            <td>{`с ${event.time_start} по ${event.time_end}`}</td>
           </tr>
           <tr>
             <td>Ссылка на доп.регистрацию</td>
             <td>
-              {data.add_link.length ? data.add_link : "Дополнительная регистрация не требуется"}
+              {event.add_link.length ? event.add_link : "Дополнительная регистрация не требуется"}
             </td>
           </tr>
           <tr>
             <td>Описание мероприятия</td>
-            <td>{data.description.length ? data.description : "Не указано"}</td>
+            <td>{event.description.length ? event.description : "Не указано"}</td>
           </tr>
           <tr>
             <td>Дополнительная информация</td>
-            <td>{data.add_info.length ? data.add_info : "Не указана"}</td>
+            <td>{event.add_info.length ? event.add_info : "Не указана"}</td>
           </tr>
+          {matchedSpeakers && (
+            <tr>
+              <td>Спикеры</td>
+              <td>{matchedSpeakers.join(", ")}</td>
+            </tr>
+          )}
+
           <tr>
-            <td>Спикеры</td>
-            <td>Иванов Иван Иванович</td>
+            <td>Участники</td>
+            <td>Иван Иванов</td>
           </tr>
+
           <tr>
             <td>Город проведения</td>
-            <td>Москва</td>
+            <td>{matchedLocation?.label}</td>
           </tr>
         </tbody>
       </table>

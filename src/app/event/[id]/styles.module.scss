@@ -8,4 +8,15 @@
     margin-bottom: 20px;
     text-align: center;
   }
+
+  &__buttons {
+    display: flex;
+    justify-content: center;
+
+    gap: 20px;
+
+    button {
+      width: 50%;
+    }
+  }
 }

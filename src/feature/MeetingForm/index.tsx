@@ -1,15 +1,17 @@
-import { useState } from "react";
+import { useRef, useState } from "react";
+import { useController } from "react-hook-form";
 
-import { InputField, MultipleSelectField } from "@/components/ui/form";
+import { InputField, MultipleSelectField, SingleSelectField } from "@/components/ui/form";
 import { withForm, WrappedComponentProps } from "@/core/hoc";
 
 import { schema } from "./schema";
-import { opinionLeaders, optionsRoles } from "./static";
+import { opinionLeaders, optionsRoles, regions } from "./static";
 
 import classes from "./styles.module.scss";
 
 export function Index(props: WrappedComponentProps) {
   const [isChecked, setIsChecked] = useState(false);
+
   console.log(isChecked);
   return (
     <section className={classes.form}>
@@ -24,7 +26,7 @@ export function Index(props: WrappedComponentProps) {
           control={props.control}
           inputName={"meetingLink"}
           inputLabel={"Постоянная ссылка"}
-          readOnly={true}
+          readOnly={false}
           defaultValue={"https://campweek.aozol.ru/"}
         />
       </div>
@@ -65,7 +67,10 @@ export function Index(props: WrappedComponentProps) {
           inputLabel={"Требуется регистрация"}
           inputType={"checkbox"}
           defaultValue={false}
-          {...props.control.register}
+          // {...props.control.register("isRegNeeded", {
+          //   onChange: (e) => setIsChecked(e.target.value),
+          // })}
+          // ref={null}
         />
       </div>
       <InputField
@@ -83,16 +88,17 @@ export function Index(props: WrappedComponentProps) {
         inputType={"textarea"}
       />
       <div className={classes.containerRow}>
-        <MultipleSelectField
+        <SingleSelectField
           control={props.control}
-          selectName={"meetingSpeakers"}
+          defaultValue={"Онлайн"}
+          selectName={"meetingLocation"}
           selectLabel={"Локация"}
-          selectOptions={opinionLeaders}
+          selectOptions={regions}
         />
         <MultipleSelectField
           control={props.control}
           selectName={"meetingTarget"}
-          selectLabel={"Аудитория"}
+          selectLabel={"Целевая аудитория"}
           selectOptions={optionsRoles}
         />
       </div>

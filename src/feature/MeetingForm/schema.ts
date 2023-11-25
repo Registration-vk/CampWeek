@@ -18,13 +18,13 @@ const schema = z.object({
   meetingAddLink: z.string().url({ message: "Укажите корректную ссылку *" }).optional().or(z.literal('')),
   meetingDsc: z.string(),
   meetingAddInfo: z.string(),
-  // meetingSpeakers: z.array(z.string(), {
-  //   required_error: "Обязательное поле *"
-  // }),
+  meetingLocation: z.enum(["1", "2", "3", "4", "5"], {
+    errorMap: () => ({ message: "Укажите локацию *" }),
+  }),
   meetingSpeakerInfo: z.string(),
-  // meetingTarget: z.array(z.string(), {
-  //   required_error: "Обязательное поле *"
-  // }),
+  meetingTarget: z.array(z.string(), {
+    required_error: "Обязательное поле *"
+  }),
   meetingNotes: z.string(),
 })
 .refine((data) => (data.meetingEnd.slice(0,2) >= data.meetingStart.slice(0,2)), {
