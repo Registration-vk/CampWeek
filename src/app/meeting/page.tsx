@@ -30,6 +30,7 @@ export default function MeetingPage() {
 
   useEffect(() => {
     if (isSuccessful) router.push(ROUTES.application.path);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [isSuccessful]);
 
   const formSubmittedCallback = (formData: FieldValues) => {
