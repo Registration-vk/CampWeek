@@ -22,6 +22,8 @@ export default function AuthBlock(props: Props) {
     router.push(`/account`);   
   }
 
+  console.log(isLoading)
+
   const onLogout = () => {
     router.push(`/`); 
     setUserId(null);
@@ -30,8 +32,8 @@ export default function AuthBlock(props: Props) {
     Cookies.remove('access_token')
   }
 
-  if(isLoading) {
-    <Loading/>
+  if(isLoading || isLoading === null) {
+    return <Loading/>
   }
 
   if (isAuth) {
@@ -49,6 +51,22 @@ export default function AuthBlock(props: Props) {
       </div>
     </aside>    
     )
+  } else {
+    return (
+      <aside className={classes.authorization}>
+        <div className={classes.infoNoAuth}>
+          <p className={classes.infoText}>
+            Чтобы зарегистрироваться на мероприятия необходимо авторизоваться через ВКонтакте
+          </p>
+          <ButtonAuthorization />
+        </div>
+        <div className={classes.checkLinkBox}>
+          <a className={classes.orgAuthLink} href="#">
+            Вход для админов
+          </a>
+        </div>
+      </aside>    
+    )
   }
     // AuthText = (
     //   <div className={classes.infoAuth}>
@@ -61,19 +79,5 @@ export default function AuthBlock(props: Props) {
     //     </a>
     //   </div>
     // );
-  return (
-    <aside className={classes.authorization}>
-      <div className={classes.infoNoAuth}>
-        <p className={classes.infoText}>
-          Чтобы зарегистрироваться на мероприятия необходимо авторизоваться через ВКонтакте
-        </p>
-        <ButtonAuthorization />
-      </div>
-      <div className={classes.checkLinkBox}>
-        <a className={classes.orgAuthLink} href="#">
-          Вход для админов
-        </a>
-      </div>
-    </aside>    
-  )
+ 
 }

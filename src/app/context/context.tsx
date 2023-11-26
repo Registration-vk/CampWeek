@@ -10,7 +10,7 @@ interface IUserContext {
 	setUserId: (userId: number | null) => void;
 	isAuth: boolean;
 	setIsAuth: (isAuth: boolean) => void;
-	isLoading: boolean;
+	isLoading: boolean | null;
 	setIsLoading: (isLoading: boolean) => void;
 }
 
@@ -23,14 +23,14 @@ const UserContext = createContext<IUserContext>({
 	setUserId: () => {},
 	isAuth: false,
 	setIsAuth: () => {},
-	isLoading: false,
+	isLoading: null,
 	setIsLoading: () => {},
 });
 
 export const UserProvider = ({ children }: UserProviderProps) => {
   const [userId, setUserId] = useState<number | null>(null);
   const [isAuth, setIsAuth] = useState<boolean>(false)
-  const [isLoading, setIsLoading] = useState<boolean>(false)
+  const [isLoading, setIsLoading] = useState<boolean | null>(null)
 
   useEffect(() => {
     const handleAuthorizationCallback = () => {
