@@ -19,6 +19,11 @@
   border: none;
   border-radius: 5px;
   background-color: transparent;
+
+  &_disabled {
+    pointer-events: none;
+    opacity: 0.5;
+  }
 }
 
 .Button__primary {

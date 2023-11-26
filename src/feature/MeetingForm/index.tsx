@@ -1,12 +1,17 @@
-import { InputField, MultipleSelectField } from "@/components/ui/form";
+import { useRef, useState } from "react";
+import { useController } from "react-hook-form";
+
+import { InputField, MultipleSelectField, SingleSelectField } from "@/components/ui/form";
 import { withForm, WrappedComponentProps } from "@/core/hoc";
 
 import { schema } from "./schema";
-import { opinionLeaders, optionsRoles } from "./static";
+import { opinionLeaders, optionsRoles, regions } from "./static";
 
 import classes from "./styles.module.scss";
 
 export function Index(props: WrappedComponentProps) {
+  const [isChecked, setIsChecked] = useState(false);
+
   return (
     <section className={classes.form}>
       <div className={classes.containerRow}>
@@ -14,12 +19,13 @@ export function Index(props: WrappedComponentProps) {
           control={props.control}
           inputName={"meetingName"}
           inputLabel={"Название мероприятия"}
+          defaultValue={""}
         />
         <InputField
           control={props.control}
           inputName={"meetingLink"}
           inputLabel={"Постоянная ссылка"}
-          readOnly={true}
+          readOnly={false}
           defaultValue={"https://campweek.aozol.ru/"}
         />
       </div>
@@ -52,13 +58,18 @@ export function Index(props: WrappedComponentProps) {
           inputName={"meetingAddLink"}
           inputLabel={"Ссылка на доп.регистрацию"}
           defaultValue={""}
+          readOnly={!isChecked}
         />
         <InputField
           control={props.control}
           inputName={"isRegNeeded"}
           inputLabel={"Требуется регистрация"}
           inputType={"checkbox"}
-          defaultValue={""}
+          defaultValue={false}
+          // {...props.control.register("isRegNeeded", {
+          //   onChange: (e) => setIsChecked(e.target.value),
+          // })}
+          // ref={null}
         />
       </div>
       <InputField
@@ -76,16 +87,17 @@ export function Index(props: WrappedComponentProps) {
         inputType={"textarea"}
       />
       <div className={classes.containerRow}>
-        <MultipleSelectField
+        <SingleSelectField
           control={props.control}
-          selectName={"meetingSpeakers"}
-          selectLabel={"Спикеры"}
-          selectOptions={opinionLeaders}
+          defaultValue={"Онлайн"}
+          selectName={"meetingLocation"}
+          selectLabel={"Локация"}
+          selectOptions={regions}
         />
         <MultipleSelectField
           control={props.control}
           selectName={"meetingTarget"}
-          selectLabel={"Аудитория"}
+          selectLabel={"Целевая аудитория"}
           selectOptions={optionsRoles}
         />
       </div>

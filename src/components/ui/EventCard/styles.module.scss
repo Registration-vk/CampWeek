@@ -1,0 +1,29 @@
+.card {
+  border-collapse: collapse; // 1
+  border-spacing: 0;
+
+  margin: 10px 0;
+
+  td {
+    padding-bottom: 10px;
+
+    &:first-child {
+      position: relative;
+      min-width: 260px;
+
+      font-weight: 700;
+    }
+
+    &:first-child::after {
+      position: absolute;
+      right: -15px;
+      content: ":";
+    }
+
+    &:last-child {
+      position: relative;
+      max-width: 400px;
+      padding-left: 30px;
+    }
+  }
+}

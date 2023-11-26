@@ -14,20 +14,14 @@ type Props = {
 } & ComponentProps<"button">;
 
 export const Button = (props: Props) => {
-  const {
-    variant = "primary",
-    fluid,
-    disabled,
-    loading,
-    children,
-    ...rest
-  } = props;
+  const { variant = "primary", fluid, disabled, loading, children, ...rest } = props;
   return (
     <button
       className={clsx(styles.Button, {
         [styles.Button__primary]: variant === "primary",
         [styles.Button__loading]: loading,
         [styles.Button__fluid]: fluid,
+        [styles.Button_disabled]: disabled,
       })}
       disabled={disabled}
       {...rest}

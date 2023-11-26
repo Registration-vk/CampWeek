@@ -1,0 +1,22 @@
+.main {
+  display: flex;
+  flex-direction: column;
+  margin-left: auto;
+  margin-right: auto;
+
+  h2 {
+    margin-bottom: 20px;
+    text-align: center;
+  }
+
+  &__buttons {
+    display: flex;
+    justify-content: center;
+
+    gap: 20px;
+
+    button {
+      width: 50%;
+    }
+  }
+}
