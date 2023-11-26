@@ -33,9 +33,15 @@ export const useVisitorById = (visitorId: number) => {
 };
 
 export const useCreateVisitor = (visitor: EventVisitor, isEnabled: boolean) => {
-    return useQuery({
+    const { data, isLoading, isError} = useQuery({
         queryKey: ['visitors/createEvent', visitor],
         queryFn: () => visitorRepository.createVisitor(visitor),
         enabled: isEnabled,
     });
+
+    return {
+        visitor: data,
+        isLoading,
+        isError
+    }
 };

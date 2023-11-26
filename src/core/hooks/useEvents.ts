@@ -33,10 +33,17 @@ export const useEventById = (eventId: number) => {
 };
 
 export const useCreateEvent = (event: EventFormData, isEnabled: boolean) => {
-    return useQuery({
+    const {data, isLoading, isError, isSuccess } = useQuery({
         queryKey: ['events/createEvent', event],
         queryFn: () => eventRepository.createEvent(event),
         enabled: isEnabled,
     });
+
+    return {
+        event: data,
+        isLoading,
+        isError,
+        isSuccess
+    }
 };
 

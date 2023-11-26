@@ -21,6 +21,7 @@ export const Button = (props: Props) => {
         [styles.Button__primary]: variant === "primary",
         [styles.Button__loading]: loading,
         [styles.Button__fluid]: fluid,
+        [styles.Button_disabled]: disabled,
       })}
       disabled={disabled}
       {...rest}

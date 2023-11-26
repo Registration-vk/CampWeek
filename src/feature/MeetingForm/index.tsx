@@ -12,7 +12,6 @@ import classes from "./styles.module.scss";
 export function Index(props: WrappedComponentProps) {
   const [isChecked, setIsChecked] = useState(false);
 
-  console.log(isChecked);
   return (
     <section className={classes.form}>
       <div className={classes.containerRow}>

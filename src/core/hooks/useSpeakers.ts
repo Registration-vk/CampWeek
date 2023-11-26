@@ -20,7 +20,7 @@ export const useSpeakersAll = () => {
 };
 
 export const useSpeakerById = (speakerId: number) => {
-    const {data, isLoading, isError} =  useQuery({
+    const {data, isLoading, isError} = useQuery({
         queryKey: ['speakers/getById', speakerId],
         queryFn: () => speakerRepository.getSpeakerById(speakerId),
     });
@@ -33,9 +33,16 @@ export const useSpeakerById = (speakerId: number) => {
 };
 
 export const useCreateSpeaker = (speaker: EventSpeaker, isEnabled: boolean) => {
-    return useQuery({
+    const {data, isLoading, isError, isSuccess} = useQuery({
         queryKey: ['speakers/createEvent', speaker],
         queryFn: () => speakerRepository.createSpeaker(speaker),
         enabled: isEnabled,
     });
+
+    return {
+        speaker: data,
+        isLoading,
+        isError,
+        isSuccessful: isSuccess
+    }
 };

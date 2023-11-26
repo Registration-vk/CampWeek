@@ -5,13 +5,22 @@ import Link from "next/link";
 
 import { Aside, Banner } from "@/components/ui";
 import { LinkItem } from "@/components/ui/Link/Link";
-import { useEventsAll } from "@/core/hooks";
+import { useEventsAll, useUsersAll } from "@/core/hooks";
+import { useSpeakersAll } from "@/core/hooks/useSpeakers";
 import { ROUTES } from "@/core/routes";
+import { getParticipants } from "@/core/utils";
+
+import { useUserId } from "./context/context";
 
 import styles from "./styles.module.scss";
 
 export default function Home() {
   const { events, isError, isLoading } = useEventsAll();
+  const { data } = useUsersAll();
+  const { speakers } = useSpeakersAll();
+  const { isAuth } = useUserId();
+
+  console.log("Список эвентов", events);
 
   return (
     <>
@@ -26,7 +35,10 @@ export default function Home() {
                 <Banner
                   subtitle={`${dayjs(event.date_time).format("DD.MM.YYYY")} в ${event.time_start}`}
                   title={event.name}
-                  fullName={"Иванов Иван Иванович"}
+                  fullName={
+                    (speakers && data && getParticipants(speakers, data, event.id).join(", ")) ||
+                    "Спикеры отсутствуют"
+                  }
                   typeEvent={event.roles.split(";").join(", ")}
                 >
                   <h3>{event.description}</h3>
@@ -36,7 +48,9 @@ export default function Home() {
         ) : (
           <h3>Мероприятий не запланировано</h3>
         )}
-        <LinkItem link={"/meeting"}>Добавить мероприятие</LinkItem>
+        <LinkItem link={"/meeting"} isDisabled={!isAuth}>
+          Добавить мероприятие
+        </LinkItem>
       </main>
       <Aside />
     </>
