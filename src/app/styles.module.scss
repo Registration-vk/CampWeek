@@ -3,7 +3,9 @@
 
   max-width: 1100px;
 
-  column-gap: 16px;
+  -moz-column-gap: 80px;
+
+  column-gap: 80px;
   margin-inline: auto;
   margin-block: 32px;
 }

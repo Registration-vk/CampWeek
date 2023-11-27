@@ -5,6 +5,7 @@ import { useUserId } from "@/app/context/context";
 
 import { Button } from "@/components/ui";
 import { EventCard } from "@/components/ui/EventCard/EventCard";
+import NotifyPopup from "@/components/ui/Notification/NotifyPopup";
 import { useCreateSpeaker } from "@/core/hooks/useSpeakers";
 import { useCreateVisitor } from "@/core/hooks/useVisitors";
 
@@ -41,9 +42,11 @@ export default function EventPage({ params }: { params: { id: string } }) {
       <div className={styles.main__buttons}>
         <Button onClick={() => registerForEvent("speaker")} disabled={!isAuth}>
           Стать спикером
+          <NotifyPopup>Требуется авторизация</NotifyPopup>
         </Button>
         <Button onClick={() => registerForEvent("visitor")} disabled={!isAuth}>
           Стать участником
+          <NotifyPopup>Требуется авторизация</NotifyPopup>
         </Button>
       </div>
     </div>

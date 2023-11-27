@@ -20,9 +20,17 @@
   border-radius: 5px;
   background-color: transparent;
 
+  &_disabled:hover > * {
+    display: block;
+  }
+
   &_disabled {
+    background: rgb(127, 17, 224, 0.5) !important;
+    cursor: default;
+  }
+
+  &_disabled:active {
     pointer-events: none;
-    opacity: 0.5;
   }
 }
 
