@@ -22,8 +22,6 @@ export default function AuthBlock(props: Props) {
     router.push(`/account`);
   };
 
-  console.log(isLoading);
-
   const onLogout = () => {
     router.push(`/`);
     setUserId(null);

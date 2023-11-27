@@ -21,13 +21,13 @@ export function Index(props: WrappedComponentProps) {
         <>
           <InputField
             control={props.control}
-            inputName={"firstName"}
+            inputName={"first_name"}
             inputLabel={"Имя"}
             defaultValue={user.first_name}
           />
           <InputField
             control={props.control}
-            inputName={"lastName"}
+            inputName={"last_name"}
             inputLabel={"Фамилия"}
             defaultValue={user.last_name}
           />
@@ -44,7 +44,7 @@ export function Index(props: WrappedComponentProps) {
           />
           <InputField
             control={props.control}
-            inputName={"birthDate"}
+            inputName={"bdate"}
             inputLabel={"Дата рождения"}
             inputType={"date"}
             defaultValue={user.bdate}
@@ -55,7 +55,7 @@ export function Index(props: WrappedComponentProps) {
             inputLabel={"Город проживания"}
             defaultValue={user.city}
           />
-          <MultipleSelectField
+          {/* <MultipleSelectField
             control={props.control}
             selectName={"roles"}
             selectLabel={"Роль в мероприятии"}
@@ -68,7 +68,7 @@ export function Index(props: WrappedComponentProps) {
             selectLabel={"Регион мероприятия"}
             selectOptions={optionsMeetings}
             defaultValue={["game"]}
-          />
+          /> */}
         </>
       )}
     </>
@@ -77,4 +77,5 @@ export function Index(props: WrappedComponentProps) {
 
 export default withForm(Index, {
   resolver: schema,
+  buttonText: "Сохранить изменения",
 });

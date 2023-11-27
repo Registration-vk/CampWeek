@@ -52,7 +52,6 @@ export default function Home() {
           Добавить мероприятие
         </LinkItem>
       </main>
-      <Aside />
     </>
   );
 }

@@ -1,7 +1,7 @@
 "use client";
 
 import { ElementType } from "react";
-import { Control, FieldErrors, FieldValues, useForm } from "react-hook-form";
+import { Control, FieldErrors, FieldValues, Path, useForm } from "react-hook-form";
 
 import { zodResolver } from "@hookform/resolvers/zod";
 import { z } from "zod";
