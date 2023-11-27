@@ -20,6 +20,10 @@
   border-radius: 5px;
   background-color: transparent;
 
+  &:active {
+    transform: translateY(2px);
+  }
+
   &_disabled:hover > * {
     display: block;
   }
