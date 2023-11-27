@@ -2,18 +2,20 @@
 
 import { FieldValues } from "react-hook-form";
 
-import UserForm from "@/feature/UserForm";
-import { $api } from "@/core/axios";
 import { useUserId } from "@/app/context/context";
+import UserForm from "@/feature/UserForm";
+
+import { $api } from "@/core/axios";
 
 export default function AccountScreen() {
   const {userId} = useUserId()
-  const formSubmittedCallback = (formData: FieldValues) => {
+
+  const formSubmittedCallback = async (formData: FieldValues) => {
     
     // eslint-disable-next-line no-console
     console.log(formData);
-
-    $api.patch(`/api/v1/user/${userId}/`, formData )
+    await $api.patch(`/api/v1/user/${userId}/`, formData )
+    window.location.reload();
   };
 
   return <UserForm formSubmittedCallback={formSubmittedCallback} />;
