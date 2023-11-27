@@ -14,7 +14,7 @@ const schema = z.object({
   meetingEnd: z.coerce.string({
     errorMap: () => ({ message: "Укажите время *" })
   }).min(5),
-  isRegNeeded: z.boolean().optional(),
+  // isRegNeeded: z.boolean().optional(),
   meetingAddLink: z.string().url({ message: "Укажите корректную ссылку *" }).optional().or(z.literal('')),
   meetingDsc: z.string(),
   meetingAddInfo: z.string(),

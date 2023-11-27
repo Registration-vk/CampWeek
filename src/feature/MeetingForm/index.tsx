@@ -58,9 +58,9 @@ export function Index(props: WrappedComponentProps) {
           inputName={"meetingAddLink"}
           inputLabel={"Ссылка на доп.регистрацию"}
           defaultValue={""}
-          readOnly={!isChecked}
+          readOnly={false}
         />
-        <InputField
+        {/* <InputField
           control={props.control}
           inputName={"isRegNeeded"}
           inputLabel={"Требуется регистрация"}
@@ -70,7 +70,7 @@ export function Index(props: WrappedComponentProps) {
           //   onChange: (e) => setIsChecked(e.target.value),
           // })}
           // ref={null}
-        />
+        /> */}
       </div>
       <InputField
         control={props.control}

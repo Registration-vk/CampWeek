@@ -23,8 +23,16 @@
   border-radius: 5px;
   text-decoration: none;
 
+  &_disabled:hover > * {
+    display: block;
+  }
+
   &_disabled {
+    background: rgb(127, 17, 224, 0.5);
+    cursor: default;
+  }
+
+  &_disabled:active {
     pointer-events: none;
-    opacity: 0.5;
   }
 }
