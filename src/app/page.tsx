@@ -5,6 +5,7 @@ import Link from "next/link";
 
 import { Aside, Banner } from "@/components/ui";
 import { LinkItem } from "@/components/ui/Link/Link";
+import NotifyPopup from "@/components/ui/Notification/NotifyPopup";
 import { useEventsAll, useUsersAll } from "@/core/hooks";
 import { useSpeakersAll } from "@/core/hooks/useSpeakers";
 import { ROUTES } from "@/core/routes";
@@ -50,6 +51,7 @@ export default function Home() {
         )}
         <LinkItem link={"/meeting"} isDisabled={!isAuth}>
           Добавить мероприятие
+          <NotifyPopup>Требуется авторизация</NotifyPopup>
         </LinkItem>
       </main>
     </>
