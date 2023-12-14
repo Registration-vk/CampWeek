@@ -31,9 +31,9 @@ export abstract class ApiBase<T> {
     return data;
   }
 
-  async update(entity: T): Promise<T> {
-    const { data }: AxiosResponse<T> = await this.axiosInstance.put(
-      `${this.baseUrl}/${(entity as any).id}`,
+  async update<T, K>(entity: T, id: number): Promise<K> {
+    const { data }: AxiosResponse<K> = await this.axiosInstance.patch(
+      `${this.baseUrl}/${id}`,
       entity,
     );
     return data;

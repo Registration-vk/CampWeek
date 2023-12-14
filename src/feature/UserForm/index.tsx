@@ -11,7 +11,7 @@ import { optionsMeetings, optionsRoles } from "./static";
 export function Index(props: WrappedComponentProps) {
   
   const { userId } = useUserId()
-  const { data: user, isLoading, isError } = useUserById(Number(userId));
+  const { data: user, isLoading, isError } = useUserById(Number(userId), `/api/v1/user/${userId}`);
 
   return (
     <>

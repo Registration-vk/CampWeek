@@ -5,17 +5,20 @@ import { FieldValues } from "react-hook-form";
 import { useUserId } from "@/app/context/context";
 import UserForm from "@/feature/UserForm";
 
-import { $api } from "@/core/axios";
+import { useUpdate } from "@/core/hooks";
+import { UserFormData } from "@/core/services/users";
 
 export default function AccountScreen() {
   const { userId } = useUserId();
-  const formSubmittedCallback = (formData: FieldValues) => {
-    // eslint-disable-next-line no-console
-    console.log(formData);
+  const mutation = useUpdate<UserFormData>(`/api/v1/user/${userId}`, {userId})
 
-    $api.patch(`/api/v1/user/${userId}/`, formData);
-    window.location.reload();
+  const formSubmittedCallback = (formData: UserFormData) => {
+    if (userId !== undefined && userId !== null) {
+      mutation.mutate(formData)
+    } else {
+      throw Error('Пользователь не может быть изменен')
+    }
   };
 
-  return <UserForm formSubmittedCallback={formSubmittedCallback} />;
+  return <UserForm formSubmittedCallback={formSubmittedCallback as unknown as (data: FieldValues) => void} />;
 }
