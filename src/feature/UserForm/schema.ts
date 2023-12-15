@@ -21,9 +21,13 @@ const schema = z.object({
       message: "Имя превысило допустимое количество знаков *",
     }),
   bdate: z.coerce
-    .date()
-    .min(new Date("1923-10-01"), { message: "Укажите корректную дату *" })
-    .max(new Date("2009-10-01"), { message: "Укажите корректную дату *" }),
+    .string()
+    .refine((value) => {
+      const minDate = "1923-10-01";
+      const maxDate = new Date().toISOString().split('T')[0];
+      
+      return value >= minDate && value <= maxDate;
+    }, { message: "Укажите корректную дату *" }),
   city: z.string().min(1, {
     message: "Обязательное поле *",
   }),

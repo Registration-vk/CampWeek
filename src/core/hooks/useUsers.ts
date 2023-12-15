@@ -56,15 +56,15 @@ export const useGenericMutation = <T>(
   });
  };
 
-export const useUpdate = <T>(
-    url: string,
-    params?: object,
-    updater?: (oldData: NoInfer<T> | undefined, newData: T) => T
-) => {
-  return useGenericMutation<T>(
-    (data) => $api.patch<T>(url, data),
-    url,
-    params,
-    updater
-  );
-};
+  export const useUpdate = <T>(
+      url: string,
+      params?: object,
+      updater?: (oldData: NoInfer<T> | undefined, newData: T) => T
+  ) => {
+    return useGenericMutation<T>(
+      (data) => $api.patch<T>(url, data),
+      url,
+      params,
+      updater,
+    );
+  };
