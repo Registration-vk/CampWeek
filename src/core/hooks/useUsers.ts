@@ -6,10 +6,11 @@ import { UserRepository } from "@/services/users";
 
 const userRepository = new UserRepository($api, "/api/v1/user");
 
-export const useUsersAll = () => {
+export const useUsersAll = (enabled: boolean = true) => {
   return useQuery({
     queryKey: ["users/getAll"],
     queryFn: () => userRepository.getAllUsers(),
+    enabled: enabled
   });
 };
 

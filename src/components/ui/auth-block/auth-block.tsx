@@ -30,6 +30,10 @@ export default function AuthBlock(props: Props) {
     Cookies.remove("access_token");
   };
 
+  const onLoginAsAdmin = () => {
+    router.push(`/admin`);
+  };
+
   if (isLoading || isLoading === null) {
     return <Loading />;
   }
@@ -59,9 +63,9 @@ export default function AuthBlock(props: Props) {
           <ButtonAuthorization />
         </div>
         <div className={classes.checkLinkBox}>
-          <a className={classes.orgAuthLink} href="#">
+          <Button className={classes.orgAuthLink} onClick={onLoginAsAdmin}>
             Вход для админов
-          </a>
+          </Button>
         </div>
       </aside>
     );

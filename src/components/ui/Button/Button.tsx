@@ -11,10 +11,11 @@ type Props = {
   loading?: boolean;
   fluid?: boolean;
   variant?: ButtonVariant;
+  className?: string;
 } & ComponentProps<"button">;
 
 export const Button = (props: Props) => {
-  const { variant = "primary", fluid, disabled, loading, children, ...rest } = props;
+  const { variant = "primary", fluid, disabled, loading, children, className, ...rest } = props;
   return (
     <button
       className={clsx(styles.Button, {
@@ -22,7 +23,7 @@ export const Button = (props: Props) => {
         [styles.Button__loading]: loading,
         [styles.Button__fluid]: fluid,
         [styles.Button_disabled]: disabled,
-      })}
+      }, className)}
       disabled={disabled}
       {...rest}
     >
