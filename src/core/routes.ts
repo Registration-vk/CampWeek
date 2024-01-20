@@ -8,8 +8,13 @@ export const ROUTES = {
       path: "/event",
     },
     registration: {
-      path: "/registration",
-      
-    }
+      path: "/registration",     
+    },
+    meetingCreate: {
+      path: "/meeting",     
+    },
+    profile: {
+      path: "/account",
+    },
   },
 };

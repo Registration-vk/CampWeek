@@ -1,4 +1,4 @@
-import React, { ComponentProps, ForwardedRef } from "react";
+import React, { ComponentProps, ForwardedRef, useEffect, useRef, useState } from "react";
 
 import clsx from "clsx";
 
@@ -16,16 +16,17 @@ type Props = {
 
 const Input = (props: Props, ref: ForwardedRef<HTMLInputElement>) => {
   const { label, error, onChange, defaultValue, ...rest } = props;
-
+  
   return (
     <div className={styles.container}>
-      {label && <label className={styles.label}>{label}</label>}
+      {label && <label className={clsx(styles.label, { [styles.labelActive]: defaultValue != '' })}>{label}</label>}
       <input
         ref={ref}
         className={clsx(styles.input, {
           [styles.input__error]: !!error,
           [styles.inputCheckbox]: props.type == "checkbox",
           [styles.readOnly]: props.readOnly,
+          [styles.inputActive]: defaultValue != ''
         })}
         defaultValue={defaultValue}
         onChange={onChange}

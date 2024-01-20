@@ -36,7 +36,7 @@ const InputField = <
     <Input
       label={props.inputLabel}
       type={props.inputType}
-      placeholder={props.inputLabel}
+      // placeholder={props.inputLabel}
       readOnly={props.readOnly}
       error={error?.message}
       {...field}

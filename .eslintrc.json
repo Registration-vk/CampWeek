@@ -43,7 +43,8 @@
         },
         "newlines-between": "always",
         "internal-pattern": ["@/components/**", "@/core/**", "@/hooks/**", "@/services/**"],
-        "read-tsconfig": false
+        "read-tsconfig": false,
+        "display-name": false
       }
     ]
   }

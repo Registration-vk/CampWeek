@@ -9,7 +9,7 @@ export default function UserLayout({
 }) {
   return (
     <main className={styles.container}>
-      <h2 className={styles.title}>Профиль участника</h2>
+      <h2 className={styles.title}>Личный кабинет</h2>
       {children}
     </main>
   )

@@ -1,0 +1,75 @@
+.navbar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  height: 100px;
+  width: 100%;
+  padding: 30px 260px;
+
+  @include media-xl {
+    padding: 30px 40px;
+  }
+
+  @include media-lg {
+    padding: 30px 29px;
+  }
+
+  @include media-md {
+    padding: 22px 14px;
+  }
+}
+
+.navbarLogo {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  width: 285px;
+  :hover,
+  :active {
+    cursor: pointer;
+  }
+}
+
+.navbarMeetings {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  width: 378px;
+  :hover,
+  :active {
+    cursor: pointer;
+  }
+}
+
+.navbarMeeting {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  width: 137px;
+}
+
+.navbarMeetingCreate {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  width: 201px;
+}
+
+.activePath {
+  color: $active-link;
+  fill: $active-link;
+  transition: all 0.25s linear;
+  :hover,
+  :active {
+    cursor: pointer;
+  }
+}
+
+.link {
+  color: $logo-color;
+  font-weight: 500;
+  font-size: 22px;
+  line-height: 24px;
+  width: 237px;
+  text-transform: uppercase;
+}

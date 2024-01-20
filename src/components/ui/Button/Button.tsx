@@ -23,6 +23,7 @@ export const Button = (props: Props) => {
         [styles.Button__fluid]: fluid,
         [styles.Button_disabled]: disabled,
       })}
+      type="button"
       disabled={disabled}
       {...rest}
     >

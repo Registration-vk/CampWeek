@@ -22,7 +22,7 @@ export function Index(props: WrappedComponentProps) {
           <InputField
             control={props.control}
             inputName={"first_name"}
-            inputLabel={"Имя"}
+            inputLabel={"Ваше имя"}
             defaultValue={user.first_name}
           />
           <InputField

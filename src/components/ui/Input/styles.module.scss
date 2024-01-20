@@ -3,16 +3,22 @@
   width: 100%;
   flex-direction: column;
   row-gap: 4px;
+  position: relative;
 }
 
 .input {
   font-weight: 400;
-  font-size: 12px;
+  font-size: 18px;
+  line-height: 24px;
   font-family: inherit;
-  height: 44px;
-  padding: 9px 11px;
-  border: 1px solid $gray;
-  border-radius: 5px;
+  height: 64px;
+  padding: 13px 20px;
+  border: 1px solid $border-color;
+  border-radius: 12px;
+
+  &Active {
+    padding: 27px 20px 13px 20px;
+  }
 
   &:focus {
     outline: none;
@@ -57,9 +63,25 @@
 }
 
 .label {
-  font-size: 14px;
+  font-size: 18px;
   font-weight: 400;
+  line-height: 24px;
   color: $input-label;
+  position: absolute;
+  top: 50%;
+  left: 20px;
+  transform: translateY(-50%);
+  transition: all 0.3s ease-out;
+  pointer-events: none;
+
+  &Active {
+    position: absolute;
+    font-size: 12px;
+    line-height: 14px;
+    top: 13px;
+    left: 20px;
+    transition: all 0.3s ease-out;
+  }
 }
 
 .error {
