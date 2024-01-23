@@ -38,6 +38,8 @@
   :hover,
   :active {
     cursor: pointer;
+    color: $active-link;
+    fill: $active-link;
   }
 }
 

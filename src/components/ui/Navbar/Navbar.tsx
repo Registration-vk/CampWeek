@@ -35,42 +35,40 @@ export const Navbar = () => {
         </Link>
       </div>
       <div className={styles.navbarMeetings}>
-        <div className={styles.navbarMeeting}>
-          <Icon
-            Svg={MeetingsIcon}
-            className={
-              currentPathname === ROUTES.application.path ? styles.activePath : styles.path
-            }
-          ></Icon>
-          <Link
-            href={ROUTES.application.path}
-            className={
-              currentPathname === ROUTES.application.path ? styles.activePath : styles.path
-            }
-          >
-            Мероприятия
-          </Link>
-        </div>
-        <div className={styles.navbarMeetingCreate}>
-          <Icon
-            Svg={MeetingCreateIcon}
-            className={
-              currentPathname === ROUTES.application.meetingCreate.path
-                ? styles.activePath
-                : styles.path
-            }
-          ></Icon>
-          <Link
-            href={ROUTES.application.meetingCreate.path}
-            className={
-              currentPathname === ROUTES.application.meetingCreate.path
-                ? styles.activePath
-                : styles.path
-            }
-          >
-            Создать мероприятие
-          </Link>
-        </div>
+        <Link
+          href={ROUTES.application.path}
+          className={currentPathname === ROUTES.application.path ? styles.activePath : styles.path}
+        >
+          <div className={styles.navbarMeeting}>
+            <Icon
+              Svg={MeetingsIcon}
+              className={
+                currentPathname === ROUTES.application.path ? styles.activePath : styles.path
+              }
+            ></Icon>
+            <p>Мероприятия</p>
+          </div>
+        </Link>
+        <Link
+          href={ROUTES.application.meetingCreate.path}
+          className={
+            currentPathname === ROUTES.application.meetingCreate.path
+              ? styles.activePath
+              : styles.path
+          }
+        >
+          <div className={styles.navbarMeetingCreate}>
+            <Icon
+              Svg={MeetingCreateIcon}
+              className={
+                currentPathname === ROUTES.application.meetingCreate.path
+                  ? styles.activePath
+                  : styles.path
+              }
+            ></Icon>
+            <p>Создать мероприятие</p>
+          </div>
+        </Link>
       </div>
       <div className={styles.profileIcon}>
         <Dropdown
