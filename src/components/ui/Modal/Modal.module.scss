@@ -1,37 +1,37 @@
 .modal {
-	position: fixed;
-	inset: 0;
-	opacity: 0;
-	pointer-events: none;
-	z-index: 100;
-	color: grey;
-	display: flex;
-	justify-content: center;
-	align-items: center;
+  position: fixed;
+  inset: 0;
+  opacity: 0;
+  pointer-events: none;
+  z-index: 100;
+  color: grey;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
 
 .content {
-	padding: 20px;
-	border-radius: 12px;
-	background: white;
-	transition: 0.3s transform;
-	transform: scale(0.5);
-	max-width: 500px;
-	z-index: 100;
+  padding: 20px;
+  border-radius: 12px;
+  background: white;
+  transition: 0.3s transform;
+  transform: scale(0.5);
+  max-width: 500px;
+  z-index: 100;
 }
 
 .opened {
-	pointer-events: auto;
-	opacity: 1;
-	z-index: 100;
+  pointer-events: auto;
+  opacity: 1;
+  z-index: 100;
 
-	.content {
-		transform: scale(1);
-	}
+  .content {
+    transform: scale(1);
+  }
 }
 
 .closed {
-	.content {
-		transform: scale(0.2);
-	}
+  .content {
+    transform: scale(0.2);
+  }
 }

@@ -16,17 +16,21 @@ type Props = {
 
 const Input = (props: Props, ref: ForwardedRef<HTMLInputElement>) => {
   const { label, error, onChange, defaultValue, ...rest } = props;
-  
+
   return (
     <div className={styles.container}>
-      {label && <label className={clsx(styles.label, { [styles.labelActive]: defaultValue != '' })}>{label}</label>}
+      {label && (
+        <label className={clsx(styles.label, { [styles.labelActive]: defaultValue != "" })}>
+          {label}
+        </label>
+      )}
       <input
         ref={ref}
         className={clsx(styles.input, {
           [styles.input__error]: !!error,
           [styles.inputCheckbox]: props.type == "checkbox",
           [styles.readOnly]: props.readOnly,
-          [styles.inputActive]: defaultValue != ''
+          [styles.inputActive]: defaultValue != "",
         })}
         defaultValue={defaultValue}
         onChange={onChange}

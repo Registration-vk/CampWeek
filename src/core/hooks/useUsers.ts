@@ -15,8 +15,8 @@ export const useUsersAll = () => {
 
 export const useUserById = (userId: number, url: string) => {
   return useQuery({
-    queryKey: [url, {userId}],
-    queryFn: () => userId > 0 ? userRepository.getUserById(userId) : null,
+    queryKey: [url, { userId }],
+    queryFn: () => (userId > 0 ? userRepository.getUserById(userId) : null),
   });
 };
 
@@ -31,40 +31,36 @@ export const useGenericMutation = <T>(
   func: (data: T) => Promise<AxiosResponse<T>>,
   url: string,
   params?: object,
-  updater?: ((oldData: NoInfer<T> | undefined, newData: T) => T) | undefined
+  updater?: ((oldData: NoInfer<T> | undefined, newData: T) => T) | undefined,
 ) => {
   const queryClient = useQueryClient();
- 
-  return useMutation<AxiosResponse, AxiosError, T>({ mutationFn: func, 
+
+  return useMutation<AxiosResponse, AxiosError, T>({
+    mutationFn: func,
     onMutate: async (data) => {
-      await queryClient.cancelQueries({queryKey: [url, params]});
- 
+      await queryClient.cancelQueries({ queryKey: [url, params] });
+
       const previousData = queryClient.getQueryData([url!, params]);
- 
+
       queryClient.setQueryData<T>([url!, params], (oldData) => {
         return updater ? updater(oldData, data) : data;
       });
- 
+
       return previousData;
-    }, 
+    },
     onError: (err, _, context) => {
       queryClient.setQueryData([url!, params], context);
-    }, 
+    },
     onSettled: () => {
-      queryClient.invalidateQueries({queryKey: [url, params]});
-    } 
+      queryClient.invalidateQueries({ queryKey: [url, params] });
+    },
   });
- };
+};
 
-  export const useUpdate = <T>(
-      url: string,
-      params?: object,
-      updater?: (oldData: NoInfer<T> | undefined, newData: T) => T
-  ) => {
-    return useGenericMutation<T>(
-      (data) => $api.patch<T>(url, data),
-      url,
-      params,
-      updater,
-    );
-  };
+export const useUpdate = <T>(
+  url: string,
+  params?: object,
+  updater?: (oldData: NoInfer<T> | undefined, newData: T) => T,
+) => {
+  return useGenericMutation<T>((data) => $api.patch<T>(url, data), url, params, updater);
+};

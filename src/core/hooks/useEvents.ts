@@ -1,49 +1,48 @@
 import { useQuery } from "@tanstack/react-query";
 
-import { EventFormData, EventRepository } from '@/services/events';
+import { EventFormData, EventRepository } from "@/services/events";
 
-import { $api } from '../axios';
+import { $api } from "../axios";
 
-const eventRepository = new EventRepository($api, '/api/v1/event');
+const eventRepository = new EventRepository($api, "/api/v1/event");
 
 export const useEventsAll = () => {
-    const {data, isLoading, isError } = useQuery({
-        queryKey: ['events/getAll'],
-        queryFn: () => eventRepository.getAllEvents(),
-    });
+  const { data, isLoading, isError } = useQuery({
+    queryKey: ["events/getAll"],
+    queryFn: () => eventRepository.getAllEvents(),
+  });
 
-    return {
-        events: data,
-        isLoading,
-        isError
-    }
+  return {
+    events: data,
+    isLoading,
+    isError,
+  };
 };
 
 export const useEventById = (eventId: number) => {
-    const {data, isLoading, isError } = useQuery({
-        queryKey: ['events/getById', eventId],
-        queryFn: () => eventRepository.getEventById(eventId),
-    });
+  const { data, isLoading, isError } = useQuery({
+    queryKey: ["events/getById", eventId],
+    queryFn: () => eventRepository.getEventById(eventId),
+  });
 
-    return {
-        event: data,
-        isLoading,
-        isError
-    }
+  return {
+    event: data,
+    isLoading,
+    isError,
+  };
 };
 
 export const useCreateEvent = (event: EventFormData, isEnabled: boolean) => {
-    const {data, isLoading, isError, isSuccess } = useQuery({
-        queryKey: ['events/createEvent', event],
-        queryFn: () => eventRepository.createEvent(event),
-        enabled: isEnabled,
-    });
+  const { data, isLoading, isError, isSuccess } = useQuery({
+    queryKey: ["events/createEvent", event],
+    queryFn: () => eventRepository.createEvent(event),
+    enabled: isEnabled,
+  });
 
-    return {
-        event: data,
-        isLoading,
-        isError,
-        isSuccess
-    }
+  return {
+    event: data,
+    isLoading,
+    isError,
+    isSuccess,
+  };
 };
-
