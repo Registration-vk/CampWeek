@@ -16,7 +16,7 @@ export const CustomLink = memo((props: CustomLinkProps) => {
   const { href, className, Svg, text, onClick } = props;
   return (
     <Link href={href} className={clsx(styles.link, [className])} onClick={onClick}>
-      {Svg && <Icon Svg={Svg} className={clsx(styles.icon, [className])}></Icon>}
+      {Svg && <Icon Svg={Svg} className={clsx(styles.icon, [className])} />}
       <p>{text}</p>
     </Link>
   );

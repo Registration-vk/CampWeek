@@ -10,22 +10,22 @@ import menuLogOut from "./assets/menuLogOut.svg";
 import closeButtonIcon from "./assets/closeButton.svg";
 import Link from "next/link";
 import { ROUTES } from "@/core/routes";
-import { usePathname, useRouter } from "next/navigation";
+import { usePathname } from "next/navigation";
 import { Dropdown } from "../Dropdown/ui/Dropdown";
 import { useUserId } from "@/app/context/context";
 import Cookies from "js-cookie";
 import { useResize } from "@/core/hooks/useResize";
 import { Burger } from "../Burger/Burger";
-import { ReactNode, useCallback, useEffect, useState } from "react";
+import { useCallback, useState } from "react";
 import { Drawer } from "../Drawer/ui/Drawer/Drawer";
 import { CustomLink } from "../CustomLink/CustomLink";
+import { ButtonAuthorization } from "@/components/modules/ButtonAuthorization/ButtonAuthorization";
 
 export const Navbar = () => {
-  const { setUserId, setIsAuth } = useUserId();
+  const { isAuth, setUserId, setIsAuth } = useUserId();
   const [isOpen, setIsOpen] = useState<boolean>(false);
   const { width } = useResize();
   const currentPathname = usePathname();
-  const router = useRouter();
   const onLogout = () => {
     setUserId(null);
     setIsAuth(false);
@@ -48,6 +48,7 @@ export const Navbar = () => {
       className={currentPathname === ROUTES.application.path ? styles.activePath : styles.path}
       Svg={MeetingsIcon}
       text="Мероприятия"
+      onClick={onCloseDrawer}
     />
   );
 
@@ -59,18 +60,20 @@ export const Navbar = () => {
       }
       Svg={MeetingCreateIcon}
       text="Создать мероприятие"
+      onClick={onCloseDrawer}
     />
   );
 
   return (
     <div className={styles.navbar}>
       <div className={styles.navbarLogo}>
-        <Icon Svg={BirdIcon}></Icon>
+        <Icon Svg={BirdIcon} />
         <Link href={ROUTES.application.path} className={styles.link}>
           Неделя вожатства
         </Link>
       </div>
-      {width > 768 && (
+      {!isAuth && <ButtonAuthorization />}
+      {width > 768 && isAuth && (
         <>
           <div className={styles.navbarMeetings}>
             {meetingsLink}
@@ -103,7 +106,7 @@ export const Navbar = () => {
           </div>
         </>
       )}
-      {width <= 768 && (
+      {width <= 768 && isAuth && (
         <>
           <Burger onClick={onOpenDrawer} />
           <Drawer isOpen={isOpen} onClose={onCloseDrawer}>
@@ -118,6 +121,7 @@ export const Navbar = () => {
                   href={ROUTES.application.profile.path}
                   Svg={ProfileIcon}
                   text="Личный кабинет"
+                  onClick={onCloseDrawer}
                 />
                 <CustomLink
                   href={ROUTES.application.path}

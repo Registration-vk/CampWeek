@@ -3,8 +3,10 @@ import { useRouter } from "next/navigation";
 
 import { Button } from "@/components/ui";
 import { API_BASE_URL, API_VERSION } from "@/core/constants";
+import VKIcon from './assets/vk-icon.svg'
 
 import styles from "./styles.module.scss";
+import { Icon } from "@/components/ui/Icon/Icon";
 
 export const ButtonAuthorization = () => {
   const router = useRouter();
@@ -15,7 +17,8 @@ export const ButtonAuthorization = () => {
 
   return (
     <Button className={styles.authorization} onClick={redirectAuthorization}>
-      Войти через ВК
+      <Icon Svg={VKIcon}></Icon>
+      <p>Войти через VK ID</p>
     </Button>
   );
 };

@@ -4,7 +4,6 @@ import React from "react";
 
 import { Manrope } from "next/font/google";
 
-import { Aside } from "@/components/ui";
 import { QueryProvider } from "@/core/providers";
 
 import { UserProvider } from "./context/context";
@@ -22,7 +21,6 @@ export const metadata: Metadata = {
 };
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {
-
   return (
     <UserProvider>
       <html lang="ru">
@@ -30,13 +28,10 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
           <meta name="viewport" content="width=device-width, initial-scale=1.0" />
         </Head>
         <body className={manrope.className}>
-          <Navbar/>
+          <Navbar />
           <QueryProvider>
-            <div className={styles.Container}>
-              {children}
-              <Aside />
-            </div>
-          </QueryProvider>       
+            <div className={styles.Container}>{children}</div>
+          </QueryProvider>
         </body>
       </html>
     </UserProvider>

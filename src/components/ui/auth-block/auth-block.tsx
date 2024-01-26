@@ -14,6 +14,8 @@ type Props = {
   isSignedIn: boolean;
 };
 
+// TODO: удалить компонент полностью
+
 export default function AuthBlock(props: Props) {
   const { setUserId, isLoading, isAuth, setIsAuth } = useUserId();
   const router = useRouter();
