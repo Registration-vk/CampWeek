@@ -1,6 +1,5 @@
 /* eslint-disable react/display-name */
-import { memo } from "react";
-
+import clsx from "clsx";
 import cls from "./Overlay.module.scss";
 
 interface OverlayProps {
@@ -8,8 +7,8 @@ interface OverlayProps {
   onClick?: () => void;
 }
 
-export const Overlay = memo((props: OverlayProps) => {
+export const Overlay = (props: OverlayProps) => {
   const { className, onClick } = props;
 
-  return <div className={cls.overlay} onClick={onClick}></div>;
-});
+  return <div className={clsx(cls.overlay, [className])} onClick={onClick}></div>;
+};

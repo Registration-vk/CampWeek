@@ -44,12 +44,12 @@ export function Dropdown(props: DropdownProps) {
   useOnClickOutside(menuRef, onClose);
 
   return (
-    <div className={clsx(styles.dropdown, [className])} ref={menuRef}>
+    <div className={clsx(styles.dropdown)} ref={menuRef}>
       <Button className={styles.trigger} onClick={onHandleDropdown}>
         {trigger}
       </Button>
       {isDropdownOpen && (
-        <div className={clsx(styles.menu, [menuClasses])}>
+        <div className={clsx(styles.menu, [menuClasses, className])}>
           {items.map((item, index) => {
             if (item.href) {
               return (

@@ -35,11 +35,31 @@
   justify-content: space-between;
   align-items: center;
   width: 378px;
+  position: relative;
   :hover,
   :active {
     cursor: pointer;
     color: $active-link;
     fill: $active-link;
+  }
+
+  @include media-md {
+    flex-direction: column;
+    justify-content: center;
+    > a {
+      height: 56px;
+      margin-bottom: 4px;
+    }
+
+    &::after {
+      content: "";
+      position: absolute;
+      bottom: 2px;
+      width: 100vw;
+      height: 3px;
+      border-radius: 20px;
+      background: $background-grey;
+    }
   }
 }
 
@@ -74,4 +94,38 @@
   line-height: 24px;
   width: 237px;
   text-transform: uppercase;
+}
+
+.contentWrapper {
+  height: 247px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+.profileMobile > div {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 56px;
+  cursor: pointer;
+  margin-bottom: 4px;
+  &:hover,
+  &:active {
+    color: $active-link;
+    fill: $active-link;
+  }
+}
+
+.icons {
+  margin-right: 8px;
+}
+
+.closeButton {
+  position: absolute;
+  top: 46px;
+  right: 16px;
+  z-index: 10000;
+  cursor: pointer;
 }

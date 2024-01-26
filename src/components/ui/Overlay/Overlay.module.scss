@@ -1,5 +1,5 @@
 .overlay {
-  background: rgba(216, 210, 210, 0.6);
+  background: $background-overlay;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -7,4 +7,5 @@
   inset: 0;
   z-index: 1;
   cursor: pointer;
+  backdrop-filter: blur(5px);
 }
