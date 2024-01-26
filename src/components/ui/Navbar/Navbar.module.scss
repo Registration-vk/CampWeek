@@ -63,20 +63,6 @@
   }
 }
 
-.navbarMeeting {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  width: 137px;
-}
-
-.navbarMeetingCreate {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  width: 201px;
-}
-
 .activePath {
   color: $active-link;
   fill: $active-link;
@@ -104,7 +90,7 @@
   align-items: center;
 }
 
-.profileMobile > div {
+.profileMobile > a {
   display: flex;
   justify-content: center;
   align-items: center;
@@ -116,10 +102,6 @@
     color: $active-link;
     fill: $active-link;
   }
-}
-
-.icons {
-  margin-right: 8px;
 }
 
 .closeButton {

@@ -16,8 +16,9 @@ import { useUserId } from "@/app/context/context";
 import Cookies from "js-cookie";
 import { useResize } from "@/core/hooks/useResize";
 import { Burger } from "../Burger/Burger";
-import { useCallback, useState } from "react";
+import { ReactNode, useCallback, useEffect, useState } from "react";
 import { Drawer } from "../Drawer/ui/Drawer/Drawer";
+import { CustomLink } from "../CustomLink/CustomLink";
 
 export const Navbar = () => {
   const { setUserId, setIsAuth } = useUserId();
@@ -26,7 +27,6 @@ export const Navbar = () => {
   const currentPathname = usePathname();
   const router = useRouter();
   const onLogout = () => {
-    router.push(`/`);
     setUserId(null);
     setIsAuth(false);
     setIsOpen(false);
@@ -42,6 +42,26 @@ export const Navbar = () => {
     setIsOpen(false);
   }, []);
 
+  const meetingsLink = (
+    <CustomLink
+      href={ROUTES.application.path}
+      className={currentPathname === ROUTES.application.path ? styles.activePath : styles.path}
+      Svg={MeetingsIcon}
+      text="Мероприятия"
+    />
+  );
+
+  const meetingCreateLink = (
+    <CustomLink
+      href={ROUTES.application.meetingCreate.path}
+      className={
+        currentPathname === ROUTES.application.meetingCreate.path ? styles.activePath : styles.path
+      }
+      Svg={MeetingCreateIcon}
+      text="Создать мероприятие"
+    />
+  );
+
   return (
     <div className={styles.navbar}>
       <div className={styles.navbarLogo}>
@@ -53,42 +73,8 @@ export const Navbar = () => {
       {width > 768 && (
         <>
           <div className={styles.navbarMeetings}>
-            <Link
-              href={ROUTES.application.path}
-              className={
-                currentPathname === ROUTES.application.path ? styles.activePath : styles.path
-              }
-            >
-              <div className={styles.navbarMeeting}>
-                <Icon
-                  Svg={MeetingsIcon}
-                  className={
-                    currentPathname === ROUTES.application.path ? styles.activePath : styles.path
-                  }
-                ></Icon>
-                <p>Мероприятия</p>
-              </div>
-            </Link>
-            <Link
-              href={ROUTES.application.meetingCreate.path}
-              className={
-                currentPathname === ROUTES.application.meetingCreate.path
-                  ? styles.activePath
-                  : styles.path
-              }
-            >
-              <div className={styles.navbarMeetingCreate}>
-                <Icon
-                  Svg={MeetingCreateIcon}
-                  className={
-                    currentPathname === ROUTES.application.meetingCreate.path
-                      ? styles.activePath
-                      : styles.path
-                  }
-                ></Icon>
-                <p>Создать мероприятие</p>
-              </div>
-            </Link>
+            {meetingsLink}
+            {meetingCreateLink}
           </div>
           <div className={styles.profileIcon}>
             <Dropdown
@@ -124,54 +110,21 @@ export const Navbar = () => {
             <Icon Svg={closeButtonIcon} className={styles.closeButton} onClick={onCloseDrawer} />
             <div className={styles.contentWrapper}>
               <div className={styles.navbarMeetings}>
-                <Link
-                  href={ROUTES.application.path}
-                  className={
-                    currentPathname === ROUTES.application.path ? styles.activePath : styles.path
-                  }
-                >
-                  <div className={styles.navbarMeeting}>
-                    <Icon
-                      Svg={MeetingsIcon}
-                      className={
-                        currentPathname === ROUTES.application.path
-                          ? styles.activePath
-                          : styles.path
-                      }
-                    ></Icon>
-                    <p>Мероприятия</p>
-                  </div>
-                </Link>
-                <Link
-                  href={ROUTES.application.meetingCreate.path}
-                  className={
-                    currentPathname === ROUTES.application.meetingCreate.path
-                      ? styles.activePath
-                      : styles.path
-                  }
-                >
-                  <div className={styles.navbarMeetingCreate}>
-                    <Icon
-                      Svg={MeetingCreateIcon}
-                      className={
-                        currentPathname === ROUTES.application.meetingCreate.path
-                          ? styles.activePath
-                          : styles.path
-                      }
-                    ></Icon>
-                    <p>Создать мероприятие</p>
-                  </div>
-                </Link>
+                {meetingsLink}
+                {meetingCreateLink}
               </div>
               <div className={styles.profileMobile}>
-                <div onClick={() => router.push("/account")}>
-                  <Icon Svg={ProfileIcon} className={styles.icons} />
-                  <p>Личный кабинет</p>
-                </div>
-                <div onClick={onLogout}>
-                  <Icon Svg={menuLogOut} className={styles.icons} />
-                  <p>Выход</p>
-                </div>
+                <CustomLink
+                  href={ROUTES.application.profile.path}
+                  Svg={ProfileIcon}
+                  text="Личный кабинет"
+                />
+                <CustomLink
+                  href={ROUTES.application.path}
+                  Svg={menuLogOut}
+                  text="Выход"
+                  onClick={onLogout}
+                />
               </div>
             </div>
           </Drawer>
