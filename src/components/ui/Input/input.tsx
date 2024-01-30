@@ -9,16 +9,17 @@ type Props = {
   isMulti?: boolean;
   isSearchable?: boolean;
   error?: string;
+  className?: string;
   // eslint-disable-next-line no-unused-vars
   onChange: (newValue: string) => void;
   defaultValue?: string;
 } & ComponentProps<"input">;
 
 const Input = (props: Props, ref: ForwardedRef<HTMLInputElement>) => {
-  const { label, error, onChange, defaultValue, ...rest } = props;
+  const { label, error, onChange, defaultValue, className, ...rest } = props;
 
   return (
-    <div className={styles.container}>
+    <div className={clsx(styles.container, [className])}>
       {label && (
         <label className={clsx(styles.label, { [styles.labelActive]: defaultValue != "" })}>
           {label}

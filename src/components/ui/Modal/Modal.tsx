@@ -15,7 +15,7 @@ interface ModalProps {
 }
 
 export const Modal = (props: ModalProps) => {
-  const { children, isOpen, onClose } = props;
+  const { children, isOpen, onClose, className } = props;
 
   const { close, isClosing } = useModal({
     animationDelay: 300,
@@ -25,7 +25,7 @@ export const Modal = (props: ModalProps) => {
 
   return (
     <div
-      className={clsx(styles.modal, {
+      className={clsx(styles.modal, [className], {
         [styles.opened]: isOpen,
         [styles.closed]: isClosing,
       })}

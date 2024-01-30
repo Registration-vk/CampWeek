@@ -1,19 +1,11 @@
 .Container {
-  display: flex;
-
-  max-width: 1100px;
-
-  -moz-column-gap: 80px;
-
-  column-gap: 80px;
-  margin-inline: auto;
-  margin-block: 32px;
+ 
 }
 
-.Main {
-  display: flex;
-  flex-basis: 70%;
-  flex-direction: column;
+// .Main {
+//   display: flex;
+//   flex-basis: 70%;
+//   flex-direction: column;
 
-  row-gap: 16px;
-}
+//   row-gap: 16px;
+// }

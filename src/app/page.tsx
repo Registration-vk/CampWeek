@@ -3,7 +3,7 @@
 import dayjs from "dayjs";
 import Link from "next/link";
 
-import { Aside, Banner } from "@/components/ui";
+import { Banner } from "@/components/ui";
 import { LinkItem } from "@/components/ui/Link/Link";
 import NotifyPopup from "@/components/ui/Notification/NotifyPopup";
 import { useEventsAll, useUsersAll } from "@/core/hooks";
@@ -14,6 +14,7 @@ import { getParticipants } from "@/core/utils";
 import { useUserId } from "./context/context";
 
 import styles from "./styles.module.scss";
+import { PageWrapper } from "@/components/ui/PageWrapper/PageWrapper";
 
 export default function Home() {
   const { events, isError, isLoading } = useEventsAll();
@@ -25,7 +26,7 @@ export default function Home() {
 
   return (
     <>
-      <main className={styles.Main}>
+      <PageWrapper className={styles.Main}>
         {isLoading && <h5>Загрузка данных...</h5>}
         {isError && <h5>При загрузке данных произошла ошибка</h5>}
         {events && events.length ? (
@@ -53,7 +54,7 @@ export default function Home() {
           Добавить мероприятие
           <NotifyPopup>Требуется авторизация</NotifyPopup>
         </LinkItem>
-      </main>
+      </PageWrapper>
     </>
   );
 }

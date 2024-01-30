@@ -20,6 +20,26 @@
   border-radius: 5px;
   background-color: transparent;
 
+  &__desktop {
+    width: 267px;
+    height: 64px;
+    border-radius: 12px;
+    padding: 24px;
+    background: $button-desktop-default;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    color: rgba(255, 255, 255, 1);
+
+    &:hover {
+      background: $button-desktop-hover;
+    }
+
+    &:active {
+      background: $button-desktop-pressed;
+    }
+  }
+
   &_disabled:hover > * {
     display: block;
   }
@@ -44,6 +64,29 @@
   }
 }
 
+// .Button__desktop {
+//   width: 267px;
+//   height: 64px;
+//   border-radius: 12px;
+//   padding: 24px;
+//   background: $button-desktop-default;
+//   display: flex;
+//   justify-content: center;
+//   align-items: center;
+//   color: rgba(255, 255, 255, 1);
+
+//   &:hover {
+//     background: $button-desktop-hover;
+//   }
+
+//   &:active {
+//     background: $button-desktop-pressed;
+//   }
+// }
+
+// .Button__desktopIconLeft
+// .Button__desktopIconRight
+
 .Button__loading {
   cursor: not-allowed;
 
@@ -63,6 +106,15 @@
     background: url("data:image/svg+xml;charset=utf-8,%3Csvg viewBox='0 0 20 20' xmlns='http://www.w3.org/2000/svg'%3E%3Ccircle cx='10' cy='10' r='8.5' fill='none' stroke='%23FFFFFF' stroke-width='3' stroke-dasharray='45' stroke-linecap='round'/%3E%3C/svg%3E")
       center center no-repeat;
   }
+}
+
+.Button__clear {
+  padding: 0;
+  margin: 0;
+  border: none;
+  background: none;
+  outline: none;
+  color: black;
 }
 
 .Button__fluid {

@@ -1,0 +1,21 @@
+.container {
+  height: calc(100vh - 100px);
+  overflow-y: auto;
+  margin: 0 auto;
+  background: $background-white;
+  padding: 40px;
+  border-radius: 24px;
+  max-width: 1400px;
+
+  // @include media-xl {
+  //   max-width: 1200px;
+  // }
+
+  // @include media-lg {
+  //   max-width: 964px;
+  // }
+
+  // @include media-md {
+  //   max-width: 740px;
+  // }
+}

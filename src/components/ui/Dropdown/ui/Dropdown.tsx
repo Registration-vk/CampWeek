@@ -4,7 +4,7 @@ import styles from "./Dropdown.module.scss";
 import { DropdownDirection } from "../types/dropdownDirections";
 import clsx from "clsx";
 import { mapDirectionClass } from "../consts/consts";
-import { Button } from "../../Button/Button";
+import { Button, ButtonVariant } from "../../Button/Button";
 import Link from "next/link";
 import { useOnClickOutside } from "@/core/hooks/useClickOutside";
 
@@ -13,6 +13,7 @@ export interface DropdownItem {
   content?: ReactNode;
   onClick?: () => void;
   href?: string;
+  variant?: ButtonVariant;
 }
 
 interface DropdownProps {
@@ -45,7 +46,7 @@ export function Dropdown(props: DropdownProps) {
 
   return (
     <div className={clsx(styles.dropdown)} ref={menuRef}>
-      <Button className={styles.trigger} onClick={onHandleDropdown}>
+      <Button className={styles.trigger} onClick={onHandleDropdown} variant="clear">
         {trigger}
       </Button>
       {isDropdownOpen && (
@@ -70,6 +71,7 @@ export function Dropdown(props: DropdownProps) {
                 key={`dropwdown-key-${index}`}
                 className={styles.item}
                 onClick={() => onCloseWithLogout(item.onClick!)}
+                variant={item.variant}
               >
                 {item.content}
               </Button>

@@ -8,7 +8,7 @@ import { z } from "zod";
 
 import { Button } from "@/components/ui";
 
-import classes from "./styles.module.scss";
+import styles from "./styles.module.scss";
 
 export interface WrappedComponentProps<TFieldsValues extends FieldValues = FieldValues> {
   control: Control<TFieldsValues>;
@@ -44,9 +44,9 @@ const withForm =
     };
 
     return (
-      <form className={classes.form} onSubmit={handleSubmit(onSubmit)}>
+      <form onSubmit={handleSubmit(onSubmit)} className={styles.form}>
         <WrappedComponent errors={errors} control={control} />
-        <div className={classes.button}>
+        <div className={styles.button}>
           <Button type={"submit"}>{buttonText}</Button>
         </div>
       </form>

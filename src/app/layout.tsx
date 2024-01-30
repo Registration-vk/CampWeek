@@ -13,6 +13,7 @@ import "./styles/global.scss";
 import { Navbar } from "@/components/ui/Navbar/Navbar";
 import Head from "next/head";
 
+
 const manrope = Manrope({ subsets: ["latin"] });
 
 export const metadata: Metadata = {

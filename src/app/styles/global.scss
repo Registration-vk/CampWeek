@@ -8,6 +8,18 @@
 
 body {
   background-color: $background-main;
+  padding: 0 40px 58px 40px;
+  @include media-xl {
+    padding: 0 40px 58px 40px;
+  }
+
+  @include media-lg {
+    padding: 0 30px 56px 30px;
+  }
+
+  @include media-md {
+    padding: 0 14px 56px 14px;
+  }
 }
 
 a {

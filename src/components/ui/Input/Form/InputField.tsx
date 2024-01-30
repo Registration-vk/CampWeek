@@ -13,6 +13,7 @@ export interface InputFieldProps<
   inputType?: ComponentProps<"input">["type"];
   readOnly?: boolean;
   type?: string;
+  className?: string;
   defaultValue?: FieldPathValue<TFieldsValues, TFieldName>;
   handleChange?: () => void;
 }
@@ -39,6 +40,7 @@ const InputField = <
       // placeholder={props.inputLabel}
       readOnly={props.readOnly}
       error={error?.message}
+      className={props.className}
       {...field}
     />
   );

@@ -8,6 +8,7 @@ import { default as SelectNative } from "react-select";
 import { isSingleFieldValues } from "@/core/guards";
 
 import { ChipStyles, ControlStyles } from "./static";
+import clsx from "clsx";
 
 import styles from "./styles.module.scss";
 
@@ -21,6 +22,7 @@ type Props = {
   description?: string;
   value?: string | SelectOption[];
   options: SelectOption[];
+  className?: string;
   onChange: (
     newValue: SingleValue<SelectOption> | MultiValue<SelectOption>,
     actionMeta: ActionMeta<SelectOption>,
@@ -39,10 +41,11 @@ const SelectField = (props: Props, ref: Ref<SelectInstance<SelectOption>> | unde
     options,
     onChange,
     defaultValue,
+    className,
   } = props;
 
   return (
-    <div className={styles.container}>
+    <div className={clsx(styles.container, [className])}>
       {label && <label className={styles.label}>{label}</label>}
       <SelectNative
         ref={ref}

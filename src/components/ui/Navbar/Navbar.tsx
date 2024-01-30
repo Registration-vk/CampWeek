@@ -10,7 +10,7 @@ import menuLogOut from "./assets/menuLogOut.svg";
 import closeButtonIcon from "./assets/closeButton.svg";
 import Link from "next/link";
 import { ROUTES } from "@/core/routes";
-import { usePathname } from "next/navigation";
+import { usePathname, useRouter } from "next/navigation";
 import { Dropdown } from "../Dropdown/ui/Dropdown";
 import { useUserId } from "@/app/context/context";
 import Cookies from "js-cookie";
@@ -26,7 +26,12 @@ export const Navbar = () => {
   const [isOpen, setIsOpen] = useState<boolean>(false);
   const { width } = useResize();
   const currentPathname = usePathname();
+  const router = useRouter();
+
+  //TODO: решить баг с переходом на страницу при выходе из личного кабинета
+
   const onLogout = () => {
+    router.replace("/");
     setUserId(null);
     setIsAuth(false);
     setIsOpen(false);
@@ -100,6 +105,7 @@ export const Navbar = () => {
                     </>
                   ),
                   onClick: onLogout,
+                  variant: "clear",
                 },
               ]}
             />

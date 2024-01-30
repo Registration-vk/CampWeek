@@ -13,6 +13,7 @@ export interface SingleSelectFieldProps<
   selectLabel: string;
   selectOptions: SelectOption[];
   defaultValue?: FieldPathValue<TFieldsValues, TFieldName>;
+  className?: string;
 }
 
 const SingleSelectField = <
@@ -36,6 +37,7 @@ const SingleSelectField = <
       options={props.selectOptions}
       placeholder={props.selectLabel}
       description={error?.message}
+      className={props.className}
       {...field}
     />
   );

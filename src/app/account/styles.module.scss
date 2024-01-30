@@ -1,14 +1,10 @@
 .title {
-  padding-bottom: 20px;
-
-  font-family: Manrope, sans-serif;
-  font-size: 26px;
+  padding-bottom: 40px;
+  font-size: 28px;
   font-weight: 700;
-  line-height: 32px;
+  line-height: 40px;
 }
 
-.container {
-  display: flex;
-  flex-basis: 70%;
-  flex-direction: column;
+.profileWrapper {
+  max-width: 920px;
 }
