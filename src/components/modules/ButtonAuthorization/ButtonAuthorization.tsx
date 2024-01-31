@@ -16,7 +16,7 @@ export const ButtonAuthorization = () => {
   }
 
   return (
-    <Button className={styles.authorization} onClick={redirectAuthorization}>
+    <Button onClick={redirectAuthorization} variant="vk">
       <Icon Svg={VKIcon}></Icon>
       <p>Войти через VK ID</p>
     </Button>

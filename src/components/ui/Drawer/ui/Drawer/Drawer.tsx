@@ -1,4 +1,4 @@
-"use client"
+"use client";
 import { memo, ReactNode, useCallback, useEffect } from "react";
 import { AnimationProvider, useAnimationLibs } from "../../AnimationProvider/AnimationProvider";
 import { Overlay } from "../../../Overlay/Overlay";

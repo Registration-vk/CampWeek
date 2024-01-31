@@ -69,9 +69,9 @@ export function Dropdown(props: DropdownProps) {
               <Button
                 disabled={item.disabled}
                 key={`dropwdown-key-${index}`}
-                className={styles.item}
                 onClick={() => onCloseWithLogout(item.onClick!)}
-                variant={item.variant}
+                variant="clear"
+                className={styles.item}
               >
                 {item.content}
               </Button>

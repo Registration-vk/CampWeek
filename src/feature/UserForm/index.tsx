@@ -82,5 +82,5 @@ export function Index(props: WrappedComponentProps) {
 
 export default withForm(Index, {
   resolver: schema,
-  buttonText: "Сохранить изменения",
+  buttonText: "Сохранить",
 });

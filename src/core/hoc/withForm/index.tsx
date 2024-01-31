@@ -47,7 +47,7 @@ const withForm =
       <form onSubmit={handleSubmit(onSubmit)} className={styles.form}>
         <WrappedComponent errors={errors} control={control} />
         <div className={styles.button}>
-          <Button type={"submit"}>{buttonText}</Button>
+          <Button type={"submit"} variant="mobile">{buttonText}</Button>
         </div>
       </form>
     );

@@ -1,56 +1,113 @@
 .Button {
-  font-family: Manrope, sans-serif;
-  font-size: 14px;
-  font-weight: 500;
-  line-height: 16px;
-
-  position: relative;
-
+  border-radius: 12px;
+  padding: 24px;
+  line-height: 24px;
+  font-weight: 600;
+  background: $button-desktop-default;
   display: flex;
-  align-items: center;
   justify-content: center;
-
-  height: 44px;
-  padding: 0 32px;
-
+  align-items: center;
   cursor: pointer;
-
-  color: $white;
   border: none;
-  border-radius: 5px;
-  background-color: transparent;
+  color: $background-white;
+
+  &:hover {
+    background: $button-desktop-hover;
+  }
+
+  &:active {
+    background: $button-desktop-pressed;
+  }
 
   &__desktop {
     width: 267px;
     height: 64px;
-    border-radius: 12px;
-    padding: 24px;
-    background: $button-desktop-default;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    color: rgba(255, 255, 255, 1);
+    font-size: 18px;
+  }
 
+  &__mobile {
+    width: 243px;
+    height: 56px;
+    font-size: 16px;
+  }
+
+  &__vk {
+    height: 68px;
+    background-color: $button-auth-default;
+    width: 255px;
+    padding: 22px, 32px, 22px, 32px;
+    font-size: 18px;
     &:hover {
-      background: $button-desktop-hover;
+      background-color: $button-auth-hover;
     }
 
     &:active {
-      background: $button-desktop-pressed;
+      background-color: $button-auth-pressed;
+    }
+
+    svg {
+      margin-right: 8px;
     }
   }
 
-  &_disabled:hover > * {
-    display: block;
+  &__burger {
+    transform-origin: 16px 11px;
+    float: left;
+    outline: 0;
+    padding: 8px;
+    width: 40px;
+    height: 40px;
+    border-radius: 50px;
+    background: $background-white;
+    flex-direction: column;
+
+    :not(:last-child) {
+      margin-bottom: 4px;
+    }
+    span {
+      transition: all 0.3s cubic-bezier(0.645, 0.045, 0.355, 1);
+      display: block;
+      width: 20px;
+      border-radius: 10px;
+      background: $background-white;
+      border: 1.8px solid $background-black;
+    }
+
+    &:hover {
+      background: $background-white;
+      :nth-of-type(1) {
+        width: 22px;
+      }
+
+      :nth-of-type(2) {
+        width: 24px;
+      }
+
+      :nth-of-type(3) {
+        width: 26px;
+      }
+    }
+
+    &:active {
+      background: $background-white;
+    }
   }
 
-  &_disabled {
-    background: rgb(127, 17, 224, 0.5) !important;
-    cursor: default;
-  }
+  &__clear {
+    padding: 0;
+    margin: 0;
+    border: none;
+    background: none;
+    outline: none;
+    color: black;
 
-  &_disabled:active {
-    pointer-events: none;
+    &:hover {
+      background: none;
+    }
+
+    &:active {
+      background: none;
+    }
   }
 }
 
@@ -106,15 +163,6 @@
     background: url("data:image/svg+xml;charset=utf-8,%3Csvg viewBox='0 0 20 20' xmlns='http://www.w3.org/2000/svg'%3E%3Ccircle cx='10' cy='10' r='8.5' fill='none' stroke='%23FFFFFF' stroke-width='3' stroke-dasharray='45' stroke-linecap='round'/%3E%3C/svg%3E")
       center center no-repeat;
   }
-}
-
-.Button__clear {
-  padding: 0;
-  margin: 0;
-  border: none;
-  background: none;
-  outline: none;
-  color: black;
 }
 
 .Button__fluid {

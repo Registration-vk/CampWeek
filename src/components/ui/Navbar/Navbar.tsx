@@ -15,14 +15,14 @@ import { Dropdown } from "../Dropdown/ui/Dropdown";
 import { useUserId } from "@/app/context/context";
 import Cookies from "js-cookie";
 import { useResize } from "@/core/hooks/useResize";
-import { Burger } from "../Burger/Burger";
 import { useCallback, useState } from "react";
 import { Drawer } from "../Drawer/ui/Drawer/Drawer";
 import { CustomLink } from "../CustomLink/CustomLink";
 import { ButtonAuthorization } from "@/components/modules/ButtonAuthorization/ButtonAuthorization";
+import { Button } from "../Button/Button";
 
 export const Navbar = () => {
-  const { isAuth, setUserId, setIsAuth } = useUserId();
+  const { isAuth, setUserId, setIsAuth, isLoading } = useUserId();
   const [isOpen, setIsOpen] = useState<boolean>(false);
   const { width } = useResize();
   const currentPathname = usePathname();
@@ -77,44 +77,45 @@ export const Navbar = () => {
           Неделя вожатства
         </Link>
       </div>
-      {!isAuth && <ButtonAuthorization />}
-      {width > 768 && isAuth && (
+      {isAuth === false && isLoading === false && <ButtonAuthorization />}
+      {isAuth && width > 768 && (
         <>
           <div className={styles.navbarMeetings}>
             {meetingsLink}
             {meetingCreateLink}
           </div>
-          <div className={styles.profileIcon}>
-            <Dropdown
-              trigger={<Icon Svg={ProfileIcon} className={styles.profileIcon} />}
-              items={[
-                {
-                  content: (
-                    <>
-                      <Icon Svg={menuProfileIcon} />
-                      <p>Личный кабинет</p>
-                    </>
-                  ),
-                  href: "/account",
-                },
-                {
-                  content: (
-                    <>
-                      <Icon Svg={menuLogOut} />
-                      <p>Выход</p>
-                    </>
-                  ),
-                  onClick: onLogout,
-                  variant: "clear",
-                },
-              ]}
-            />
-          </div>
+          <Dropdown
+            trigger={<Icon Svg={ProfileIcon}/>}
+            items={[
+              {
+                content: (
+                  <>
+                    <Icon Svg={menuProfileIcon} />
+                    <p>Личный кабинет</p>
+                  </>
+                ),
+                href: "/account",
+              },
+              {
+                content: (
+                  <>
+                    <Icon Svg={menuLogOut} />
+                    <p>Выход</p>
+                  </>
+                ),
+                onClick: onLogout,
+              },
+            ]}
+          />
         </>
       )}
-      {width <= 768 && isAuth && (
+      {isAuth && width <= 768 && (
         <>
-          <Burger onClick={onOpenDrawer} />
+          <Button onClick={onOpenDrawer} variant="burger">
+            <span></span>
+            <span></span>
+            <span></span>
+          </Button>
           <Drawer isOpen={isOpen} onClose={onCloseDrawer}>
             <Icon Svg={closeButtonIcon} className={styles.closeButton} onClick={onCloseDrawer} />
             <div className={styles.contentWrapper}>
