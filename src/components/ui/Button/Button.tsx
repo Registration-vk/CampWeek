@@ -30,19 +30,17 @@ export const Button = (props: Props) => {
     <button
       className={clsx(
         styles.Button,
+        className,
         {
           [styles.Button__vk]: variant === "vk",
           [styles.Button__desktop]: variant === "desktop",
           [styles.Button__mobile]: variant === "mobile",
           [styles.Button__burger]: variant === "burger",
-          // [styles.Button__desktopIconLeft]: variant === "desktopIconLeft",
-          // [styles.Button__desktopIconRight]: variant === "desktopIconRight",
           [styles.Button__clear]: variant === "clear",
           [styles.Button__loading]: loading,
           [styles.Button__fluid]: fluid,
           [styles.Button_disabled]: disabled,
         },
-        [className],
       )}
       type="button"
       disabled={disabled}

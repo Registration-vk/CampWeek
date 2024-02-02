@@ -15,29 +15,29 @@ import { Dropdown } from "../Dropdown/ui/Dropdown";
 import { useUserId } from "@/app/context/context";
 import Cookies from "js-cookie";
 import { useResize } from "@/core/hooks/useResize";
-import { useCallback, useState } from "react";
+import { memo, useCallback, useState } from "react";
 import { Drawer } from "../Drawer/ui/Drawer/Drawer";
 import { CustomLink } from "../CustomLink/CustomLink";
 import { ButtonAuthorization } from "@/components/modules/ButtonAuthorization/ButtonAuthorization";
 import { Button } from "../Button/Button";
 
-export const Navbar = () => {
+export const Navbar = memo(() => {
   const { isAuth, setUserId, setIsAuth, isLoading } = useUserId();
   const [isOpen, setIsOpen] = useState<boolean>(false);
   const { width } = useResize();
   const currentPathname = usePathname();
   const router = useRouter();
-
   //TODO: решить баг с переходом на страницу при выходе из личного кабинета
+  //TODO: убрать перерисовки при изменении ширина окна
 
-  const onLogout = () => {
+  const onLogout = useCallback(() => {
     router.replace("/");
     setUserId(null);
     setIsAuth(false);
     setIsOpen(false);
     localStorage.removeItem("token");
     Cookies.remove("access_token");
-  };
+  }, [router, setIsAuth, setUserId]);
 
   const onOpenDrawer = useCallback(() => {
     setIsOpen(true);
@@ -85,7 +85,7 @@ export const Navbar = () => {
             {meetingCreateLink}
           </div>
           <Dropdown
-            trigger={<Icon Svg={ProfileIcon}/>}
+            trigger={<Icon Svg={ProfileIcon} />}
             items={[
               {
                 content: (
@@ -104,6 +104,7 @@ export const Navbar = () => {
                   </>
                 ),
                 onClick: onLogout,
+                variant: "clear",
               },
             ]}
           />
@@ -143,4 +144,4 @@ export const Navbar = () => {
       )}
     </div>
   );
-};
+});

@@ -11,24 +11,32 @@
   border: none;
   color: $background-white;
 
-  &:hover {
-    background: $button-desktop-hover;
-  }
-
-  &:active {
-    background: $button-desktop-pressed;
-  }
-
   &__desktop {
     width: 267px;
     height: 64px;
     font-size: 18px;
+
+    &:hover, &:focus {
+      background: $button-desktop-hover;
+    }
+
+    &:active {
+      background: $button-desktop-pressed;
+    }
   }
 
   &__mobile {
     width: 243px;
     height: 56px;
     font-size: 16px;
+
+    &:hover, &:focus {
+      background: $button-desktop-hover;
+    }
+
+    &:active {
+      background: $button-desktop-pressed;
+    }
   }
 
   &__vk {
@@ -37,7 +45,7 @@
     width: 255px;
     padding: 22px, 32px, 22px, 32px;
     font-size: 18px;
-    &:hover {
+    &:hover, &:focus {
       background-color: $button-auth-hover;
     }
 
@@ -60,36 +68,33 @@
     border-radius: 50px;
     background: $background-white;
     flex-direction: column;
+    transition: $animation-hover;
 
     :not(:last-child) {
       margin-bottom: 4px;
     }
     span {
-      transition: all 0.3s cubic-bezier(0.645, 0.045, 0.355, 1);
+      transition: $animation-hover;
       display: block;
       width: 20px;
       border-radius: 10px;
-      background: $background-white;
       border: 1.8px solid $background-black;
     }
 
-    &:hover {
-      background: $background-white;
-      :nth-of-type(1) {
-        width: 22px;
-      }
+    &:hover, &:focus {
+      background: rgba(29, 183, 240, 0.2);
 
-      :nth-of-type(2) {
-        width: 24px;
-      }
-
-      :nth-of-type(3) {
-        width: 26px;
+      span {
+        border: 1.8px solid rgba(17, 171, 228, 1);
       }
     }
 
     &:active {
-      background: $background-white;
+      background: rgba(33, 136, 246, 1);
+
+      span {
+        border: 1.8px solid $background-white;
+      }
     }
   }
 
@@ -97,52 +102,12 @@
     padding: 0;
     margin: 0;
     border: none;
+    border-radius: 0;
     background: none;
     outline: none;
     color: black;
-
-    &:hover {
-      background: none;
-    }
-
-    &:active {
-      background: none;
-    }
   }
 }
-
-.Button__primary {
-  background-color: $blue;
-
-  &:hover:not(.Button__loading) {
-    transition: background-color 0.3s;
-
-    background-color: $dark-blue;
-  }
-}
-
-// .Button__desktop {
-//   width: 267px;
-//   height: 64px;
-//   border-radius: 12px;
-//   padding: 24px;
-//   background: $button-desktop-default;
-//   display: flex;
-//   justify-content: center;
-//   align-items: center;
-//   color: rgba(255, 255, 255, 1);
-
-//   &:hover {
-//     background: $button-desktop-hover;
-//   }
-
-//   &:active {
-//     background: $button-desktop-pressed;
-//   }
-// }
-
-// .Button__desktopIconLeft
-// .Button__desktopIconRight
 
 .Button__loading {
   cursor: not-allowed;
@@ -163,10 +128,6 @@
     background: url("data:image/svg+xml;charset=utf-8,%3Csvg viewBox='0 0 20 20' xmlns='http://www.w3.org/2000/svg'%3E%3Ccircle cx='10' cy='10' r='8.5' fill='none' stroke='%23FFFFFF' stroke-width='3' stroke-dasharray='45' stroke-linecap='round'/%3E%3C/svg%3E")
       center center no-repeat;
   }
-}
-
-.Button__fluid {
-  width: 100%;
 }
 
 @-webkit-keyframes spin {

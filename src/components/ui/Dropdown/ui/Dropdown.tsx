@@ -1,20 +1,12 @@
 "use client";
 import { ReactNode, useRef, useState } from "react";
 import styles from "./Dropdown.module.scss";
-import { DropdownDirection } from "../types/dropdownDirections";
+import { DropdownDirection, DropdownItem } from "../types/dropdownDirections";
 import clsx from "clsx";
 import { mapDirectionClass } from "../consts/consts";
-import { Button, ButtonVariant } from "../../Button/Button";
+import { Button } from "../../Button/Button";
 import Link from "next/link";
 import { useOnClickOutside } from "@/core/hooks/useClickOutside";
-
-export interface DropdownItem {
-  disabled?: boolean;
-  content?: ReactNode;
-  onClick?: () => void;
-  href?: string;
-  variant?: ButtonVariant;
-}
 
 interface DropdownProps {
   className?: string;
@@ -70,7 +62,7 @@ export function Dropdown(props: DropdownProps) {
                 disabled={item.disabled}
                 key={`dropwdown-key-${index}`}
                 onClick={() => onCloseWithLogout(item.onClick!)}
-                variant="clear"
+                variant={item.variant}
                 className={styles.item}
               >
                 {item.content}

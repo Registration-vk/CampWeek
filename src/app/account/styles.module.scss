@@ -1,3 +1,14 @@
+.profileWrapper {
+  width: 920px;
+  margin-left: 0;
+  margin-right: 40px;
+
+  @include media-md {
+    width: 100%;
+    margin-right: 0;
+    margin-bottom: 32px;
+  }
+}
 .title {
   padding-bottom: 40px;
   font-size: 28px;
@@ -5,6 +16,23 @@
   line-height: 40px;
 }
 
-.profileWrapper {
-  max-width: 920px;
+.pageWrapper {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  max-width: 1400px;
+  margin: 0 auto;
+
+  // @include media-xl {
+  //   width: 318px;
+  // }
+
+  // @include media-lg {
+  //   width: 308px;
+  // }
+
+  @include media-md {
+    flex-direction: column;
+    justify-content: center;
+  }
 }

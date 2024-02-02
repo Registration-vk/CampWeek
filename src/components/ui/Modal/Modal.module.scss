@@ -11,6 +11,10 @@
 }
 
 .content {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
   padding: 40px;
   border-radius: 32px;
   background: $background-white;
