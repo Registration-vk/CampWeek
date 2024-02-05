@@ -12,17 +12,17 @@
   }
 }
 @mixin media-md {
-  @media (min-width: 361px) and (max-width: 768px) {
+  @media (max-width: 768px) {
     @content;
   }
 }
 @mixin media-lg {
-  @media all and (min-width: 769px) and (max-width: 1024px) {
+  @media all and (max-width: 1024px) {
     @content;
   }
 }
 @mixin media-xl {
-  @media all and (min-width: 1025px) and (max-width: 1280px) {
+  @media all and (max-width: 1280px) {
     @content;
   }
 }

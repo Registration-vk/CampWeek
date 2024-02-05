@@ -6,13 +6,20 @@ import { PlaceFilter } from "../../PlaceFilter/ui/PlaceFilter";
 import { Icon } from "../../Icon/Icon";
 import styles from "./FiltersProfileWrapper.module.scss";
 import { Button } from "../../Button/Button";
-import { useState } from "react";
+import { useCallback, useState } from "react";
 
 const cities = ["Онлайн", "Москва", "Санкт-Петербург", "Рязань", "Псков", "Оренбург"];
 
+function createInitialCities() {
+  const storedCities = localStorage.getItem("cities");
+  return storedCities ? JSON.parse(storedCities) : [];
+}
+
 export const FiltersProfileWrapper = () => {
   const [isEditable, setIsEditable] = useState<boolean>(false);
-  const [selectedCities, setSelectedCities] = useState<string[]>([]);
+  const [storedCities, setStoredCities] = useState<string[]>(createInitialCities);
+
+  console.log(storedCities);
 
   const onEdit = () => {
     setIsEditable(true);
@@ -20,24 +27,33 @@ export const FiltersProfileWrapper = () => {
 
   const onCancel = () => {
     setIsEditable(false);
-    setSelectedCities([]);
+    setStoredCities(createInitialCities);
   };
 
-  const onAddCity = (city: string) => {
-    const cityIndex = selectedCities.indexOf(city);
+  const onAddCity = useCallback(
+    (city: string) => {
+      const cityIndex = storedCities.indexOf(city);
 
-    if (cityIndex === -1) {
-      setSelectedCities((prev) => [...prev, city]);
-    }
-  };
+      if (cityIndex === -1) {
+        setStoredCities((prev) => [...prev, city]);
+      }
+    },
+    [storedCities],
+  );
+
+  const onDeleteCity = useCallback(
+    (city: string) => {
+      const cityIndex = storedCities.indexOf(city);
+      if (cityIndex >= 0) {
+        setStoredCities((prev) => prev.filter((c) => c !== city));
+      }
+    },
+    [storedCities],
+  );
 
   const onSave = (cities: string[]) => {
-    onCancel();
-
-    cities.map((city) => {
-      localStorage.setItem(`${city}`, city);
-    });
-    setSelectedCities([]);
+    setIsEditable(false);
+    localStorage.setItem("cities", JSON.stringify(cities));
   };
 
   return (
@@ -57,18 +73,17 @@ export const FiltersProfileWrapper = () => {
               text={city}
               key={`${city}-${index}`}
               editable={isEditable}
-              onClick={() => onAddCity(city)}
-            >
-              <Icon Svg={city === "Онлайн" ? OnlineIcon : CityIcon}></Icon>
-              {city}
-            </PlaceFilter>
+              onAdd={() => onAddCity(city)}
+              onDelete={() => onDeleteCity(city)}
+              Svg={city === "Онлайн" ? OnlineIcon : CityIcon}
+            />
           );
         })}
       </div>
 
       {isEditable && (
         <div className={styles.buttonWrapper}>
-          <Button className={styles.saveButton} onClick={() => onSave(selectedCities)}>
+          <Button className={styles.saveButton} onClick={() => onSave(storedCities)}>
             Сохранить
           </Button>
           <Button className={styles.cancelButton} onClick={onCancel}>

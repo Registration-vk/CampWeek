@@ -2,7 +2,7 @@
 import clsx from "clsx";
 import { Icon } from "../../Icon/Icon";
 import styles from "./PlaceFilter.module.scss";
-import { MouseEvent, ReactNode, memo, useEffect, useState } from "react";
+import { MouseEvent, memo, useCallback, useEffect, useState } from "react";
 import closeIcon from "../assets/closefilter.svg";
 
 export type PlaceFilterTheme = "active" | "disable";
@@ -11,40 +11,49 @@ export interface PlaceFilterProps {
   text: string;
   editable?: boolean;
   disabled?: boolean;
-  //   Svg?: React.VFC<React.SVGProps<SVGSVGElement>>;
-  children?: ReactNode;
-  onClick: () => void;
+  Svg?: React.VFC<React.SVGProps<SVGSVGElement>>;
+  onAdd?: () => void;
+  onDelete?: () => void;
 }
 
 export const PlaceFilter = memo((props: PlaceFilterProps) => {
-  const { text, editable, disabled, children, onClick } = props;
+  const { text, editable, disabled, Svg, onDelete, onAdd } = props;
   const [isActive, setIsActive] = useState(false);
 
+  const isCityInStorage = useCallback(() => {
+    const storedCities = localStorage.getItem("cities");
+
+    if (storedCities) {
+      const parsedStoredCities = JSON.parse(storedCities);
+      return parsedStoredCities.some((city: string) => city === text);
+    } else {
+      return false;
+    }
+  }, [text]);
+
   useEffect(() => {
-    const storedCity = localStorage.getItem(`${text}`);
-    if (storedCity) {
+    if (isCityInStorage()) {
       setIsActive(true);
     } else {
       setIsActive(false);
     }
-  }, [editable, text]);
+  }, [editable, isCityInStorage]);
 
   const onActive = (event: MouseEvent<HTMLButtonElement>) => {
     const target = event.target as HTMLElement;
     if (target.classList.contains(styles.button)) {
-      console.log(event.target);
       setIsActive(true);
-      onClick();
+      onAdd && onAdd();
     }
   };
 
   const onClose = (event: MouseEvent<SVGSVGElement>) => {
     setIsActive(false);
     event.stopPropagation();
-    localStorage.removeItem(`${text}`);
+    onDelete && onDelete();
   };
 
-  if (!editable && !localStorage.getItem(`${text}`)) {
+  if (!editable && !isCityInStorage()) {
     return null;
   }
 
@@ -52,11 +61,12 @@ export const PlaceFilter = memo((props: PlaceFilterProps) => {
     <button
       className={clsx(styles.button, {
         [styles.button__active]: isActive,
-        [styles.button__disabled]: disabled,
+        [styles.button__editable]: !editable,
       })}
       onClick={onActive}
     >
-      {children}
+      {Svg && <Icon Svg={Svg}></Icon>}
+      {text}
       {editable && isActive && (
         <Icon className={styles.closeButton} Svg={closeIcon} onClick={onClose}></Icon>
       )}
