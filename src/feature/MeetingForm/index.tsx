@@ -13,8 +13,8 @@ export function Index(props: WrappedComponentProps) {
   const [isChecked, setIsChecked] = useState(false);
 
   return (
-    <section className={classes.form}>
-      <div className={classes.containerRow}>
+    <section className={classes.meetingForm}>
+    
         <InputField
           control={props.control}
           inputName={"meetingName"}
@@ -28,8 +28,8 @@ export function Index(props: WrappedComponentProps) {
           readOnly={false}
           defaultValue={"https://campweek.aozol.ru/"}
         />
-      </div>
-      <div className={classes.containerRow}>
+
+     
         <InputField
           control={props.control}
           inputName={"meetingDate"}
@@ -51,8 +51,8 @@ export function Index(props: WrappedComponentProps) {
           inputType={"time"}
           defaultValue={""}
         />
-      </div>
-      <div className={classes.containerColumn}>
+     
+    
         <InputField
           control={props.control}
           inputName={"meetingAddLink"}
@@ -71,13 +71,14 @@ export function Index(props: WrappedComponentProps) {
           // })}
           // ref={null}
         /> */}
-      </div>
+    
       <InputField
         control={props.control}
         inputName={"meetingDsc"}
         inputLabel={"Короткое описание"}
         defaultValue={""}
         inputType={"textarea"}
+        className={classes.textarea}
       />
       <InputField
         control={props.control}
@@ -86,7 +87,7 @@ export function Index(props: WrappedComponentProps) {
         defaultValue={""}
         inputType={"textarea"}
       />
-      <div className={classes.containerRow}>
+   
         <SingleSelectField
           control={props.control}
           defaultValue={"Онлайн"}
@@ -100,7 +101,7 @@ export function Index(props: WrappedComponentProps) {
           selectLabel={"Целевая аудитория"}
           selectOptions={optionsRoles}
         />
-      </div>
+
       <InputField
         control={props.control}
         inputName={"meetingSpeakerInfo"}

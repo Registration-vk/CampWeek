@@ -5,7 +5,7 @@ import { PageWrapper } from "@/components/ui/PageWrapper/PageWrapper";
 
 export default function UserLayout({ children }: { children: React.ReactNode }) {
   return (
-    <PageWrapper className={styles.container}>
+    <PageWrapper>
       <h2 className={styles.title}>Мероприятие</h2>
       {children}
     </PageWrapper>

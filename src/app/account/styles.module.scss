@@ -4,6 +4,7 @@
   margin-right: 0;
   overflow-x: auto;
   box-sizing: border-box;
+  height: auto;
 
   @include media-xl {
     width: 860px;
@@ -29,6 +30,7 @@
   max-width: 1400px;
   margin: 0 auto;
   gap: 40px;
+  
 
   @include media-xl {
     gap: 20px;

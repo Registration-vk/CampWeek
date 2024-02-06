@@ -1,19 +1,8 @@
 .form {
-  display: grid;
-  grid-template-rows: repeat(2, 64px);
-  grid-template-columns: repeat(4, 25%);
-  grid-auto-rows: auto;
-  row-gap: 24px;
   width: 100%;
-
-  @include media-xs {
-    grid-template-rows: repeat(5, 64px);
-    grid-template-columns: repeat(1, 100%);
-  }
 }
 
 .button {
-
   @include media-xs {
     width: 100%;
     grid-column: 1 / -1;

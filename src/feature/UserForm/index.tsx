@@ -18,7 +18,7 @@ export function Index(props: WrappedComponentProps) {
       {isLoading && <h5>Загрузка данных...</h5>}
       {isError && <h5>При загрузке данных произошла ошибка</h5>}
       {user && (
-        <>
+        <section className={styles.userForm}>
           <InputField
             control={props.control}
             inputName={"first_name"}
@@ -74,7 +74,7 @@ export function Index(props: WrappedComponentProps) {
             selectOptions={optionsMeetings}
             defaultValue={["game"]}
           /> */}
-        </>
+        </section>
       )}
     </>
   );
