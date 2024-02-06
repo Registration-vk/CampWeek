@@ -16,7 +16,8 @@
     height: 64px;
     font-size: 18px;
 
-    &:hover, &:focus {
+    &:hover,
+    &:focus {
       background: $button-desktop-hover;
     }
 
@@ -30,7 +31,8 @@
     height: 56px;
     font-size: 16px;
 
-    &:hover, &:focus {
+    &:hover,
+    &:focus {
       background: $button-desktop-hover;
     }
 
@@ -45,7 +47,8 @@
     width: 255px;
     padding: 22px, 32px, 22px, 32px;
     font-size: 18px;
-    &:hover, &:focus {
+    &:hover,
+    &:focus {
       background-color: $button-auth-hover;
     }
 
@@ -55,6 +58,13 @@
 
     svg {
       margin-right: 8px;
+    }
+
+    @include media-xs {
+      width: 143px;
+      height: 45px;
+      font-size: 16px;
+      padding: 10px;
     }
   }
 
@@ -81,7 +91,8 @@
       border: 1.8px solid $background-black;
     }
 
-    &:hover, &:focus {
+    &:hover,
+    &:focus {
       background: rgba(29, 183, 240, 0.2);
 
       span {

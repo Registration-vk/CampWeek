@@ -11,6 +11,7 @@
   font-weight: 600;
   cursor: pointer;
   position: relative;
+  height: 42px;
 
   &:hover {
     background: rgba(254, 236, 220, 1);
@@ -29,7 +30,7 @@
     &:hover {
       background: rgba(254, 236, 220, 1);
     }
-  
+
     &:active {
       background: rgba(254, 236, 220, 1);
     }

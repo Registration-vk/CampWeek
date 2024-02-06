@@ -3,6 +3,11 @@
   margin-left: 0;
   margin-right: 0;
   overflow-x: auto;
+  box-sizing: border-box;
+
+  @include media-xl {
+    width: 860px;
+  }
 
   @include media-md {
     width: 100%;
@@ -19,7 +24,7 @@
 
 .pageWrapper {
   display: flex;
-  justify-content: space-between;
+  justify-content: center;
   align-items: center;
   max-width: 1400px;
   margin: 0 auto;

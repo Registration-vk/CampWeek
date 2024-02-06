@@ -10,7 +10,7 @@ export default function UserLayout({ children }: { children: React.ReactNode }) 
         <h2 className={styles.title}>Личный кабинет</h2>
         {children}
       </PageWrapper>
-      <FiltersProfileWrapper></FiltersProfileWrapper> 
+      <FiltersProfileWrapper/>
     </section>
   );
 }

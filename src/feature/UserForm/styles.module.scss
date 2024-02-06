@@ -3,22 +3,65 @@
   position: relative;
   color: rgba(17, 17, 17, 1);
   margin-right: 24px;
+
+  @include media-lg {
+    grid-column: 1 / 3;
+  }
+
+  @include media-xs {
+    grid-column: 1 / -1;
+    margin-right: 0;
+  }
 }
 
 .inputBdate {
   grid-column: 2 / 3;
   margin-right: 24px;
+
+  @include media-lg {
+    grid-column: 3 / 5;
+    margin-right: 0;
+  }
+
+  @include media-xs {
+    grid-column: 1 / -1;
+  }
 }
 
 .inputName {
   grid-column: 1 / 3;
   margin-right: 24px;
+
+  @include media-lg {
+    grid-column: 1 / 5;
+    margin-right: 0;
+  }
+
+  @include media-xs {
+    grid-column: 1 / -1;
+  }
 }
 
 .inputLastName {
   grid-column: 3 / 5;
+
+  @include media-lg {
+    grid-column: 1 / 5;
+  }
+
+  @include media-xs {
+    grid-column: 1 / -1;
+  }
 }
 
 .inputCity {
   grid-column: 3 / 5;
+
+  @include media-lg {
+    grid-column: 1 / 5;
+  }
+
+  @include media-xs {
+    grid-column: 1 / -1;
+  }
 }

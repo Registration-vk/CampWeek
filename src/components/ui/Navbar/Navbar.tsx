@@ -2,6 +2,7 @@
 import { Icon } from "../Icon/Icon";
 import styles from "./Navbar.module.scss";
 import BirdIcon from "./assets/Bird.svg";
+import BirdIconSmall from "./assets/smallBird.svg";
 import ProfileIcon from "./assets/profile.svg";
 import MeetingsIcon from "./assets/meetings.svg";
 import MeetingCreateIcon from "./assets/createMeeting.svg";
@@ -72,12 +73,14 @@ export const Navbar = memo(() => {
   return (
     <div className={styles.navbar}>
       <div className={styles.navbarLogo}>
-        <Icon Svg={BirdIcon} />
+        <Icon Svg={width <= 360 ? BirdIconSmall : BirdIcon} />
         <Link href={ROUTES.application.path} className={styles.link}>
           Неделя вожатства
         </Link>
       </div>
-      {isAuth === false && isLoading === false && <ButtonAuthorization />}
+      {isAuth === false && isLoading === false && (
+        <ButtonAuthorization text={width <= 546 ? "Войти" : "Войти через VK ID"} />
+      )}
       {isAuth && width > 768 && (
         <>
           <div className={styles.navbarMeetings}>

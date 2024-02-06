@@ -8,6 +8,7 @@
 
   @include media-xl {
     width: 318px;
+    padding: 32px;
   }
 
   @include media-lg {
@@ -59,6 +60,10 @@
   align-items: center;
   flex-wrap: wrap;
   gap: 5px;
+
+  @include media-xl {
+    
+  }
 }
 
 .buttonWrapper {
