@@ -15,9 +15,9 @@ import { usePathname, useRouter } from "next/navigation";
 import { Dropdown } from "../Dropdown/ui/Dropdown";
 import { useUserId } from "@/app/context/context";
 import Cookies from "js-cookie";
-import { useResize } from "@/core/hooks/useResize";
+// import { useResize } from "@/core/hooks/useResize";
 import { memo, useCallback, useState } from "react";
-import { Drawer } from "../Drawer/ui/Drawer/Drawer";
+// import { Drawer } from "../Drawer/ui/Drawer/Drawer";
 import { CustomLink } from "../CustomLink/CustomLink";
 import { ButtonAuthorization } from "@/components/modules/ButtonAuthorization/ButtonAuthorization";
 import { Button } from "../Button/Button";
@@ -25,7 +25,8 @@ import { Button } from "../Button/Button";
 export const Navbar = memo(() => {
   const { isAuth, setUserId, setIsAuth, isLoading } = useUserId();
   const [isOpen, setIsOpen] = useState<boolean>(false);
-  const { width } = useResize();
+  // const { width } = useResize();
+  const width = 1200;
   const currentPathname = usePathname();
   const router = useRouter();
   //TODO: решить баг с переходом на страницу при выходе из личного кабинета
@@ -120,7 +121,7 @@ export const Navbar = memo(() => {
             <span></span>
             <span></span>
           </Button>
-          <Drawer isOpen={isOpen} onClose={onCloseDrawer}>
+          {/* <Drawer isOpen={isOpen} onClose={onCloseDrawer}>
             <Icon Svg={closeButtonIcon} className={styles.closeButton} onClick={onCloseDrawer} />
             <div className={styles.contentWrapper}>
               <div className={styles.navbarMeetings}>
@@ -142,7 +143,7 @@ export const Navbar = memo(() => {
                 />
               </div>
             </div>
-          </Drawer>
+          </Drawer> */}
         </>
       )}
     </div>
