@@ -13,8 +13,6 @@ import styles from "./styles.module.scss";
 import "./styles/global.scss";
 import { Navbar } from "@/components/ui/Navbar/Navbar";
 import { StoreProvider } from "./store/StoreProvider/StoreProvider";
-import { useDispatch } from "react-redux";
-import { getUserIsAuth, userActions } from "./store/slices/userAuthSlice";
 
 const manrope = Manrope({ subsets: ["latin"] });
 

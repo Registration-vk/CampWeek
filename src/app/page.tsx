@@ -1,6 +1,4 @@
 "use client";
-
-import dayjs from "dayjs";
 import Link from "next/link";
 
 import { LinkItem } from "@/components/ui/Link/Link";
@@ -27,37 +25,20 @@ export default function Home() {
 
   return (
     <div className={styles.Main}>
-      {isLoading && <h5>Загрузка данных...</h5>}
-      {isError && <h5>При загрузке данных произошла ошибка</h5>}
       <Title />
       <MainBanner />
-      {events && events.length ? (
-        events
-          .sort((a, b) => Number(new Date(a.date_time)) - Number(new Date(b.date_time))) // Уточнить порядок сортировки
-          .map((event) => (
-            <Link href={`${ROUTES.application.event.path}/${event.id}`} key={event.id}>
-              <SmallCard
-                // subtitle={`${dayjs(event.date_time).format("DD.MM.YYYY")} в ${event.time_start}`}
-                title={event.name}
-                fullName={
-                  (speakers && data && getParticipants(speakers, data, event.id).join(", ")) ||
-                  "Спикеры отсутствуют"
-                }
-                typeEvent={event.roles.split(";").join(", ")}
-                description={event.description}
-                date={`${dayjs(event.date_time).format("DD.MM.YYYY")}`}
-                timeStart={`${event.time_start}`}
-                timeEnd={`${event.end}`}
-              />
-            </Link>
-          ))
-      ) : (
-        <h3>Мероприятий не запланировано</h3>
-      )}
-      <LinkItem link={"/meeting"} isDisabled={!isAuth}>
-        Добавить мероприятие
-        <NotifyPopup>Требуется авторизация</NotifyPopup>
-      </LinkItem>
+      {isLoading && <h5>Загрузка данных...</h5>}
+      {isError && <h5>При загрузке данных произошла ошибка</h5>}
+      <h2 className={styles.title}>Программа</h2>
+      <div className={styles.eventsWrapper}>
+        {events && events.length ? (
+          events
+            .sort((a, b) => Number(new Date(a.date_time)) - Number(new Date(b.date_time))) // Уточнить порядок сортировки
+            .map((event) => <SmallCard event={event} key={event.id} />)
+        ) : (
+          <h3>Мероприятий не запланировано</h3>
+        )}
+      </div>
     </div>
   );
 }

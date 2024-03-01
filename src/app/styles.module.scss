@@ -1,11 +1,14 @@
-.Container {
- 
+.eventsWrapper {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 40px;
+  flex-wrap: wrap;
 }
 
-// .Main {
-//   display: flex;
-//   flex-basis: 70%;
-//   flex-direction: column;
-
-//   row-gap: 16px;
-// }
+.title {
+  font-weight: 700;
+  font-size: 40px;
+  line-height: 48px;
+  margin-bottom: 32px;
+}

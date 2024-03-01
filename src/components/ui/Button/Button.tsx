@@ -2,7 +2,7 @@ import { ComponentProps } from "react";
 
 import clsx from "clsx";
 
-import styles from "./styles.module.scss";
+import styles from "./Button.module.scss";
 
 export type ButtonVariant = "vk" | "desktop" | "mobile" | "burger" | "clear";
 

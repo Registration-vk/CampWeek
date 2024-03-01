@@ -1,7 +1,7 @@
 "use client";
-import OnlineIcon from "../assets/online.svg";
-import PenIcon from "../assets/pen.svg";
-import CityIcon from "../assets/city.svg";
+import OnlineIcon from "../../../../assets/icons/icons/online.svg";
+import PenIcon from "../../../../assets/icons/icons/pen.svg";
+import CityIcon from "../../../../assets/icons/icons/city.svg";
 import { PlaceFilter } from "../../PlaceFilter/ui/PlaceFilter";
 import { Icon } from "../../Icon/Icon";
 import styles from "./FiltersProfileWrapper.module.scss";
@@ -11,15 +11,16 @@ import { useCallback, useState } from "react";
 const cities = ["Онлайн", "Москва", "Санкт-Петербург", "Рязань", "Псков", "Оренбург"];
 
 function createInitialCities() {
-  const storedCities = localStorage.getItem("cities");
-  return storedCities ? JSON.parse(storedCities) : [];
+  if (typeof window !== "undefined") {
+    const storedCities = localStorage.getItem("cities");
+    return storedCities ? JSON.parse(storedCities) : [];
+  }
+  return [];
 }
 
 export const FiltersProfileWrapper = () => {
   const [isEditable, setIsEditable] = useState<boolean>(false);
   const [storedCities, setStoredCities] = useState<string[]>(createInitialCities);
-
-  console.log(storedCities);
 
   const onEdit = () => {
     setIsEditable(true);

@@ -2,7 +2,7 @@ export interface EventFormData {
   name: string;
   link: string;
   add_link: string;
-  date_time: Date;
+  date_time: string;
   time_start: string;
   time_end: string;
   is_reg_needed: boolean;
