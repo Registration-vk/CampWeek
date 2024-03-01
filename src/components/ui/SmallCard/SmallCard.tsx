@@ -4,23 +4,39 @@ import { Icon } from "@/assets/icons/Icon";
 
 import styles from "./SmallCard.module.scss";
 
-type Props = {
+type SmallCardProps = {
   subtitle?: string;
   title?: string;
   fullName?: string;
   typeEvent?: string;
-} & PropsWithChildren;
+  date?: string;
+  timeStart?: string;
+  timeEnd?: string;
+  description?: string;
+  region?: string;
+};
 
-export const SmallCard = (props: Props) => {
-  const { subtitle, title, fullName, typeEvent, children } = props;
+export const SmallCard = (props: SmallCardProps) => {
+  const {
+    date,
+    timeStart,
+    timeEnd,
+    description,
+    title,
+    fullName,
+    typeEvent,
+    region = "Онлайн",
+  } = props;
 
   return (
     <section className={styles.Banner}>
-      <div className={styles.Banner__header}>
-        {subtitle && <div className={styles.Banner__subtitle}>{subtitle}</div>}
-        {title && <div className={styles.Banner__title}>{title}</div>}
+      {title && <div className={styles.Banner__title}>{title}</div>}
+      <div className={styles.Banner__description}>{description}</div>
+      <div>
+        <div>{date}</div>
+        <div>{`${timeStart} - ${timeEnd}`}</div>
+        <div>{region}</div>
       </div>
-      <div className={styles.Banner__main}>{children}</div>
       <div className={styles.Banner__footer}>
         {fullName && (
           <div className={styles.Banner__item}>

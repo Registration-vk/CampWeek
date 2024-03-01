@@ -37,16 +37,18 @@ export default function Home() {
           .map((event) => (
             <Link href={`${ROUTES.application.event.path}/${event.id}`} key={event.id}>
               <SmallCard
-                subtitle={`${dayjs(event.date_time).format("DD.MM.YYYY")} в ${event.time_start}`}
+                // subtitle={`${dayjs(event.date_time).format("DD.MM.YYYY")} в ${event.time_start}`}
                 title={event.name}
                 fullName={
                   (speakers && data && getParticipants(speakers, data, event.id).join(", ")) ||
                   "Спикеры отсутствуют"
                 }
                 typeEvent={event.roles.split(";").join(", ")}
-              >
-                <h3>{event.description}</h3>
-              </SmallCard>
+                description={event.description}
+                date={`${dayjs(event.date_time).format("DD.MM.YYYY")}`}
+                timeStart={`${event.time_start}`}
+                timeEnd={`${event.end}`}
+              />
             </Link>
           ))
       ) : (
