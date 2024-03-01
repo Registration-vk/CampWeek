@@ -17,7 +17,7 @@ export class UserService extends ApiBase<User> {
   }
 
   async getCurrentProfile(): Promise<User> {
-    const { data }: AxiosResponse<User> = await this.axiosInstance.get(`/profile`);
+    const { data }: AxiosResponse<User> = await this.axiosInstance.get("/profile");
     return data;
   }
 }

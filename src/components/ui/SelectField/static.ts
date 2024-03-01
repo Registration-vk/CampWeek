@@ -5,7 +5,7 @@ export const ControlStyles = {
   borderRadius: "12px",
   height: "64px",
   paddingLeft: "10px",
-  paddingTop: "12px"
+  paddingTop: "12px",
 };
 
 export const ChipStyles = {

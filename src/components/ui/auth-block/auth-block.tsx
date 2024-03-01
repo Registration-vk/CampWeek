@@ -21,11 +21,11 @@ export default function AuthBlock(props: Props) {
   const router = useRouter();
 
   const onLogin = () => {
-    router.push(`/account`);
+    router.push("/account");
   };
 
   const onLogout = () => {
-    router.push(`/`);
+    router.push("/");
     setUserId(null);
     setIsAuth(false);
     localStorage.removeItem("token");

@@ -3,10 +3,12 @@
     "next/core-web-vitals",
     "eslint:recommended",
     "plugin:@typescript-eslint/recommended",
-    "plugin:@tanstack/eslint-plugin-query/recommended"
+    "plugin:@tanstack/eslint-plugin-query/recommended",
+    "plugin:react/recommended",
+    "prettier"
   ],
   "parser": "@typescript-eslint/parser",
-  "plugins": ["perfectionist", "@typescript-eslint"],
+  "plugins": ["perfectionist", "@typescript-eslint", "react", "prettier"],
   "rules": {
     "@typescript-eslint/explicit-function-return-type": "off",
     "@typescript-eslint/explicit-member-accessibility": "off",
@@ -15,7 +17,16 @@
     "@typescript-eslint/no-unused-vars": "off",
     "@typescript-eslint/prefer-interface": "off",
     "no-console": "off",
-    "react/display-name": "off"
+    "react/display-name": "off",
+    "quotes": ["error", "double"],
+    "@typescript-eslint/quotes": ["error", "double"],
+    "react/react-in-jsx-scope": 0,
+    "prettier/prettier": [
+      "error",
+      {
+        "endOfLine": "auto"
+      }
+    ]
     // "perfectionist/sort-imports": [
     //   "warn",
     //   {

@@ -33,9 +33,5 @@ function Icon<Variant extends IconVariant>(
 
 const componentWithRef = forwardRef(Icon) as typeof Icon;
 
-export type {
-  Props as IconProps,
-  IconVariant,
-  VariantProps as IconVariantProps,
-};
+export type { Props as IconProps, IconVariant, VariantProps as IconVariantProps };
 export { componentWithRef as Icon };

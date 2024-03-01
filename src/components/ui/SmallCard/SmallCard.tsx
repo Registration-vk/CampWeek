@@ -2,7 +2,7 @@ import { PropsWithChildren } from "react";
 
 import { Icon } from "@/assets/icons/Icon";
 
-import styles from "./styles.module.scss";
+import styles from "./SmallCard.module.scss";
 
 type Props = {
   subtitle?: string;
@@ -11,7 +11,7 @@ type Props = {
   typeEvent?: string;
 } & PropsWithChildren;
 
-export const Banner = (props: Props) => {
+export const SmallCard = (props: Props) => {
   const { subtitle, title, fullName, typeEvent, children } = props;
 
   return (

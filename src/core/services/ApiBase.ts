@@ -10,24 +10,17 @@ export abstract class ApiBase<T> {
   }
 
   async getAll(): Promise<T[]> {
-    const { data }: AxiosResponse<T[]> = await this.axiosInstance.get(
-      this.baseUrl,
-    );
+    const { data }: AxiosResponse<T[]> = await this.axiosInstance.get(this.baseUrl);
     return data;
   }
 
   async getById(id: number): Promise<T> {
-    const { data }: AxiosResponse<T> = await this.axiosInstance.get(
-      `${this.baseUrl}/${id}`,
-    );
+    const { data }: AxiosResponse<T> = await this.axiosInstance.get(`${this.baseUrl}/${id}`);
     return data;
   }
 
   async create<T, K>(entity: T): Promise<K> {
-    const { data }: AxiosResponse<K> = await this.axiosInstance.post(
-      this.baseUrl,
-      entity,
-    );
+    const { data }: AxiosResponse<K> = await this.axiosInstance.post(this.baseUrl, entity);
     return data;
   }
 

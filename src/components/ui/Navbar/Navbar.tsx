@@ -21,6 +21,8 @@ import { memo, useCallback, useState } from "react";
 import { CustomLink } from "../CustomLink/CustomLink";
 import { ButtonAuthorization } from "@/components/modules/ButtonAuthorization/ButtonAuthorization";
 import { Button } from "../Button/Button";
+import axios from "axios";
+import { API_BASE_URL, API_VERSION } from "@/core/constants";
 
 export const Navbar = memo(() => {
   const { isAuth, setUserId, setIsAuth, isLoading } = useUserId();
@@ -29,6 +31,7 @@ export const Navbar = memo(() => {
   const width = 1200;
   const currentPathname = usePathname();
   const router = useRouter();
+
   //TODO: решить баг с переходом на страницу при выходе из личного кабинета
   //TODO: убрать перерисовки при изменении ширина окна
 

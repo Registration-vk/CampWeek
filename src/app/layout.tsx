@@ -1,3 +1,4 @@
+"use client";
 import type { Metadata } from "next";
 
 import React from "react";
@@ -11,8 +12,9 @@ import { UserProvider } from "./context/context";
 import styles from "./styles.module.scss";
 import "./styles/global.scss";
 import { Navbar } from "@/components/ui/Navbar/Navbar";
-import Head from "next/head";
-
+import { StoreProvider } from "./store/StoreProvider/StoreProvider";
+import { useDispatch } from "react-redux";
+import { getUserIsAuth, userActions } from "./store/slices/userAuthSlice";
 
 const manrope = Manrope({ subsets: ["latin"] });
 
@@ -23,15 +25,17 @@ export const metadata: Metadata = {
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
-    <UserProvider>
-      <html lang="ru">
-        <body className={manrope.className}>
-          <Navbar />
-          <QueryProvider>
-            <div className={styles.Container}>{children}</div>
-          </QueryProvider>
-        </body>
-      </html>
-    </UserProvider>
+    <StoreProvider>
+      <UserProvider>
+        <html lang="ru">
+          <body className={manrope.className}>
+            <Navbar />
+            <QueryProvider>
+              <div className={styles.Container}>{children}</div>
+            </QueryProvider>
+          </body>
+        </html>
+      </UserProvider>
+    </StoreProvider>
   );
 }

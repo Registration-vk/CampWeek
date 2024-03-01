@@ -14,53 +14,50 @@ export function Index(props: WrappedComponentProps) {
 
   return (
     <section className={classes.meetingForm}>
-    
-        <InputField
-          control={props.control}
-          inputName={"meetingName"}
-          inputLabel={"Название мероприятия"}
-          defaultValue={""}
-        />
-        <InputField
-          control={props.control}
-          inputName={"meetingLink"}
-          inputLabel={"Постоянная ссылка"}
-          readOnly={false}
-          defaultValue={"https://campweek.aozol.ru/"}
-        />
+      <InputField
+        control={props.control}
+        inputName={"meetingName"}
+        inputLabel={"Название мероприятия"}
+        defaultValue={""}
+      />
+      <InputField
+        control={props.control}
+        inputName={"meetingLink"}
+        inputLabel={"Постоянная ссылка"}
+        readOnly={false}
+        defaultValue={"https://campweek.aozol.ru/"}
+      />
 
-     
-        <InputField
-          control={props.control}
-          inputName={"meetingDate"}
-          inputLabel={"Дата мероприятия"}
-          inputType={"date"}
-          defaultValue={""}
-        />
-        <InputField
-          control={props.control}
-          inputName={"meetingStart"}
-          inputLabel={"Время начала"}
-          inputType={"time"}
-          defaultValue={""}
-        />
-        <InputField
-          control={props.control}
-          inputName={"meetingEnd"}
-          inputLabel={"Время окончания"}
-          inputType={"time"}
-          defaultValue={""}
-        />
-     
-    
-        <InputField
-          control={props.control}
-          inputName={"meetingAddLink"}
-          inputLabel={"Ссылка на доп.регистрацию"}
-          defaultValue={""}
-          readOnly={false}
-        />
-        {/* <InputField
+      <InputField
+        control={props.control}
+        inputName={"meetingDate"}
+        inputLabel={"Дата мероприятия"}
+        inputType={"date"}
+        defaultValue={""}
+      />
+      <InputField
+        control={props.control}
+        inputName={"meetingStart"}
+        inputLabel={"Время начала"}
+        inputType={"time"}
+        defaultValue={""}
+      />
+      <InputField
+        control={props.control}
+        inputName={"meetingEnd"}
+        inputLabel={"Время окончания"}
+        inputType={"time"}
+        defaultValue={""}
+      />
+
+      <InputField
+        control={props.control}
+        inputName={"meetingAddLink"}
+        inputLabel={"Ссылка на доп.регистрацию"}
+        defaultValue={""}
+        readOnly={false}
+      />
+      {/* <InputField
           control={props.control}
           inputName={"isRegNeeded"}
           inputLabel={"Требуется регистрация"}
@@ -71,7 +68,7 @@ export function Index(props: WrappedComponentProps) {
           // })}
           // ref={null}
         /> */}
-    
+
       <InputField
         control={props.control}
         inputName={"meetingDsc"}
@@ -87,20 +84,20 @@ export function Index(props: WrappedComponentProps) {
         defaultValue={""}
         inputType={"textarea"}
       />
-   
-        <SingleSelectField
-          control={props.control}
-          defaultValue={"Онлайн"}
-          selectName={"meetingLocation"}
-          selectLabel={"Локация"}
-          selectOptions={regions}
-        />
-        <MultipleSelectField
-          control={props.control}
-          selectName={"meetingTarget"}
-          selectLabel={"Целевая аудитория"}
-          selectOptions={optionsRoles}
-        />
+
+      <SingleSelectField
+        control={props.control}
+        defaultValue={"Онлайн"}
+        selectName={"meetingLocation"}
+        selectLabel={"Локация"}
+        selectOptions={regions}
+      />
+      <MultipleSelectField
+        control={props.control}
+        selectName={"meetingTarget"}
+        selectLabel={"Целевая аудитория"}
+        selectOptions={optionsRoles}
+      />
 
       <InputField
         control={props.control}

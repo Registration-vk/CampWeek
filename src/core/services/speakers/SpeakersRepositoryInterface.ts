@@ -1,7 +1,7 @@
-import { RegisteredSpeaker, EventSpeaker } from '@/core/services/speakers';
+import { RegisteredSpeaker, EventSpeaker } from "@/core/services/speakers";
 
 export interface SpeakersRepositoryInterface {
-    getAllSpeakers: () => Promise<RegisteredSpeaker[]>;
-    getSpeakerById: (eventId: number) => Promise<RegisteredSpeaker>;
-    createSpeaker: (event: EventSpeaker) => Promise<RegisteredSpeaker>;
+  getAllSpeakers: () => Promise<RegisteredSpeaker[]>;
+  getSpeakerById: (eventId: number) => Promise<RegisteredSpeaker>;
+  createSpeaker: (event: EventSpeaker) => Promise<RegisteredSpeaker>;
 }
