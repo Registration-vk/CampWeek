@@ -1,14 +1,5 @@
 "use client";
-import Link from "next/link";
-
-import { LinkItem } from "@/components/ui/Link/Link";
-import NotifyPopup from "@/components/ui/Notification/NotifyPopup";
-import { useEventsAll, useUsersAll } from "@/core/hooks";
-import { useSpeakersAll } from "@/core/hooks/useSpeakers";
-import { ROUTES } from "@/core/routes";
-import { getParticipants } from "@/core/utils";
-
-import { useUserId } from "./context/context";
+import { useEventsAll } from "@/core/hooks";
 
 import styles from "./styles.module.scss";
 import { MainBanner } from "@/components/ui/MainBanner/MainBanner";
@@ -17,9 +8,6 @@ import { SmallCard } from "@/components/ui/SmallCard/SmallCard";
 
 export default function Home() {
   const { events, isError, isLoading } = useEventsAll();
-  const { data } = useUsersAll();
-  const { speakers } = useSpeakersAll();
-  const { isAuth } = useUserId();
 
   console.log("Список эвентов", events);
 
