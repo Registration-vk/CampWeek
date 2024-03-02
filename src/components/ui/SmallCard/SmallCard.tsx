@@ -10,17 +10,20 @@ import CityIcon from "@/assets/icons/icons/cityBlue.svg";
 import PlusIcon from "@/assets/icons/icons/plus.svg";
 import { title } from "process";
 import { Icon } from "../Icon/Icon";
-import { useState } from "react";
+import { CSSProperties, useState } from "react";
 import { useUserId } from "@/app/context/context";
 import { Button } from "../Button/Button";
 import NotifyPopup from "../Notification/NotifyPopup";
+import clsx from "clsx";
 
 type SmallCardProps = {
   event: Event;
+  className?: string;
+  style?: CSSProperties;
 };
 
 export const SmallCard = (props: SmallCardProps) => {
-  const { event, ...otherProps } = props;
+  const { event, className, style, ...otherProps } = props;
   const [isVisitorQueryEnabled, setIsVisitorQueryEnabled] = useState(false);
   const { isAuth, userId } = useUserId();
   const { speakers } = useSpeakersAll();
@@ -38,7 +41,7 @@ export const SmallCard = (props: SmallCardProps) => {
   };
 
   return (
-    <section className={styles.card} {...otherProps}>
+    <section className={clsx(styles.card, {}, [className])} style={style} {...otherProps}>
       {title && <div className={styles.cardTitle}>{event.name}</div>}
       <div className={styles.cardDescription}>{event.description}</div>
       <div className={styles.cardTimeWrapper}>

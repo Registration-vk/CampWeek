@@ -24,7 +24,7 @@ export const Button = (props: Props) => {
     children,
     className,
     onClick,
-    ...rest
+    ...otherProps
   } = props;
   return (
     <button
@@ -41,7 +41,7 @@ export const Button = (props: Props) => {
       type="button"
       disabled={disabled}
       onClick={onClick}
-      {...rest}
+      {...otherProps}
     >
       {!loading && children}
     </button>
