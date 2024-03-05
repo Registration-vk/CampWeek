@@ -1,4 +1,5 @@
-import { fetchUserAuth } from "./../services/fetchUserAuth";
+"use client";
+import { fetchUserAuth } from "../services/fetchUserAuth";
 import { createSlice } from "@reduxjs/toolkit";
 import { StateSchema, UserSchema } from "../types/StateSchema";
 

@@ -1,4 +1,3 @@
-"use client";
 import type { Metadata } from "next";
 
 import React from "react";
@@ -12,7 +11,7 @@ import { UserProvider } from "./context/context";
 import styles from "./styles.module.scss";
 import "./styles/global.scss";
 import { Navbar } from "@/components/ui/Navbar/Navbar";
-import { StoreProvider } from "./store/StoreProvider/StoreProvider";
+import { StoreProvider } from "../core/store/StoreProvider/StoreProvider";
 
 const manrope = Manrope({ subsets: ["latin"] });
 

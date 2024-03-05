@@ -1,3 +1,4 @@
+"use client";
 import { configureStore } from "@reduxjs/toolkit";
 import { StateSchema } from "./types/StateSchema";
 import { userReducer } from "./slices/userAuthSlice";
