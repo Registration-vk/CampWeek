@@ -16,5 +16,8 @@ export const ROUTES = {
     profile: {
       path: "/account",
     },
+    meetings: {
+      path: "/meetings",
+    },
   },
 };

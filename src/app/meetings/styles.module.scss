@@ -1,0 +1,44 @@
+.title {
+  padding-bottom: 20px;
+
+  font-family: Manrope, sans-serif;
+  font-size: 26px;
+  font-weight: 700;
+  line-height: 32px;
+}
+
+.eventsWrapper {
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
+  row-gap: 25px;
+  column-gap: 17px;
+  flex-wrap: wrap;
+}
+
+.filtersWrapper {
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  align-items: flex-start;
+  row-gap: 12px;
+  margin-bottom: 32px;
+}
+
+.buttonWrapper {
+  display: flex;
+  justify-content: flex-start;
+  align-items: flex-start;
+  column-gap: 8px;
+}
+
+.citiesWrapper {
+  display: flex;
+  justify-content: flex-start;
+  align-items: flex-start;
+  column-gap: 8px;
+}
+
+.eventsLoadMoreButton {
+  margin: 32px auto 0 auto;
+}

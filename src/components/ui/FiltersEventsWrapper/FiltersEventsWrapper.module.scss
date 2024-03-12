@@ -1,0 +1,103 @@
+.modal {
+  max-width: 1080px;
+  padding: 32px;
+}
+
+.filtersMainHeader {
+  font-size: 40px;
+  line-height: 48px;
+  font-weight: 700;
+  margin-bottom: 40px;
+}
+
+.filtersHeader {
+  font-size: 28px;
+  line-height: 40px;
+  font-weight: 700;
+  margin-bottom: 20px;
+  margin-right: 12px;
+}
+.filtersWrapper {
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  align-items: flex-start;
+  width: 100%;
+}
+
+.filtersRoles {
+  display: flex;
+  justify-content: flex-start;
+  align-items: flex-start;
+  flex-wrap: wrap;
+  gap: 12px;
+  margin-bottom: 28px;
+}
+
+.filtersButtonWrapper {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  width: 100%;
+}
+
+.buttonCancel {
+  width: 267px;
+}
+
+.headerWrapper {
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
+}
+
+.counterWrapper {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  column-gap: 8px;
+  padding: 8px;
+  background: rgba(249, 248, 251, 1);
+  border-radius: 50px;
+  color: rgba(131, 136, 143, 1);
+}
+
+.counter {
+  border-radius: 50px;
+  background: rgba(29, 183, 240, 1);
+  width: 24px;
+  height: 24px;
+  color: white;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.counterButton {
+  background-color: inherit;
+  width: 24px;
+  height: 24px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  position: relative;
+
+  &::before,
+  &::after {
+    content: "";
+    position: absolute;
+    top: 12px;
+    display: block;
+    width: 16px;
+    height: 2px;
+    background: rgba(193, 192, 198, 1);
+  }
+
+  &::before {
+    transform: rotate(45deg);
+  }
+
+  &::after {
+    transform: rotate(-45deg);
+  }
+}

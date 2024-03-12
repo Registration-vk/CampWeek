@@ -10,7 +10,7 @@ import CityIcon from "@/assets/icons/icons/cityBlue.svg";
 import PlusIcon from "@/assets/icons/icons/plus.svg";
 import { title } from "process";
 import { Icon } from "../Icon/Icon";
-import { CSSProperties, useState } from "react";
+import { CSSProperties, memo, useState } from "react";
 import { useUserId } from "@/app/context/context";
 import { Button } from "../Button/Button";
 import NotifyPopup from "../Notification/NotifyPopup";
@@ -22,7 +22,7 @@ type SmallCardProps = {
   style?: CSSProperties;
 };
 
-export const SmallCard = (props: SmallCardProps) => {
+export const SmallCard = memo((props: SmallCardProps) => {
   const { event, className, style, ...otherProps } = props;
   const [isVisitorQueryEnabled, setIsVisitorQueryEnabled] = useState(false);
   const { isAuth, userId } = useUserId();
@@ -66,7 +66,7 @@ export const SmallCard = (props: SmallCardProps) => {
         </div>
       </div>
       {event.roles && (
-        <div className={styles.cardSpickerWrapper}>
+        <div className={styles.cardForWhomWrapper}>
           <h3 className={styles.spickerTitle}>Для кого</h3>
           <div className={styles.cardText}>{event.roles.split(";").join(", ")}</div>
         </div>
@@ -91,4 +91,4 @@ export const SmallCard = (props: SmallCardProps) => {
       </div>
     </section>
   );
-};
+});

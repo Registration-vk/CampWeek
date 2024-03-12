@@ -10,8 +10,8 @@ import styles from "./Modal.module.scss";
 interface ModalProps {
   className?: string;
   children?: ReactNode;
-  isOpen?: boolean;
-  onClose?: () => void;
+  isOpen: boolean;
+  onClose: () => void;
 }
 
 export const Modal = (props: ModalProps) => {
@@ -25,13 +25,13 @@ export const Modal = (props: ModalProps) => {
 
   return (
     <div
-      className={clsx(styles.modal, [className], {
+      className={clsx(styles.modal, {
         [styles.opened]: isOpen,
         [styles.closed]: isClosing,
       })}
     >
       <Overlay onClick={close} />
-      <div className={styles.content}>{children}</div>
+      <div className={clsx(styles.content, [className])}>{children}</div>
     </div>
   );
 };

@@ -39,3 +39,12 @@ export const getParticipants = (
     return [];
   });
 };
+
+export function compareArrays(array1: string[], array2: string[]) {
+  for (const element of array2) {
+    if (!array1.includes(element)) {
+      return false;
+    }
+  }
+  return true;
+}

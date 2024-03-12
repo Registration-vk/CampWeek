@@ -109,6 +109,30 @@
     }
   }
 
+  &__loadMore {
+    width: auto;
+    border: 2px solid rgba(17, 171, 228, 1);
+    height: 64px;
+    color: rgba(17, 171, 228, 1);
+    background: inherit;
+    font-size: 18px;
+    line-height: 24px;
+    transition: $animation-hover;
+
+    &:hover,
+    &:focus {
+      background: $button-desktop-hover;
+      color: rgba(255, 255, 255, 1);
+      border: none;
+    }
+
+    &:active {
+      background: $button-desktop-pressed;
+      color: rgba(255, 255, 255, 1);
+      border: none;
+    }
+  }
+
   &__clear {
     padding: 0;
     margin: 0;

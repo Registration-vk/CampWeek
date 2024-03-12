@@ -5,9 +5,16 @@ import styles from "./styles.module.scss";
 import { MainBanner } from "@/components/ui/MainBanner/MainBanner";
 import { Title } from "@/components/ui/Title/Title";
 import { Carousel } from "@/components/ui/Carousel/Carousel";
+import { useAppDispatch } from "@/core/store/hooks/typingHooks";
+import { fetchEvents } from "@/core/store/services/fetchEvents";
+import { useEffect } from "react";
 
 export default function Home() {
   const { events, isError, isLoading } = useEventsAll();
+  const dispatch = useAppDispatch();
+  useEffect(() => {
+    dispatch(fetchEvents());
+  }, [dispatch]);
 
   console.log("Список эвентов", events);
 

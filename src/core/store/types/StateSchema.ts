@@ -1,5 +1,7 @@
 export interface StateSchema {
   user: UserSchema;
+  filtersRole: FiltersRoleSchema;
+  events: EventsSchema;
 }
 
 export interface UserSchema {
@@ -7,4 +9,34 @@ export interface UserSchema {
   isAuth: boolean;
   isLoading: boolean;
   error?: string;
+}
+
+export interface FiltersRoleSchema {
+  filters: string[];
+}
+
+export interface EventsSchema {
+  events: EventSchema[];
+  filteredEvents: EventSchema[];
+  roleFilters: string[];
+  isLoading: boolean;
+  error?: string;
+}
+
+export interface EventSchema {
+  id: number;
+  name: string;
+  link: string;
+  add_link: string;
+  date_time: string;
+  time_start: string;
+  time_end: string;
+  is_reg_needed: boolean;
+  approved: boolean;
+  description: string;
+  add_info: string;
+  notes: string;
+  roles: string;
+  region_id: number;
+  creator_id: number;
 }

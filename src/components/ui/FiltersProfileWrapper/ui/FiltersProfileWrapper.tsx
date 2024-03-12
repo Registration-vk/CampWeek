@@ -2,7 +2,7 @@
 import OnlineIcon from "../../../../assets/icons/icons/online.svg";
 import PenIcon from "../../../../assets/icons/icons/pen.svg";
 import CityIcon from "../../../../assets/icons/icons/city.svg";
-import { PlaceFilter } from "../../PlaceFilter/ui/PlaceFilter";
+import PlaceFilter from "../../PlaceFilter/ui/PlaceFilter";
 import { Icon } from "../../Icon/Icon";
 import styles from "./FiltersProfileWrapper.module.scss";
 import { Button } from "../../Button/Button";
@@ -10,7 +10,7 @@ import { useCallback, useState } from "react";
 
 const cities = ["Онлайн", "Москва", "Санкт-Петербург", "Рязань", "Псков", "Оренбург"];
 
-function createInitialCities() {
+export function createInitialCities() {
   if (typeof window !== "undefined") {
     const storedCities = localStorage.getItem("cities");
     return storedCities ? JSON.parse(storedCities) : [];
@@ -74,6 +74,7 @@ export const FiltersProfileWrapper = () => {
               text={city}
               key={`${city}-${index}`}
               editable={isEditable}
+              isEditFilter={true}
               onAdd={() => onAddCity(city)}
               onDelete={() => onDeleteCity(city)}
               Svg={city === "Онлайн" ? OnlineIcon : CityIcon}

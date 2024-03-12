@@ -36,6 +36,18 @@
     }
   }
 
+  &__disabled {
+    cursor: auto;
+    background: rgba(244, 245, 246, 1);
+    color: rgba(131, 136, 143, 1);
+    &:hover {
+      background: rgba(244, 245, 246, 1);
+    }
+    svg {
+      fill: rgba(131, 136, 143, 1);
+    }
+  }
+
   svg {
     margin-right: 4px;
   }

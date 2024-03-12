@@ -2,22 +2,33 @@
 import clsx from "clsx";
 import { Icon } from "../../Icon/Icon";
 import styles from "./PlaceFilter.module.scss";
-import { MouseEvent, memo, useCallback, useEffect, useState } from "react";
+import {
+  MouseEvent,
+  memo,
+  useCallback,
+  useEffect,
+  useImperativeHandle,
+  useState,
+  forwardRef,
+  Dispatch,
+  SetStateAction,
+  Ref,
+} from "react";
 import closeIcon from "../assets/closefilter.svg";
 
-export type PlaceFilterTheme = "active" | "disable";
-
-export interface PlaceFilterProps {
+interface PlaceFilterProps {
   text: string;
   editable?: boolean;
   disabled?: boolean;
   Svg?: React.VFC<React.SVGProps<SVGSVGElement>>;
-  onAdd?: () => void;
+  isEditFilter?: boolean;
+  isFilterActive?: boolean;
+  onAdd?: (value?: string) => void;
   onDelete?: () => void;
 }
 
-export const PlaceFilter = memo((props: PlaceFilterProps) => {
-  const { text, editable, disabled, Svg, onDelete, onAdd } = props;
+const PlaceFilter = (props: PlaceFilterProps) => {
+  const { text, editable, disabled, Svg, isEditFilter, isFilterActive, onDelete, onAdd } = props;
   const [isActive, setIsActive] = useState(false);
 
   const isCityInStorage = useCallback(() => {
@@ -32,6 +43,12 @@ export const PlaceFilter = memo((props: PlaceFilterProps) => {
   }, [text]);
 
   useEffect(() => {
+    if (isFilterActive) {
+      setIsActive(false);
+    }
+  }, [isFilterActive]);
+
+  useEffect(() => {
     if (isCityInStorage()) {
       setIsActive(true);
     } else {
@@ -41,9 +58,10 @@ export const PlaceFilter = memo((props: PlaceFilterProps) => {
 
   const onActive = (event: MouseEvent<HTMLButtonElement>) => {
     const target = event.target as HTMLElement;
+
     if (target.classList.contains(styles.button)) {
       setIsActive(true);
-      onAdd && onAdd();
+      onAdd && onAdd(text);
     }
   };
 
@@ -62,14 +80,17 @@ export const PlaceFilter = memo((props: PlaceFilterProps) => {
       className={clsx(styles.button, {
         [styles.button__active]: isActive,
         [styles.button__editable]: !editable,
+        [styles.button__disabled]: disabled,
       })}
       onClick={onActive}
     >
       {Svg && <Icon Svg={Svg}></Icon>}
       {text}
-      {editable && isActive && (
+      {editable && isActive && isEditFilter && (
         <Icon className={styles.closeButton} Svg={closeIcon} onClick={onClose}></Icon>
       )}
     </button>
   );
-});
+};
+
+export default memo(PlaceFilter);
