@@ -3,7 +3,8 @@
 import { SmallCard } from "@/components/ui/SmallCard/SmallCard";
 import cls from "./styles.module.scss";
 import OnlineIcon from "@/assets/icons/icons/online.svg";
-import PenIcon from "../../../../assets/icons/icons/pen.svg";
+import PenIcon from "@/assets/icons/icons/pen.svg";
+import FiltersIcon from "@/assets/icons/icons/filters.svg";
 import CityIcon from "@/assets/icons/icons/city.svg";
 import { Button } from "@/components/ui";
 import PlaceFilter from "@/components/ui/PlaceFilter/ui/PlaceFilter";
@@ -16,9 +17,10 @@ import { useSelector } from "react-redux";
 import { getAllEvents } from "@/core/store/slices/eventsSlice";
 import { useAppDispatch } from "@/core/store/hooks/typingHooks";
 import { fetchEvents } from "@/core/store/services/fetchEvents";
+import { Icon } from "@/components/ui/Icon/Icon";
 
 export default function MeetingsPage() {
-  const { filteredEvents, error, isLoading } = useSelector(getAllEvents);
+  const { filteredEvents, error, isLoading, roleFilters } = useSelector(getAllEvents);
   const tabs = useMemo<Tab[]>(
     () => [{ title: "Все мероприятия" }, { title: "Участвую" }, { title: "Провожу" }],
     [],
@@ -63,7 +65,6 @@ export default function MeetingsPage() {
 
   return (
     <section>
-      <button onClick={onOpenFilters}>Кнопка фильтров</button>
       <FiltersEventsWrapper isOpen={isOpenFilter} onClose={onCloseFilters}></FiltersEventsWrapper>
       <div className={cls.filtersWrapper}>
         <div className={cls.buttonWrapper}>
@@ -73,6 +74,11 @@ export default function MeetingsPage() {
             onTabClick={clickHandleTab}
             numberSelected={filteredEvents?.length}
           />
+          <button onClick={onOpenFilters} className={cls.counterWrapper}>
+            <Icon Svg={FiltersIcon} />
+            <div className={cls.counterText}>Настройка фильтров</div>
+            <div className={cls.counter}>{roleFilters.length}</div>
+          </button>
         </div>
         <div>
           <div className={cls.citiesWrapper}>
