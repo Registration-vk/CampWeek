@@ -12,6 +12,8 @@
   cursor: pointer;
   position: relative;
   height: 42px;
+  width: auto;
+  text-wrap: none;
 
   &:hover {
     background: rgba(254, 236, 220, 1);

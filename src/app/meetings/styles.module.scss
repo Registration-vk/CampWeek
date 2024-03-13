@@ -80,3 +80,11 @@
   justify-content: center;
   align-items: center;
 }
+
+.filtersCitiesWrapper {
+  display: flex;
+  justify-content: flex;
+  align-items: center;
+  gap: 8px;
+  flex-wrap: wrap;
+}

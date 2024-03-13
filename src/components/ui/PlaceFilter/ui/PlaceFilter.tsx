@@ -2,19 +2,10 @@
 import clsx from "clsx";
 import { Icon } from "../../Icon/Icon";
 import styles from "./PlaceFilter.module.scss";
-import {
-  MouseEvent,
-  memo,
-  useCallback,
-  useEffect,
-  useImperativeHandle,
-  useState,
-  forwardRef,
-  Dispatch,
-  SetStateAction,
-  Ref,
-} from "react";
+import { MouseEvent, memo, useCallback, useEffect, useState } from "react";
 import closeIcon from "../assets/closefilter.svg";
+import { useSelector } from "react-redux";
+import { getAllEvents } from "@/core/store/slices/eventsSlice";
 
 interface PlaceFilterProps {
   text: string;
@@ -30,6 +21,7 @@ interface PlaceFilterProps {
 const PlaceFilter = (props: PlaceFilterProps) => {
   const { text, editable, disabled, Svg, isEditFilter, isFilterActive, onDelete, onAdd } = props;
   const [isActive, setIsActive] = useState(false);
+  const { roleFilters } = useSelector(getAllEvents);
 
   const isCityInStorage = useCallback(() => {
     const storedCities = localStorage.getItem("cities");
@@ -43,18 +35,12 @@ const PlaceFilter = (props: PlaceFilterProps) => {
   }, [text]);
 
   useEffect(() => {
-    if (isFilterActive) {
-      setIsActive(false);
-    }
-  }, [isFilterActive]);
-
-  useEffect(() => {
-    if (isCityInStorage()) {
+    if (isCityInStorage() || roleFilters.indexOf(text) !== -1 || isFilterActive) {
       setIsActive(true);
     } else {
       setIsActive(false);
     }
-  }, [editable, isCityInStorage]);
+  }, [editable, isCityInStorage, isFilterActive, roleFilters, text]);
 
   const onActive = (event: MouseEvent<HTMLButtonElement>) => {
     const target = event.target as HTMLElement;

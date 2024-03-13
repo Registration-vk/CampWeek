@@ -1,4 +1,4 @@
-import { useCallback, useState, useRef, Dispatch, SetStateAction } from "react";
+import { useCallback, useState, memo } from "react";
 import { Button } from "../Button/Button";
 import { Modal } from "../Modal/Modal";
 import cls from "./FiltersEventsWrapper.module.scss";
@@ -18,18 +18,16 @@ interface FiltersRole {
   label: string;
 }
 
-export const FiltersEventsWrapper = (props: FiltersEventsWrapperProps) => {
+export const FiltersEventsWrapper = memo((props: FiltersEventsWrapperProps) => {
   const { isOpen, onClose } = props;
   const { roleFilters } = useSelector(getAllEvents);
   const [roles, setRoles] = useState<FiltersRole[]>(optionsRoles);
   const [filterRoles, setFilterRoles] = useState<string[]>([]);
-  const [isFilterRolesActive, setIsFilterRolesActive] = useState(false);
   const dispatch = useAppDispatch();
 
   const onAddFilter = useCallback((value: string) => {
     if (value) {
       setFilterRoles((prev) => [...new Set([...prev, value])]);
-      setIsFilterRolesActive(false);
     }
   }, []);
 
@@ -47,7 +45,6 @@ export const FiltersEventsWrapper = (props: FiltersEventsWrapperProps) => {
 
   const clearRoleFilters = () => {
     setFilterRoles([]);
-    setIsFilterRolesActive(true);
   };
 
   return (
@@ -72,7 +69,7 @@ export const FiltersEventsWrapper = (props: FiltersEventsWrapperProps) => {
                 key={role.label}
                 editable={true}
                 isEditFilter={false}
-                isFilterActive={isFilterRolesActive}
+                isFilterActive={filterRoles.indexOf(role.value) !== -1 ? true : false}
                 onAdd={(value) => onAddFilter(value as string)}
               />
             ))}
@@ -97,4 +94,4 @@ export const FiltersEventsWrapper = (props: FiltersEventsWrapperProps) => {
       </div>
     </Modal>
   );
-};
+});

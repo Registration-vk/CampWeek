@@ -8,7 +8,7 @@ import styles from "./FiltersProfileWrapper.module.scss";
 import { Button } from "../../Button/Button";
 import { useCallback, useState } from "react";
 
-const cities = ["Онлайн", "Москва", "Санкт-Петербург", "Рязань", "Псков", "Оренбург"];
+const cities = ["Онлайн", "Москва", "Рязань", "Псков", "Оренбург"];
 
 export function createInitialCities() {
   if (typeof window !== "undefined") {

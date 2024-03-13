@@ -57,4 +57,12 @@ const regions = [
   { value: "5", label: "Оренбург" },
 ];
 
-export { optionsRoles, opinionLeaders, regions };
+const regionsId: { [key: number]: string } = {
+  1: "Онлайн",
+  2: "Москва",
+  3: "Рязань",
+  4: "Псков",
+  5: "Оренбург",
+};
+
+export { optionsRoles, opinionLeaders, regions, regionsId };

@@ -1,6 +1,5 @@
 export interface StateSchema {
   user: UserSchema;
-  filtersRole: FiltersRoleSchema;
   events: EventsSchema;
 }
 
@@ -11,14 +10,11 @@ export interface UserSchema {
   error?: string;
 }
 
-export interface FiltersRoleSchema {
-  filters: string[];
-}
-
 export interface EventsSchema {
   events: EventSchema[];
   filteredEvents: EventSchema[];
   roleFilters: string[];
+  storedCities: string[];
   isLoading: boolean;
   error?: string;
 }

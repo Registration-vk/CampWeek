@@ -9,27 +9,27 @@ import CityIcon from "@/assets/icons/icons/city.svg";
 import { Button } from "@/components/ui";
 import PlaceFilter from "@/components/ui/PlaceFilter/ui/PlaceFilter";
 import { Tab, Tabs } from "@/components/ui/Tabs/Tabs";
-import { useCallback, useEffect, useMemo, useRef, useState } from "react";
+import { useCallback, useEffect, useMemo, useState } from "react";
 import { createInitialCities } from "@/components/ui/FiltersProfileWrapper/ui/FiltersProfileWrapper";
 import { FiltersEventsWrapper } from "@/components/ui/FiltersEventsWrapper/FiltersEventsWrapper";
-import { getFiltersRole } from "@/core/store/slices/filtersRoleSlice";
 import { useSelector } from "react-redux";
 import { getAllEvents } from "@/core/store/slices/eventsSlice";
 import { useAppDispatch } from "@/core/store/hooks/typingHooks";
 import { fetchEvents } from "@/core/store/services/fetchEvents";
 import { Icon } from "@/components/ui/Icon/Icon";
+import { regionsId } from "@/feature/MeetingForm/static";
+import { NotifyPopup } from "@/components/ui/Notification/NotifyPopup";
 
 export default function MeetingsPage() {
-  const { filteredEvents, error, isLoading, roleFilters } = useSelector(getAllEvents);
+  const { filteredEvents, error, isLoading, roleFilters, storedCities } = useSelector(getAllEvents);
   const tabs = useMemo<Tab[]>(
     () => [{ title: "Все мероприятия" }, { title: "Участвую" }, { title: "Провожу" }],
     [],
   );
   const [selectedTab, setSelectedTab] = useState(tabs[0].title);
-  const [storedCities, setStoredCities] = useState<string[]>(createInitialCities);
   const [currentPage, setCurrentPage] = useState(0);
   const [isOpenFilter, setIsOpenFilter] = useState(false);
-  const filters = useSelector(getFiltersRole);
+  const [tabsCounter, setTabsCounter] = useState(0);
   const dispatch = useAppDispatch();
   const itemsPerPage = 6;
   const offset = (currentPage - 1) * itemsPerPage;
@@ -50,15 +50,6 @@ export default function MeetingsPage() {
     setIsOpenFilter(false);
   }, []);
 
-  // const getFilteredEvents = useMemo(() => {
-  //   return events?.filter((value) => {
-  //     if (filters.length > 0) {
-  //       console.log(value.roles.split(";"));
-  //       return compareArrays(value.roles.split(";"), filters);
-  //     }
-  //   });
-  // }, [events, filters]);
-
   useEffect(() => {
     dispatch(fetchEvents());
   }, [dispatch]);
@@ -72,7 +63,7 @@ export default function MeetingsPage() {
             tabs={tabs}
             selected={selectedTab}
             onTabClick={clickHandleTab}
-            numberSelected={filteredEvents?.length}
+            numberSelected={filteredEvents.length}
           />
           <button onClick={onOpenFilters} className={cls.counterWrapper}>
             <Icon Svg={FiltersIcon} />
@@ -80,17 +71,25 @@ export default function MeetingsPage() {
             <div className={cls.counter}>{roleFilters.length}</div>
           </button>
         </div>
-        <div>
-          <div className={cls.citiesWrapper}>
-            {storedCities.map((city) => (
-              <PlaceFilter
-                text={city}
-                key={city}
-                disabled
-                Svg={city === "Онлайн" ? OnlineIcon : CityIcon}
-              />
+        <div className={cls.filtersCitiesWrapper}>
+          <NotifyPopup
+            className={cls.citiesWrapper}
+            text="Для изменения списка отслеживаемых конференций перейдите в профиль"
+          >
+            {storedCities &&
+              storedCities.map((city) => (
+                <PlaceFilter
+                  text={city}
+                  key={city}
+                  disabled
+                  Svg={city === "Онлайн" ? OnlineIcon : CityIcon}
+                />
+              ))}
+          </NotifyPopup>
+          {roleFilters &&
+            roleFilters.map((role) => (
+              <PlaceFilter text={role} key={`${role} - filtersRole`} editable />
             ))}
-          </div>
         </div>
       </div>
       <div className={cls.eventsWrapper}>

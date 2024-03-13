@@ -13,8 +13,9 @@ import { Icon } from "../Icon/Icon";
 import { CSSProperties, memo, useState } from "react";
 import { useUserId } from "@/app/context/context";
 import { Button } from "../Button/Button";
-import NotifyPopup from "../Notification/NotifyPopup";
 import clsx from "clsx";
+import { regionsId } from "@/feature/MeetingForm/static";
+import { useRouter } from "next/navigation";
 
 type SmallCardProps = {
   event: Event;
@@ -28,6 +29,7 @@ export const SmallCard = memo((props: SmallCardProps) => {
   const { isAuth, userId } = useUserId();
   const { speakers } = useSpeakersAll();
   const { data } = useUsersAll();
+  const router = useRouter();
 
   const convertDate = (date: string) => {
     const inputDate = new Date(date);
@@ -55,7 +57,7 @@ export const SmallCard = memo((props: SmallCardProps) => {
         </div>
         <div>
           <Icon Svg={OnlineIcon} />
-          Онлайн
+          {regionsId[`${event.region_id}`]}
         </div>
       </div>
       <div className={styles.cardSpickerWrapper}>
@@ -79,11 +81,10 @@ export const SmallCard = memo((props: SmallCardProps) => {
         >
           <Icon Svg={PlusIcon} />
           Участвовать
-          <NotifyPopup>Требуется авторизация</NotifyPopup>
         </Button>
         <Button
           variant="clear"
-          onClick={() => registerForEvent("visitor")}
+          onClick={() => router.push(`/event/${event.id}`)}
           className={styles.button}
         >
           Подробнее

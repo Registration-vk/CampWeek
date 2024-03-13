@@ -1,9 +1,26 @@
-import { PropsWithChildren } from "react";
+import { ReactNode, useState } from "react";
 
-import styles from "./styles.module.scss";
+import cls from "./NotifyPopup.module.scss";
+import clsx from "clsx";
 
-const NotifyPopup = ({ children }: PropsWithChildren) => {
-  return <div className={styles.notification}>{children}</div>;
+interface NotifyPopupProps {
+  children: ReactNode;
+  text: string;
+  className?: string;
+}
+
+export const NotifyPopup = (props: NotifyPopupProps) => {
+  const { children, text, className } = props;
+  const [isHovered, setIsHovered] = useState(false);
+
+  return (
+    <div
+      className={clsx(cls.notifyContainer, className)}
+      onMouseEnter={() => setIsHovered(true)}
+      onMouseLeave={() => setIsHovered(false)}
+    >
+      {children}
+      {isHovered && <div className={cls.notify}>{text}</div>}
+    </div>
+  );
 };
-
-export default NotifyPopup;
