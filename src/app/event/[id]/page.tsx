@@ -1,51 +1,63 @@
 "use client";
-import { useState } from "react";
-
-import { useUserId } from "@/app/context/context";
-
-import { Button } from "@/components/ui";
-import { EventCard } from "@/components/ui/EventCard/EventCard";
-import { useCreateSpeaker } from "@/core/hooks/useSpeakers";
-import { useCreateVisitor } from "@/core/hooks/useVisitors";
-
-import styles from "./styles.module.scss";
+import { useEffect } from "react";
+import cls from "./styles.module.scss";
+import Arrow from "@/assets/icons/icons/arrowBack.svg";
+import { PageWrapper } from "@/components/ui/PageWrapper/PageWrapper";
+import { useSelector } from "react-redux";
+import { getEventById } from "@/core/store/slices/eventByIdSlice";
+import { useAppDispatch } from "@/core/store/hooks/typingHooks";
+import { fetchEventById } from "@/core/store/services/fetchEventById";
+import { EventCardTheme, SmallCard } from "@/components/ui/SmallCard/SmallCard";
+import { Icon } from "@/components/ui/Icon/Icon";
+import Link from "next/link";
 
 export default function EventPage({ params }: { params: { id: string } }) {
-  const [isSpeakerQueryEnabled, setIsSpeakerQueryEnabled] = useState(false);
-  const [isVisitorQueryEnabled, setIsVisitorQueryEnabled] = useState(false);
+  const { event, isLoading, error } = useSelector(getEventById);
+  const dispatch = useAppDispatch();
 
-  const { isAuth, userId } = useUserId();
-  console.log("userId speaker", userId);
+  // const [isSpeakerQueryEnabled, setIsSpeakerQueryEnabled] = useState(false);
+  // const [isVisitorQueryEnabled, setIsVisitorQueryEnabled] = useState(false);
 
-  const { isError } = useCreateSpeaker(
-    { speaker_id: userId!, event_id: Number(params.id) }, // Здесь передаем id авторизованного пользователя
-    isSpeakerQueryEnabled,
-  );
+  // const { isAuth, userId } = useUserId();
+  // console.log("userId speaker", userId);
 
-  const { visitor } = useCreateVisitor(
-    { visitor_id: userId!, event_id: Number(params.id) }, // Здесь передаем id авторизованного пользователя
-    isVisitorQueryEnabled,
-  );
+  // const { isError } = useCreateSpeaker(
+  //   { speaker_id: userId!, event_id: Number(params.id) }, // Здесь передаем id авторизованного пользователя
+  //   isSpeakerQueryEnabled,
+  // );
 
-  const registerForEvent = (participant: "speaker" | "visitor") => {
-    participant === "speaker" ? setIsSpeakerQueryEnabled(true) : setIsVisitorQueryEnabled(true);
-    window.location.reload();
-  };
+  // const { visitor } = useCreateVisitor(
+  //   { visitor_id: userId!, event_id: Number(params.id) }, // Здесь передаем id авторизованного пользователя
+  //   isVisitorQueryEnabled,
+  // );
 
-  return isError ? (
-    <h5>При регистрации произошла ошибка</h5>
-  ) : (
-    <div className={styles.main}>
-      <h2>Мероприятие</h2>
-      <EventCard eventId={Number(params.id)} />
-      <div className={styles.main__buttons}>
-        <Button onClick={() => registerForEvent("speaker")} disabled={!isAuth}>
-          Стать спикером
-        </Button>
-        <Button onClick={() => registerForEvent("visitor")} disabled={!isAuth}>
-          Стать участником
-        </Button>
+  // const registerForEvent = (participant: "speaker" | "visitor") => {
+  //   participant === "speaker" ? setIsSpeakerQueryEnabled(true) : setIsVisitorQueryEnabled(true);
+  // };
+
+  useEffect(() => {
+    dispatch(fetchEventById(Number(params.id)));
+    console.log(event);
+  }, [dispatch, params.id]);
+
+  if (isLoading) {
+    return <div>Загрузка...</div>;
+  }
+
+  if (error) {
+    return <div>{error}</div>;
+  }
+
+  return (
+    <PageWrapper>
+      <div className={cls.backToArrowWrapper}>
+        <Link href={"/meetings"}>
+          <Icon Svg={Arrow} className={cls.backToArrow} />
+        </Link>
+        <h4 className={cls.backToHeader}>Мероприятия</h4>
       </div>
-    </div>
+      {/* <EventCard eventId={Number(params.id)} /> */}
+      {event && <SmallCard event={event} theme={EventCardTheme.BigCard} />}
+    </PageWrapper>
   );
 }

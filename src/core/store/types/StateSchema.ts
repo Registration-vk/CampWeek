@@ -1,6 +1,7 @@
 export interface StateSchema {
   user: UserSchema;
   events: EventsSchema;
+  eventById: EventSchema;
 }
 
 export interface UserSchema {
@@ -11,8 +12,8 @@ export interface UserSchema {
 }
 
 export interface EventsSchema {
-  events: EventSchema[];
-  filteredEvents: EventSchema[];
+  events: Meeting[];
+  filteredEvents: Meeting[];
   roleFilters: string[];
   storedCities: string[];
   isLoading: boolean;
@@ -20,6 +21,12 @@ export interface EventsSchema {
 }
 
 export interface EventSchema {
+  event: Meeting | null;
+  isLoading: boolean;
+  error?: string;
+}
+
+export interface Meeting {
   id: number;
   name: string;
   link: string;

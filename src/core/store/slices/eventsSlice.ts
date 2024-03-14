@@ -1,6 +1,6 @@
 "use client";
 import { PayloadAction, createSlice } from "@reduxjs/toolkit";
-import { EventSchema, EventsSchema, StateSchema } from "../types/StateSchema";
+import { EventSchema, EventsSchema, Meeting, StateSchema } from "../types/StateSchema";
 import { fetchEvents } from "../services/fetchEvents";
 import { compareArrays } from "@/core/utils";
 import { createInitialCities } from "@/components/ui/FiltersProfileWrapper/ui/FiltersProfileWrapper";
@@ -38,7 +38,7 @@ export const eventsSlice = createSlice({
         state.error = undefined;
         state.isLoading = true;
       })
-      .addCase(fetchEvents.fulfilled, (state, action: PayloadAction<EventSchema[]>) => {
+      .addCase(fetchEvents.fulfilled, (state, action: PayloadAction<Meeting[]>) => {
         state.isLoading = false;
         state.storedCities = createInitialCities();
         state.events = action.payload.filter((value) => {

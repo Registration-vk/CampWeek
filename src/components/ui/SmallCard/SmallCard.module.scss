@@ -96,6 +96,11 @@
   align-items: flex-start;
   margin-bottom: 16px;
   height: 50px;
+
+  &_Big {
+    height: auto;
+    margin-bottom: 28px;
+  }
 }
 
 .cardForWhomWrapper {
@@ -105,6 +110,25 @@
   align-items: flex-start;
   margin-bottom: 16px;
   height: 60px;
+
+  &_Big {
+    width: 100%;
+    height: auto;
+    margin-bottom: 35px;
+
+    div:last-child {
+      &::after {
+        content: "";
+        position: absolute;
+        bottom: -17.5px;
+        left: 0;
+        width: 100%;
+        height: 3px;
+        border-radius: 10px;
+        background: $background-grey;
+      }
+    }
+  }
 }
 
 .spickerTitle {
@@ -116,6 +140,23 @@
   -webkit-line-clamp: 1;
   -webkit-box-orient: vertical;
   overflow: hidden;
+
+  &_Big {
+    margin-bottom: 8px;
+    width: 100%;
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+    height: auto;
+    position: relative;
+    font-size: 18px;
+    font-weight: 600;
+    line-height: 24px;
+
+    > svg {
+      margin-right: 8px;
+    }
+  }
 }
 
 .cardText {
@@ -126,6 +167,16 @@
   -webkit-line-clamp: 2;
   -webkit-box-orient: vertical;
   overflow: hidden;
+
+  &_Big {
+    width: 100%;
+    position: relative;
+    height: auto;
+    text-wrap: wrap;
+    font-size: 18px;
+    line-height: 24px;
+    font-weight: 400;
+  }
 }
 
 .buttonWrapper {
@@ -142,7 +193,125 @@
   height: 48px;
   padding: 12px 18px;
 
+  &_Big {
+    width: 600px;
+    padding: 24px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    svg {
+      margin-right: 16px;
+    }
+  }
+
   svg {
     margin-right: 16px;
   }
+}
+
+.bigCard {
+  display: flex;
+  flex-direction: column;
+  margin-left: auto;
+  margin-right: auto;
+  border-radius: 24px;
+  box-shadow: 0px 4px 30px 0px rgba(57, 62, 85, 0.1);
+  margin-top: 32px;
+  padding: 40px;
+  justify-content: flex-start;
+  align-items: flex-start;
+}
+
+.bigCardTitle {
+  font-size: 28px;
+  font-weight: 700;
+  line-height: 40px;
+  margin-bottom: 16px;
+}
+
+.bigCardDescription {
+  font-size: 18px;
+  line-height: 24px;
+  font-weight: 400;
+  margin-bottom: 35px;
+  position: relative;
+  width: 100%;
+  height: auto;
+  text-wrap: wrap;
+  white-space: pre-line;
+  word-wrap: break-word;
+
+  &::after {
+    content: "";
+    position: absolute;
+    bottom: -17.5px;
+    left: 0;
+    width: 100%;
+    height: 3px;
+    border-radius: 10px;
+    background: $background-grey;
+  }
+}
+
+.bigCardTimeWrapper {
+  display: flex;
+  justify-content: flex-start;
+  align-items: flex-start;
+  flex-wrap: wrap;
+  margin-bottom: 35px;
+  position: relative;
+  font-weight: 400;
+  font-size: 18px;
+  line-height: 24px;
+  width: 100%;
+  height: 72px;
+
+  div:last-child {
+    flex-basis: 100%;
+  }
+
+  div {
+    display: flex;
+    align-items: center;
+    margin-right: 24px;
+    svg {
+      margin-right: 7px;
+    }
+  }
+
+  &::after {
+    content: "";
+    position: absolute;
+    bottom: -17.5px;
+    left: 0;
+    width: 100%;
+    height: 3px;
+    border-radius: 10px;
+    background: $background-grey;
+  }
+}
+
+.spickerAddInfo_Big {
+  width: 100%;
+  margin-bottom: 28px;
+}
+
+.spickerAddInfoLink_Big {
+  width: 100%;
+  margin-bottom: 35px;
+  position: relative;
+  &::after {
+    content: "";
+    position: absolute;
+    bottom: -17.5px;
+    left: 0;
+    width: 100%;
+    height: 3px;
+    border-radius: 10px;
+    background: $background-grey;
+  }
+}
+
+.links {
+  color: rgba(33, 136, 246, 1);
 }
