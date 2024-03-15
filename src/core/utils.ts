@@ -48,3 +48,10 @@ export function compareArrays(array1: string[], array2: string[]) {
   }
   return true;
 }
+
+export const convertDate = (date: string) => {
+  const inputDate = new Date(date);
+  const dateFormatter = new Intl.DateTimeFormat("ru-RU", { day: "2-digit", month: "long" });
+  const formattedDateStr = dateFormatter.format(inputDate);
+  return formattedDateStr;
+};

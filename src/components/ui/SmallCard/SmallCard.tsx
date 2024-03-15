@@ -2,7 +2,7 @@ import styles from "./SmallCard.module.scss";
 import { Event } from "@/core/services/events";
 import { useUsersAll } from "@/core/hooks";
 import { useSpeakersAll } from "@/core/hooks/useSpeakers";
-import { getParticipants } from "@/core/utils";
+import { convertDate, getParticipants } from "@/core/utils";
 import OnlineIcon from "@/assets/icons/icons/onlineBlue.svg";
 import ClockIcon from "@/assets/icons/icons/clock.svg";
 import CalendarIcon from "@/assets/icons/icons/calendar.svg";
@@ -10,9 +10,10 @@ import CityIcon from "@/assets/icons/icons/cityBlue.svg";
 import MicrophoneIcon from "@/assets/icons/icons/microphone.svg";
 import ForWhomIcon from "@/assets/icons/icons/forWhome.svg";
 import PlusIcon from "@/assets/icons/icons/plus.svg";
+import SuccessfulIcon from "@/assets/icons/icons/successful.svg";
 import { title } from "process";
 import { Icon } from "../Icon/Icon";
-import { CSSProperties, memo, useState } from "react";
+import { CSSProperties, memo, useCallback, useState } from "react";
 import { useUserId } from "@/app/context/context";
 import { Button } from "../Button/Button";
 import clsx from "clsx";
@@ -20,6 +21,9 @@ import { regionsId } from "@/feature/MeetingForm/static";
 import { useRouter } from "next/navigation";
 import { Meeting } from "@/core/store/types/StateSchema";
 import Link from "next/link";
+import { useAppDispatch } from "@/core/store/hooks/typingHooks";
+import { fetchRegisterAsVisitor } from "@/core/store/services/fetchRegisterAsVisitor";
+import { Modal } from "../Modal/Modal";
 
 export enum EventCardTheme {
   SmallCard = "smallCard",
@@ -35,26 +39,45 @@ type SmallCardProps = {
 
 export const SmallCard = memo((props: SmallCardProps) => {
   const { event, className, style, theme = EventCardTheme.SmallCard, ...otherProps } = props;
+  const [isOpenSuccessModal, setIsOpenSuccessModal] = useState(false);
+  const [userIsVisitor, setUserIsVisitor] = useState(false);
+  const dispatch = useAppDispatch();
   const [isVisitorQueryEnabled, setIsVisitorQueryEnabled] = useState(false);
   const { isAuth, userId } = useUserId();
   const { speakers } = useSpeakersAll();
   const { data } = useUsersAll();
   const router = useRouter();
 
-  const convertDate = (date: string) => {
-    const inputDate = new Date(date);
-    const dateFormatter = new Intl.DateTimeFormat("ru-RU", { day: "2-digit", month: "long" });
-    const formattedDateStr = dateFormatter.format(inputDate);
-    return formattedDateStr;
-  };
+  const onOpenSuccessRegister = () => {};
 
-  const registerForEvent = (participant: "visitor") => {
-    participant === "visitor" ? setIsVisitorQueryEnabled(true) : setIsVisitorQueryEnabled(false);
+  const registerAsVisitor = async () => {
+    console.log("нажал кнопку");
+    if (event.id && userId) {
+      const result = await dispatch(
+        fetchRegisterAsVisitor({ event_id: event.id, visitor_id: userId }),
+      );
+      console.log("запрос");
+      if (result.meta.requestStatus === "fulfilled") {
+        console.log("успешно");
+        setUserIsVisitor(true);
+        setIsOpenSuccessModal(true);
+      }
+    }
   };
 
   if (theme === EventCardTheme.SmallCard) {
     return (
       <section className={clsx(styles.card, {}, [className])} style={style} {...otherProps}>
+        <Modal isOpen={isOpenSuccessModal} onClose={() => setIsOpenSuccessModal(false)}>
+          <div>
+            <Icon Svg={SuccessfulIcon} />
+            <h3>Вы успешно зарегистрировались на мероприятие</h3>
+            <div>
+              Мы напомним об этом мероприятии перед началом, а также будем держать в курсе, если
+              что‑то поменяется.
+            </div>
+          </div>
+        </Modal>
         {title && <div className={styles.cardTitle}>{event.name}</div>}
         <div className={styles.cardDescription}>{event.description}</div>
         <div className={styles.cardTimeWrapper}>
@@ -85,11 +108,7 @@ export const SmallCard = memo((props: SmallCardProps) => {
           </div>
         )}
         <div className={styles.buttonWrapper}>
-          <Button
-            onClick={() => registerForEvent("visitor")}
-            disabled={isAuth}
-            className={styles.button}
-          >
+          <Button onClick={registerAsVisitor} disabled={isAuth} className={styles.button}>
             <Icon Svg={PlusIcon} />
             Участвовать
           </Button>
@@ -172,9 +191,10 @@ export const SmallCard = memo((props: SmallCardProps) => {
 
         <div className={styles.buttonWrapper}>
           <Button
-            onClick={() => registerForEvent("visitor")}
+            onClick={registerAsVisitor}
             disabled={isAuth}
             className={styles.button_Big}
+            style={{ width: "600px" }}
           >
             <Icon Svg={PlusIcon} />
             Участвовать

@@ -10,7 +10,7 @@ const initialState: EventSchema = {
 };
 
 export const eventByIdSlice = createSlice({
-  name: "events",
+  name: "eventById",
   initialState,
   reducers: {},
   extraReducers: (builder) => {

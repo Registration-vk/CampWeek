@@ -13,7 +13,7 @@ import { useCallback, useEffect, useMemo, useState } from "react";
 import { createInitialCities } from "@/components/ui/FiltersProfileWrapper/ui/FiltersProfileWrapper";
 import { FiltersEventsWrapper } from "@/components/ui/FiltersEventsWrapper/FiltersEventsWrapper";
 import { useSelector } from "react-redux";
-import { getAllEvents } from "@/core/store/slices/eventsSlice";
+import { getAllEvents, getEvents } from "@/core/store/slices/eventsSlice";
 import { useAppDispatch } from "@/core/store/hooks/typingHooks";
 import { fetchEvents } from "@/core/store/services/fetchEvents";
 import { Icon } from "@/components/ui/Icon/Icon";
@@ -21,18 +21,18 @@ import { regionsId } from "@/feature/MeetingForm/static";
 import { NotifyPopup } from "@/components/ui/Notification/NotifyPopup";
 
 export default function MeetingsPage() {
-  const { filteredEvents, error, isLoading, roleFilters, storedCities } = useSelector(getAllEvents);
+  const { error, isLoading, roleFilters, storedCities, limit } = useSelector(getAllEvents);
+  const filteredEvents = useSelector(getEvents.selectAll);
   const tabs = useMemo<Tab[]>(
     () => [{ title: "Все мероприятия" }, { title: "Участвую" }, { title: "Провожу" }],
     [],
   );
   const [selectedTab, setSelectedTab] = useState(tabs[0].title);
-  const [currentPage, setCurrentPage] = useState(0);
+  const [currentPage, setCurrentPage] = useState(1);
   const [isOpenFilter, setIsOpenFilter] = useState(false);
   const [tabsCounter, setTabsCounter] = useState(0);
   const dispatch = useAppDispatch();
-  const itemsPerPage = 6;
-  const offset = (currentPage - 1) * itemsPerPage;
+  const offset = (currentPage - 1) * limit;
 
   const clickHandleTab = useCallback((title: string) => {
     setSelectedTab(title);
@@ -51,8 +51,8 @@ export default function MeetingsPage() {
   }, []);
 
   useEffect(() => {
-    dispatch(fetchEvents());
-  }, [dispatch]);
+    dispatch(fetchEvents({ offset }));
+  }, [dispatch, offset]);
 
   return (
     <section>

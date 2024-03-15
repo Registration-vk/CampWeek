@@ -1,17 +1,30 @@
 "use client";
 import { $api } from "@/core/axios";
 import { createAsyncThunk } from "@reduxjs/toolkit";
-import { Meeting } from "../types/StateSchema";
+import { Meeting, ThunkConfig } from "../types/StateSchema";
+import { getLimitForEvents, getOffsetForEvents } from "../slices/eventsSlice";
 
-export const fetchEvents = createAsyncThunk<Meeting[], void, { rejectValue: string }>(
+interface FetchEventsProps {
+  offset: number;
+}
+
+export const fetchEvents = createAsyncThunk<Meeting[], FetchEventsProps, ThunkConfig<string>>(
   "events/getEvents",
-  async (_, thunkApi) => {
+  async (props, thunkApi) => {
+    const { rejectWithValue, getState } = thunkApi;
+    const { offset } = props;
+    const limit = getLimitForEvents(getState());
     try {
-      const response = await $api.get<Meeting[]>("/api/v1/event/");
+      const response = await $api.get<Meeting[]>("/api/v1/event/", {
+        params: {
+          offset,
+          limit,
+        },
+      });
       return response.data;
     } catch (error) {
       console.log(error);
-      return thunkApi.rejectWithValue(`error: ${error}`);
+      return rejectWithValue(`error: ${error}`);
     }
   },
 );

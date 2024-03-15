@@ -1,7 +1,10 @@
+import { EntityState } from "@reduxjs/toolkit";
+
 export interface StateSchema {
   user: UserSchema;
   events: EventsSchema;
   eventById: EventSchema;
+  visitor: CreateVisitorSchema;
 }
 
 export interface UserSchema {
@@ -11,13 +14,16 @@ export interface UserSchema {
   error?: string;
 }
 
-export interface EventsSchema {
+export interface EventsSchema extends EntityState<Meeting, number> {
   events: Meeting[];
   filteredEvents: Meeting[];
   roleFilters: string[];
   storedCities: string[];
   isLoading: boolean;
   error?: string;
+  offset: number;
+  limit: number;
+  hasMore: boolean;
 }
 
 export interface EventSchema {
@@ -42,4 +48,20 @@ export interface Meeting {
   roles: string;
   region_id: number;
   creator_id: number;
+}
+
+export interface CreateVisitor {
+  event_id: number;
+  visitor_id: number;
+}
+
+export interface CreateVisitorSchema {
+  ids: CreateVisitor | null;
+  isLoading: boolean;
+  error?: string;
+}
+
+export interface ThunkConfig<T> {
+  rejectValue: T;
+  state: StateSchema;
 }

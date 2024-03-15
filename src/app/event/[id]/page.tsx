@@ -37,7 +37,6 @@ export default function EventPage({ params }: { params: { id: string } }) {
 
   useEffect(() => {
     dispatch(fetchEventById(Number(params.id)));
-    console.log(event);
   }, [dispatch, params.id]);
 
   if (isLoading) {
