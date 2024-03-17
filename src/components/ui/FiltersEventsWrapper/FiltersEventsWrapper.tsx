@@ -60,6 +60,7 @@ export const FiltersEventsWrapper = memo((props: FiltersEventsWrapperProps) => {
 
   const clearRoleFilters = () => {
     setFilterRoles([]);
+    dispatch(eventsActions.cancelRoleFilter());
   };
 
   return (

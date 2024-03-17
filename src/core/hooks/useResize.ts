@@ -17,14 +17,21 @@ interface ResizeResult {
 }
 
 export const useResize = (): ResizeResult => {
-  const [width, setWidth] = useState<number>(window.innerWidth);
-  const [height, setHeight] = useState<number>(window.innerHeight);
+  const [width, setWidth] = useState<number>(0);
+  const [height, setHeight] = useState<number>(0);
+
+  // if (typeof window !== "undefined") {
+  //   const innerWidth = window.innerWidth;
+  //   const innerHeight = window.innerHeight;
+  // }
   const handleResize = useDebounce((event: UIEvent) => {
     setWidth((event.target as Window).innerWidth);
     setHeight((event.target as Window).innerHeight);
   }, 500);
 
   useEffect(() => {
+    setWidth(window.innerWidth);
+    setHeight(window.innerHeight);
     window.addEventListener("resize", handleResize);
     return () => {
       window.removeEventListener("resize", handleResize);

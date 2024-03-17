@@ -1,5 +1,5 @@
 "use client";
-import { PayloadAction, createEntityAdapter, createSlice } from "@reduxjs/toolkit";
+import { PayloadAction, createEntityAdapter, createSelector, createSlice } from "@reduxjs/toolkit";
 import { EventSchema, EventsSchema, Meeting, StateSchema } from "../types/StateSchema";
 import { fetchEvents } from "../services/fetchEvents";
 import { compareArrays } from "@/core/utils";
@@ -31,7 +31,7 @@ export const eventsSlice = createSlice({
   initialState: eventsAdapter.getInitialState<EventsSchema>({
     ids: [],
     entities: {},
-    events: [],
+    // events: [],
     filteredEvents: [],
     error: "",
     isLoading: false,
@@ -47,12 +47,20 @@ export const eventsSlice = createSlice({
     },
     getFilteredEvents(state) {
       if (state.roleFilters.length > 0) {
-        state.filteredEvents = state.events?.filter((value) => {
-          return compareArrays(value.roles.split(";"), state.roleFilters);
+        state.filteredEvents = Object.values(state.entities).filter((entity) => {
+          return compareArrays(entity.roles.split(";"), state.roleFilters);
         });
-      } else {
-        state.filteredEvents = state.events;
+        eventsAdapter.setAll(state, state.filteredEvents);
+        // state.filteredEvents = state.events?.filter((value) => {
+        //   return compareArrays(value.roles.split(";"), state.roleFilters);
+        // });
+        // } else {
+        //   state.filteredEvents = state.events;
       }
+    },
+    cancelRoleFilter(state) {
+      state.roleFilters = [];
+      eventsAdapter.setAll(state, Object.values(state.entities));
     },
     setOffset(state, action: PayloadAction<number>) {
       state.offset = action.payload;

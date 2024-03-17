@@ -15,7 +15,7 @@ export interface UserSchema {
 }
 
 export interface EventsSchema extends EntityState<Meeting, number> {
-  events: Meeting[];
+  // events: Meeting[];
   filteredEvents: Meeting[];
   roleFilters: string[];
   storedCities: string[];

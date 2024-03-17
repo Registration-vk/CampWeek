@@ -11,10 +11,10 @@ import { useEffect } from "react";
 
 export default function Home() {
   const { events, isError, isLoading } = useEventsAll();
-  const dispatch = useAppDispatch();
-  useEffect(() => {
-    dispatch(fetchEvents());
-  }, [dispatch]);
+  // const dispatch = useAppDispatch();
+  // useEffect(() => {
+  //   dispatch(fetchEvents());
+  // }, [dispatch]);
 
   console.log("Список эвентов", events);
 

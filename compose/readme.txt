@@ -1,0 +1,1 @@
+docker compose -f compose.yaml run --name campweek_front --service-ports frontend-application

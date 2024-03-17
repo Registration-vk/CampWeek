@@ -2,7 +2,7 @@
 import clsx from "clsx";
 import { Icon } from "../../Icon/Icon";
 import styles from "./PlaceFilter.module.scss";
-import { MouseEvent, memo, useCallback, useEffect, useState } from "react";
+import { MouseEvent, memo, useEffect, useState } from "react";
 import closeIcon from "../assets/closefilter.svg";
 import { useSelector } from "react-redux";
 import { getAllEvents } from "@/core/store/slices/eventsSlice";
@@ -21,26 +21,40 @@ interface PlaceFilterProps {
 const PlaceFilter = (props: PlaceFilterProps) => {
   const { text, editable, disabled, Svg, isEditFilter, isFilterActive, onDelete, onAdd } = props;
   const [isActive, setIsActive] = useState(false);
+  const [isShow, setIsShow] = useState(true);
   const { roleFilters } = useSelector(getAllEvents);
 
-  const isCityInStorage = useCallback(() => {
-    const storedCities = localStorage.getItem("cities");
+  // const isCityInStorage = useCallback(() => {
+  //   const storedCities = localStorage.getItem("cities");
 
-    if (storedCities) {
-      const parsedStoredCities = JSON.parse(storedCities);
-      return parsedStoredCities.some((city: string) => city === text);
-    } else {
-      return false;
-    }
-  }, [text]);
+  //   if (storedCities) {
+  //     const parsedStoredCities = JSON.parse(storedCities);
+  //     return parsedStoredCities.some((city: string) => city === text);
+  //   } else {
+  //     return false;
+  //   }
+  // }, [text]);
 
   useEffect(() => {
+    const isCityInStorage = () => {
+      const storedCities = localStorage.getItem("cities");
+
+      if (storedCities) {
+        const parsedStoredCities = JSON.parse(storedCities);
+        return parsedStoredCities.some((city: string) => city === text);
+      } else {
+        // setIsShow(false);
+        return false;
+      }
+    };
     if (isCityInStorage() || roleFilters.indexOf(text) !== -1 || isFilterActive) {
+      setIsShow(true);
       setIsActive(true);
     } else {
+      setIsShow(false);
       setIsActive(false);
     }
-  }, [editable, isCityInStorage, isFilterActive, roleFilters, text]);
+  }, [editable, isFilterActive, roleFilters, text]);
 
   const onActive = (event: MouseEvent<HTMLButtonElement>) => {
     const target = event.target as HTMLElement;
@@ -57,7 +71,7 @@ const PlaceFilter = (props: PlaceFilterProps) => {
     onDelete && onDelete();
   };
 
-  if (!editable && !isCityInStorage()) {
+  if (!isShow && !editable) {
     return null;
   }
 
