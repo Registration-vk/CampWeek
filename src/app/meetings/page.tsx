@@ -23,6 +23,7 @@ import { NotifyPopup } from "@/components/ui/Notification/NotifyPopup";
 export default function MeetingsPage() {
   const { error, isLoading, roleFilters, storedCities, limit } = useSelector(getAllEvents);
   const filteredEvents = useSelector(getEvents.selectAll);
+  console.log(filteredEvents);
   const tabs = useMemo<Tab[]>(
     () => [{ title: "Все мероприятия" }, { title: "Участвую" }, { title: "Провожу" }],
     [],

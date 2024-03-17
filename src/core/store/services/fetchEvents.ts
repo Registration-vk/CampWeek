@@ -2,7 +2,7 @@
 import { $api } from "@/core/axios";
 import { createAsyncThunk } from "@reduxjs/toolkit";
 import { Meeting, ThunkConfig } from "../types/StateSchema";
-import { getLimitForEvents, getOffsetForEvents } from "../slices/eventsSlice";
+import { getCitiesIdsEvents, getLimitForEvents, getOffsetForEvents } from "../slices/eventsSlice";
 
 interface FetchEventsProps {
   offset: number;
@@ -14,11 +14,13 @@ export const fetchEvents = createAsyncThunk<Meeting[], FetchEventsProps, ThunkCo
     const { rejectWithValue, getState } = thunkApi;
     const { offset } = props;
     const limit = getLimitForEvents(getState());
+    const citiesIds = getCitiesIdsEvents(getState());
     try {
       const response = await $api.get<Meeting[]>("/api/v1/event/", {
         params: {
           offset,
           limit,
+          region_ids: citiesIds,
         },
       });
       return response.data;

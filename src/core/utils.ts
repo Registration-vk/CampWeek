@@ -3,6 +3,7 @@ import { User } from "@/services/users";
 
 import { RegisteredSpeaker } from "./services/speakers";
 import { RegisteredVisitor } from "./services/visitors";
+import { regionsId } from "@/feature/MeetingForm/static";
 
 export const filterOptions = (options: SelectOption[], selectedValues?: string[]) => {
   if (!selectedValues) {
@@ -54,4 +55,19 @@ export const convertDate = (date: string) => {
   const dateFormatter = new Intl.DateTimeFormat("ru-RU", { day: "2-digit", month: "long" });
   const formattedDateStr = dateFormatter.format(inputDate);
   return formattedDateStr;
+};
+
+export const getStoredCitiesIds = (): string => {
+  const storedCities = localStorage.getItem("cities");
+
+  if (storedCities) {
+    const parsedStoredCities = JSON.parse(storedCities);
+    const ids = parsedStoredCities.map((value: string) => {
+      return Object.keys(regionsId).find((key) => regionsId[key as unknown as number] === value);
+    });
+    console.log(ids.join(";"));
+    return ids.join(";");
+  } else {
+    return "";
+  }
 };

@@ -7,6 +7,9 @@ import { Icon } from "../../Icon/Icon";
 import styles from "./FiltersProfileWrapper.module.scss";
 import { Button } from "../../Button/Button";
 import { useCallback, useState } from "react";
+import { useAppDispatch } from "@/core/store/hooks/typingHooks";
+import { eventsActions } from "@/core/store/slices/eventsSlice";
+import { getStoredCitiesIds } from "@/core/utils";
 
 const cities = ["Онлайн", "Москва", "Рязань", "Псков", "Оренбург"];
 
@@ -21,6 +24,7 @@ export function createInitialCities() {
 export const FiltersProfileWrapper = () => {
   const [isEditable, setIsEditable] = useState<boolean>(false);
   const [storedCities, setStoredCities] = useState<string[]>(createInitialCities);
+  const dispatch = useAppDispatch();
 
   const onEdit = () => {
     setIsEditable(true);
@@ -55,6 +59,7 @@ export const FiltersProfileWrapper = () => {
   const onSave = (cities: string[]) => {
     setIsEditable(false);
     localStorage.setItem("cities", JSON.stringify(cities));
+    dispatch(eventsActions.setRegionIds(getStoredCitiesIds()));
   };
 
   return (
