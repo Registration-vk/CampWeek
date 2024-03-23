@@ -1,11 +1,11 @@
-import { useCallback, useState, memo } from "react";
+import { useCallback, useState, memo, useEffect } from "react";
 import { Button } from "../Button/Button";
 import { Modal } from "../Modal/Modal";
 import cls from "./FiltersEventsWrapper.module.scss";
 import { optionsRoles } from "@/feature/MeetingForm/static";
 import PlaceFilter from "@/components/ui/PlaceFilter/ui/PlaceFilter";
 import { useAppDispatch } from "@/core/store/hooks/typingHooks";
-import { eventsActions, getAllEvents } from "@/core/store/slices/eventsSlice";
+import { eventsActions, getAllEvents, getEvents } from "@/core/store/slices/eventsSlice";
 import { useSelector } from "react-redux";
 import { convertDate } from "@/core/utils";
 
@@ -21,12 +21,19 @@ interface FiltersRole {
 
 export const FiltersEventsWrapper = memo((props: FiltersEventsWrapperProps) => {
   const { isOpen, onClose } = props;
-  const { roleFilters, filteredEvents } = useSelector(getAllEvents);
-  const [roles, _] = useState<FiltersRole[]>(optionsRoles);
-  const [dates, setDates] = useState<string[]>(getAllDates);
+  const { roleFilters } = useSelector(getAllEvents);
+  const filteredEvents = useSelector(getEvents.selectAll);
+  const [dates, setDates] = useState<string[]>([]);
+  const [roles, setRoles] = useState<FiltersRole[]>(optionsRoles);
   const [filterRoles, setFilterRoles] = useState<string[]>([]);
-  const [filterDate, setFilterDate] = useState<string[]>([]);
+  const [filterDates, setFilterDates] = useState<string[]>([]);
   const dispatch = useAppDispatch();
+
+  useEffect(() => {
+    if (filteredEvents) {
+      setDates([...new Set(filteredEvents.map((event) => convertDate(event.date_time)))]);
+    }
+  }, [filteredEvents]);
 
   const onAddFilterRole = useCallback((value: string) => {
     if (value) {
@@ -36,21 +43,16 @@ export const FiltersEventsWrapper = memo((props: FiltersEventsWrapperProps) => {
 
   const onAddFilterDate = useCallback((value: string) => {
     if (value) {
-      setFilterDate((prev) => [...new Set([...prev, value])]);
+      setFilterDates((prev) => [...new Set([...prev, value])]);
     }
   }, []);
 
   const onSaveFilters = () => {
     dispatch(eventsActions.addRoleFilter(filterRoles));
+    dispatch(eventsActions.addDatesFilter(filterDates));
     dispatch(eventsActions.getFilteredEvents());
     onClose();
   };
-
-  function getAllDates() {
-    const allDates: string[] = [];
-    filteredEvents.map((event) => allDates.push(convertDate(event.date_time)));
-    return allDates;
-  }
 
   const onCloseModal = () => {
     setFilterRoles(roleFilters);
@@ -61,6 +63,11 @@ export const FiltersEventsWrapper = memo((props: FiltersEventsWrapperProps) => {
   const clearRoleFilters = () => {
     setFilterRoles([]);
     dispatch(eventsActions.cancelRoleFilter());
+  };
+
+  const clearDateFilters = () => {
+    setFilterDates([]);
+    dispatch(eventsActions.cancelDateFilter());
   };
 
   return (
@@ -94,11 +101,11 @@ export const FiltersEventsWrapper = memo((props: FiltersEventsWrapperProps) => {
         <div>
           <div className={cls.headerWrapper}>
             <h3 className={cls.filtersHeader}>Даты мероприятия</h3>
-            {filterRoles.length > 0 && (
+            {filterDates.length > 0 && (
               <div className={cls.counterWrapper}>
-                <div className={cls.counter}>{filterRoles.length}</div>
+                <div className={cls.counter}>{filterDates.length}</div>
                 <span>Сбросить</span>
-                <Button className={cls.counterButton} variant="clear" onClick={clearRoleFilters} />
+                <Button className={cls.counterButton} variant="clear" onClick={clearDateFilters} />
               </div>
             )}
           </div>
@@ -109,7 +116,7 @@ export const FiltersEventsWrapper = memo((props: FiltersEventsWrapperProps) => {
                 key={`${date}-timeFilter-${index}`}
                 editable
                 isEditFilter={false}
-                isFilterActive={filterDate.indexOf(date) !== -1 ? true : false}
+                isFilterActive={filterDates.indexOf(date) !== -1 ? true : false}
                 onAdd={(value) => onAddFilterDate(value as string)}
               />
             ))}

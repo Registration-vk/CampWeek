@@ -2,7 +2,7 @@
 import { PayloadAction, createEntityAdapter, createSelector, createSlice } from "@reduxjs/toolkit";
 import { EventSchema, EventsSchema, Meeting, StateSchema } from "../types/StateSchema";
 import { fetchEvents } from "../services/fetchEvents";
-import { compareArrays, getStoredCitiesIds } from "@/core/utils";
+import { compareArrays, convertDate, getStoredCitiesIds } from "@/core/utils";
 import { createInitialCities } from "@/components/ui/FiltersProfileWrapper/ui/FiltersProfileWrapper";
 import { regionsId } from "@/feature/MeetingForm/static";
 
@@ -34,9 +34,11 @@ export const eventsSlice = createSlice({
     // events: [],
     regionIds: getStoredCitiesIds(),
     filteredEvents: [],
+    prevFilteredEvents: [],
     error: "",
     isLoading: false,
     roleFilters: [],
+    datesFilters: [],
     storedCities: [],
     offset: 0,
     limit: 6,
@@ -46,13 +48,33 @@ export const eventsSlice = createSlice({
     addRoleFilter(state, action: PayloadAction<string[]>) {
       state.roleFilters = action.payload;
     },
+    addDatesFilter(state, action: PayloadAction<string[]>) {
+      state.datesFilters = action.payload;
+    },
     getFilteredEvents(state) {
-      if (state.roleFilters.length > 0) {
-        state.filteredEvents = Object.values(state.entities).filter((entity) => {
-          return compareArrays(entity.roles.split(";"), state.roleFilters);
+      if (state.roleFilters.length > 0 || state.datesFilters.length > 0) {
+        state.filteredEvents = state.prevFilteredEvents.filter((entity) => {
+          const roleFilterPassed =
+            state.roleFilters.length === 0 ||
+            compareArrays(entity.roles.split(";"), state.roleFilters);
+          const dateFilterPassed =
+            state.datesFilters.length === 0 ||
+            state.datesFilters.includes(convertDate(entity.date_time));
+
+          // Возвращаем true только если фильтры ролей и дат прошли проверку
+          return roleFilterPassed && dateFilterPassed;
         });
-        eventsAdapter.setAll(state, state.filteredEvents);
+      } else if (state.roleFilters.length === 0) {
+        state.filteredEvents = state.prevFilteredEvents.filter((entity) => {
+          const dateFilterPassed =
+            state.datesFilters.length === 0 ||
+            state.datesFilters.includes(convertDate(entity.date_time));
+          return dateFilterPassed;
+        });
+      } else {
+        state.filteredEvents = state.prevFilteredEvents;
       }
+      eventsAdapter.setAll(state, state.filteredEvents);
     },
     setRegionIds(state, action: PayloadAction<string>) {
       state.regionIds = action.payload;
@@ -60,7 +82,11 @@ export const eventsSlice = createSlice({
     },
     cancelRoleFilter(state) {
       state.roleFilters = [];
-      eventsAdapter.setAll(state, Object.values(state.entities));
+      // eventsAdapter.setAll(state, Object.values(state.entities));
+    },
+    cancelDateFilter(state) {
+      state.datesFilters = [];
+      // eventsAdapter.setAll(state, Object.values(state.entities));
     },
     setOffset(state, action: PayloadAction<number>) {
       state.offset = action.payload;
@@ -74,8 +100,10 @@ export const eventsSlice = createSlice({
       })
       .addCase(fetchEvents.fulfilled, (state, action: PayloadAction<Meeting[]>) => {
         state.isLoading = false;
-        state.hasMore = action.payload.length > 0;
+        state.hasMore = action.payload.length >= 6;
+
         eventsAdapter.addMany(state, action.payload);
+        state.prevFilteredEvents = Object.values(state.entities);
       })
       .addCase(fetchEvents.rejected, (state, action) => {
         state.error = action.payload;

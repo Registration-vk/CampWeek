@@ -21,9 +21,8 @@ import { regionsId } from "@/feature/MeetingForm/static";
 import { NotifyPopup } from "@/components/ui/Notification/NotifyPopup";
 
 export default function MeetingsPage() {
-  const { error, isLoading, roleFilters, storedCities, limit } = useSelector(getAllEvents);
+  const { error, isLoading, roleFilters, datesFilters, storedCities, limit, hasMore } = useSelector(getAllEvents);
   const filteredEvents = useSelector(getEvents.selectAll);
-  console.log(filteredEvents);
   const tabs = useMemo<Tab[]>(
     () => [{ title: "Все мероприятия" }, { title: "Участвую" }, { title: "Провожу" }],
     [],
@@ -99,9 +98,11 @@ export default function MeetingsPage() {
         {filteredEvents &&
           filteredEvents.map((event) => <SmallCard event={event} key={event.id} />)}
       </div>
-      <Button onClick={onLoadMore} variant="loadMore" className={cls.eventsLoadMoreButton}>
-        Показать еще
-      </Button>
+      {hasMore && !roleFilters.length && !datesFilters.length && (
+        <Button onClick={onLoadMore} variant="loadMore" className={cls.eventsLoadMoreButton}>
+          Показать еще
+        </Button>
+      )}
     </section>
   );
 }

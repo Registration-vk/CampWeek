@@ -119,8 +119,7 @@
     line-height: 24px;
     transition: $animation-hover;
 
-    &:hover,
-    &:focus {
+    &:hover {
       background: $button-desktop-hover;
       color: rgba(255, 255, 255, 1);
       border: none;
