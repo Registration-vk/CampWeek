@@ -19,9 +19,16 @@ import { fetchEvents } from "@/core/store/services/fetchEvents";
 import { Icon } from "@/components/ui/Icon/Icon";
 import { regionsId } from "@/feature/MeetingForm/static";
 import { NotifyPopup } from "@/components/ui/Notification/NotifyPopup";
+import {
+  fetchEventsByVisitorId,
+  fetchEventsBySpeakerId,
+} from "@/core/store/services/fetchEventsByVisitorId";
+import { getEventByVisitor } from "@/core/store/slices/eventByVisitorIdSlice";
 
 export default function MeetingsPage() {
-  const { error, isLoading, roleFilters, datesFilters, storedCities, limit, hasMore } = useSelector(getAllEvents);
+  const { error, isLoading, roleFilters, datesFilters, storedCities, limit, hasMore } =
+    useSelector(getAllEvents);
+  const { eventsBySpeakerId, eventsByVisitorId } = useSelector(getEventByVisitor);
   const filteredEvents = useSelector(getEvents.selectAll);
   const tabs = useMemo<Tab[]>(
     () => [{ title: "Все мероприятия" }, { title: "Участвую" }, { title: "Провожу" }],
@@ -33,6 +40,11 @@ export default function MeetingsPage() {
   const [tabsCounter, setTabsCounter] = useState(0);
   const dispatch = useAppDispatch();
   const offset = (currentPage - 1) * limit;
+
+  useEffect(() => {
+    dispatch(fetchEventsByVisitorId());
+    dispatch(fetchEventsBySpeakerId());
+  }, [dispatch]);
 
   const clickHandleTab = useCallback((title: string) => {
     setSelectedTab(title);
@@ -54,6 +66,16 @@ export default function MeetingsPage() {
     dispatch(fetchEvents({ offset }));
   }, [dispatch, offset]);
 
+  const showedEvents = () => {
+    if (selectedTab === tabs[0].title && filteredEvents) {
+      return filteredEvents.map((event) => <SmallCard event={event} key={event.id} />);
+    } else if (selectedTab === tabs[1].title && eventsByVisitorId) {
+      return eventsByVisitorId.map((event) => <SmallCard event={event} key={event.id} />);
+    } else if (selectedTab === tabs[2].title && eventsBySpeakerId) {
+      return eventsBySpeakerId.map((event) => <SmallCard event={event} key={event.id} />);
+    }
+  };
+
   return (
     <section>
       <FiltersEventsWrapper isOpen={isOpenFilter} onClose={onCloseFilters}></FiltersEventsWrapper>
@@ -63,7 +85,11 @@ export default function MeetingsPage() {
             tabs={tabs}
             selected={selectedTab}
             onTabClick={clickHandleTab}
-            numberSelected={filteredEvents.length}
+            numberSelected={[
+              filteredEvents.length,
+              eventsByVisitorId.length,
+              eventsBySpeakerId.length,
+            ]}
           />
           <button onClick={onOpenFilters} className={cls.counterWrapper}>
             <Icon Svg={FiltersIcon} />
@@ -95,10 +121,9 @@ export default function MeetingsPage() {
       <div className={cls.eventsWrapper}>
         {isLoading && <h5>Загрузка данных...</h5>}
         {error && <h5>При загрузке данных произошла ошибка</h5>}
-        {filteredEvents &&
-          filteredEvents.map((event) => <SmallCard event={event} key={event.id} />)}
+        {showedEvents()}
       </div>
-      {hasMore && !roleFilters.length && !datesFilters.length && (
+      {hasMore && !roleFilters.length && !datesFilters.length && selectedTab === tabs[0].title && (
         <Button onClick={onLoadMore} variant="loadMore" className={cls.eventsLoadMoreButton}>
           Показать еще
         </Button>

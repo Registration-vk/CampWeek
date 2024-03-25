@@ -5,6 +5,7 @@ import { userReducer } from "./slices/userAuthSlice";
 import { eventsReducer } from "./slices/eventsSlice";
 import { eventByIdReducer } from "./slices/eventByIdSlice";
 import { registerAsVisitorReducer } from "./slices/registerAsVisitorSlice";
+import { eventByVisitorReducer } from "./slices/eventByVisitorIdSlice";
 
 export function createReduxStore(initialState?: StateSchema) {
   return configureStore<StateSchema>({
@@ -13,6 +14,7 @@ export function createReduxStore(initialState?: StateSchema) {
       events: eventsReducer,
       eventById: eventByIdReducer,
       visitor: registerAsVisitorReducer,
+      eventByVisitorId: eventByVisitorReducer,
     },
     preloadedState: initialState,
   });

@@ -10,6 +10,7 @@ import { fetchEventById } from "@/core/store/services/fetchEventById";
 import { EventCardTheme, SmallCard } from "@/components/ui/SmallCard/SmallCard";
 import { Icon } from "@/components/ui/Icon/Icon";
 import Link from "next/link";
+import { fetchEventsByVisitorId } from "@/core/store/services/fetchEventsByVisitorId";
 
 export default function EventPage({ params }: { params: { id: string } }) {
   const { event, isLoading, error } = useSelector(getEventById);
@@ -37,6 +38,8 @@ export default function EventPage({ params }: { params: { id: string } }) {
 
   useEffect(() => {
     dispatch(fetchEventById(Number(params.id)));
+
+    dispatch(fetchEventsByVisitorId());
   }, [dispatch, params.id]);
 
   if (isLoading) {

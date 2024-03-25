@@ -4,7 +4,7 @@ import { createAsyncThunk } from "@reduxjs/toolkit";
 import { Meeting } from "../types/StateSchema";
 
 export const fetchEventById = createAsyncThunk<Meeting, number, { rejectValue: string }>(
-  "event/getEventById",
+  "event/fetchEventById",
   async (id, thunkApi) => {
     try {
       const response = await $api.get<Meeting>(`/api/v1/event/${id}`);

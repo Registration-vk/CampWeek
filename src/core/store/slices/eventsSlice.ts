@@ -14,18 +14,6 @@ export const getEvents = eventsAdapter.getSelectors<StateSchema>(
   (state) => state.events || eventsAdapter.getInitialState(),
 );
 
-// const initialState: EventsSchema = {
-//   events: [],
-//   filteredEvents: [],
-//   error: "",
-//   isLoading: false,
-//   roleFilters: [],
-//   storedCities: [],
-//   offset: 0,
-//   limit: 6,
-//   hasMore: true,
-// };
-
 export const eventsSlice = createSlice({
   name: "events",
   initialState: eventsAdapter.getInitialState<EventsSchema>({

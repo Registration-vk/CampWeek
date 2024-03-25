@@ -10,6 +10,25 @@
   background-color: $white;
 }
 
+.cardTitleWrapper {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+}
+
+.cardTitleIcon {
+  width: 44px;
+  height: 44px;
+  background: rgba(102, 201, 106, 1);
+  box-shadow: 0px 4px 30px 0px rgba(57, 62, 85, 0.1);
+  padding: 8px;
+  border-radius: 100px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-left: 20px;
+}
+
 .cardTitle {
   height: 60px;
   font-size: 24px;
@@ -220,6 +239,7 @@
   padding: 40px;
   justify-content: flex-start;
   align-items: flex-start;
+  position: relative;
 }
 
 .bigCardTitle {
@@ -314,4 +334,26 @@
 
 .links {
   color: rgba(33, 136, 246, 1);
+}
+
+.visitorWrapper {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  column-gap: 8px;
+  padding: 8px 16px;
+  border-radius: 100px;
+  background: rgba(102, 201, 106, 1);
+  box-shadow: 0px 4px 30px 0px rgba(57, 62, 85, 0.1);
+  position: absolute;
+  top: -25px;
+  right: 40px;
+  color: white;
+}
+
+.visitorText {
+  color: white;
+  font-weight: 800;
+  font-size: 20px;
+  line-height: 23px;
 }

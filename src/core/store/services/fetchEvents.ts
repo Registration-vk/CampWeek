@@ -9,7 +9,7 @@ interface FetchEventsProps {
 }
 
 export const fetchEvents = createAsyncThunk<Meeting[], FetchEventsProps, ThunkConfig<string>>(
-  "events/getEvents",
+  "events/fetchEvents",
   async (props, thunkApi) => {
     const { rejectWithValue, getState } = thunkApi;
     const { offset } = props;

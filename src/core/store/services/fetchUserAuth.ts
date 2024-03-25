@@ -7,7 +7,7 @@ interface Access {
 }
 
 export const fetchUserAuth = createAsyncThunk<Access, void, { rejectValue: string }>(
-  "login/getUserIdThunk",
+  "login/fetchUserAuth",
   async (_, thunkApi) => {
     try {
       const response = await $api.post<Access>("/api/v1/user/check_access/");

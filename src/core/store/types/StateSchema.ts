@@ -5,6 +5,7 @@ export interface StateSchema {
   events: EventsSchema;
   eventById: EventSchema;
   visitor: CreateVisitorSchema;
+  eventByVisitorId: EventsByUserSchema;
 }
 
 export interface UserSchema {
@@ -31,6 +32,13 @@ export interface EventsSchema extends EntityState<Meeting, number> {
 
 export interface EventSchema {
   event: Meeting | null;
+  isLoading: boolean;
+  error?: string;
+}
+
+export interface EventsByUserSchema {
+  eventsByVisitorId: Meeting[];
+  eventsBySpeakerId: Meeting[];
   isLoading: boolean;
   error?: string;
 }

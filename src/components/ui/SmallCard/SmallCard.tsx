@@ -11,9 +11,10 @@ import MicrophoneIcon from "@/assets/icons/icons/microphone.svg";
 import ForWhomIcon from "@/assets/icons/icons/forWhome.svg";
 import PlusIcon from "@/assets/icons/icons/plus.svg";
 import SuccessfulIcon from "@/assets/icons/icons/successful.svg";
+import CheckIcon from "@/assets/icons/icons/Check.svg";
 import { title } from "process";
 import { Icon } from "../Icon/Icon";
-import { CSSProperties, memo, useCallback, useState } from "react";
+import { CSSProperties, memo, useCallback, useEffect, useState } from "react";
 import { useUserId } from "@/app/context/context";
 import { Button } from "../Button/Button";
 import clsx from "clsx";
@@ -24,6 +25,8 @@ import Link from "next/link";
 import { useAppDispatch } from "@/core/store/hooks/typingHooks";
 import { fetchRegisterAsVisitor } from "@/core/store/services/fetchRegisterAsVisitor";
 import { Modal } from "../Modal/Modal";
+import { getEventByVisitor } from "@/core/store/slices/eventByVisitorIdSlice";
+import { useSelector } from "react-redux";
 
 export enum EventCardTheme {
   SmallCard = "smallCard",
@@ -39,14 +42,19 @@ type SmallCardProps = {
 
 export const SmallCard = memo((props: SmallCardProps) => {
   const { event, className, style, theme = EventCardTheme.SmallCard, ...otherProps } = props;
+  const { eventsByVisitorId } = useSelector(getEventByVisitor);
   const [isOpenSuccessModal, setIsOpenSuccessModal] = useState(false);
-  const [userIsVisitor, setUserIsVisitor] = useState(false);
+  const [isVisitor, setIsVisitor] = useState(false);
   const dispatch = useAppDispatch();
   const [isVisitorQueryEnabled, setIsVisitorQueryEnabled] = useState(false);
   const { isAuth, userId } = useUserId();
   const { speakers } = useSpeakersAll();
   const { data } = useUsersAll();
   const router = useRouter();
+
+  useEffect(() => {
+    setIsVisitor(eventsByVisitorId.some((value) => value.id === event.id));
+  }, [event.id, eventsByVisitorId]);
 
   const onOpenSuccessRegister = () => {};
 
@@ -59,7 +67,7 @@ export const SmallCard = memo((props: SmallCardProps) => {
       console.log("запрос");
       if (result.meta.requestStatus === "fulfilled") {
         console.log("успешно");
-        setUserIsVisitor(true);
+        setIsVisitor(true);
         setIsOpenSuccessModal(true);
       }
     }
@@ -78,7 +86,15 @@ export const SmallCard = memo((props: SmallCardProps) => {
             </div>
           </div>
         </Modal>
-        {title && <div className={styles.cardTitle}>{event.name}</div>}
+        <div className={styles.cardTitleWrapper}>
+          {title && <div className={styles.cardTitle}>{event.name}</div>}
+          {isVisitor && (
+            <div className={styles.cardTitleIcon}>
+              <Icon Svg={CheckIcon} />
+            </div>
+          )}
+        </div>
+
         <div className={styles.cardDescription}>{event.description}</div>
         <div className={styles.cardTimeWrapper}>
           <div>
@@ -108,7 +124,7 @@ export const SmallCard = memo((props: SmallCardProps) => {
           </div>
         )}
         <div className={styles.buttonWrapper}>
-          <Button onClick={registerAsVisitor} disabled={isAuth} className={styles.button}>
+          <Button onClick={registerAsVisitor} disabled={!isAuth} className={styles.button}>
             <Icon Svg={PlusIcon} />
             Участвовать
           </Button>
@@ -127,6 +143,12 @@ export const SmallCard = memo((props: SmallCardProps) => {
   if (theme === EventCardTheme.BigCard) {
     return (
       <section className={styles.bigCard} {...otherProps}>
+        {isVisitor && (
+          <div className={styles.visitorWrapper}>
+            <Icon Svg={CheckIcon} />
+            <div className={styles.visitorText}>Участвую</div>
+          </div>
+        )}
         {title && <div className={styles.bigCardTitle}>{event.name}</div>}
         <div className={styles.bigCardDescription}>{event.description}</div>
         <div className={styles.bigCardTimeWrapper}>

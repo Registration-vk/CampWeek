@@ -9,7 +9,7 @@ export interface Tab {
 interface TabsProps {
   tabs: Tab[];
   selected: string;
-  numberSelected: number | undefined;
+  numberSelected: number[];
   onTabClick: (title: string) => void;
 }
 
@@ -24,7 +24,7 @@ export const Tabs = memo((props: TabsProps) => {
   );
   return (
     <div>
-      {tabs.map((tab) => (
+      {tabs.map((tab, index) => (
         <button
           className={clsx(cls.tabsButton, {
             [cls.active]: tab.title === selected,
@@ -33,7 +33,7 @@ export const Tabs = memo((props: TabsProps) => {
           key={tab.title}
         >
           <span className={cls.tabsTitle}>{tab.title}</span>
-          <span className={cls.tabsNumber}>{numberSelected && numberSelected}</span>
+          <span className={cls.tabsNumber}>{numberSelected && numberSelected[index]}</span>
         </button>
       ))}
     </div>

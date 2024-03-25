@@ -1,3 +1,4 @@
+"use client";
 import { ButtonAuthorization } from "@/components/modules/ButtonAuthorization/ButtonAuthorization";
 import BottomLeftIcon from "./assets/bottomLeft.svg";
 import BottomRightIcon from "./assets/bottomRight.svg";
@@ -6,8 +7,11 @@ import TopTightIcon from "./assets/topRight.svg";
 
 import cls from "./Title.module.scss";
 import { Icon } from "../Icon/Icon";
+import { useSelector } from "react-redux";
+import { getUser } from "@/core/store/slices/userAuthSlice";
 
 export const Title = () => {
+  const { isAuth } = useSelector(getUser);
   return (
     <div className={cls.titleWrapper}>
       <div className={cls.titleWrapperContent}>
@@ -18,7 +22,7 @@ export const Title = () => {
         <p className={cls.titleText}>
           Мероприятия для работников и организаторов лагерей в разных городах.
         </p>
-        <ButtonAuthorization />
+        {!isAuth && <ButtonAuthorization />}
         <Icon Svg={TopLeftIcon} className={cls.titleTopLeftIcon}></Icon>
         <Icon Svg={TopTightIcon} className={cls.titleTopRightIcon}></Icon>
         <Icon Svg={BottomLeftIcon} className={cls.titleBottomLeftIcon}></Icon>

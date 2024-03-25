@@ -54,7 +54,7 @@ export const Carousel = (props: CarouselProps) => {
         onClick={handleNext}
         variant="clear"
         style={{
-          visibility: currentIndex < events.length - 1 ? "visible" : "hidden",
+          visibility: currentIndex < events.length - 2 ? "visible" : "hidden",
         }}
       >
         <Icon Svg={ArrowIcon} />

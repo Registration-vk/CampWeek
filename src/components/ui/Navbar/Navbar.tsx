@@ -13,33 +13,41 @@ import Link from "next/link";
 import { ROUTES } from "@/core/routes";
 import { usePathname, useRouter } from "next/navigation";
 import { Dropdown } from "../Dropdown/ui/Dropdown";
-import { useUserId } from "@/app/context/context";
 import Cookies from "js-cookie";
 import { useResize } from "@/core/hooks/useResize";
-import { memo, useCallback, useState } from "react";
+import { memo, useCallback, useEffect, useState } from "react";
 import { Drawer } from "../Drawer/ui/Drawer/Drawer";
 import { CustomLink } from "../CustomLink/CustomLink";
 import { ButtonAuthorization } from "@/components/modules/ButtonAuthorization/ButtonAuthorization";
 import { Button } from "../Button/Button";
+import { useSelector } from "react-redux";
+import { getUser, userActions } from "@/core/store/slices/userAuthSlice";
+import { useAppDispatch } from "@/core/store/hooks/typingHooks";
+import { fetchUserAuth } from "@/core/store/services/fetchUserAuth";
 
 export const Navbar = memo(() => {
-  const { isAuth, setUserId, setIsAuth, isLoading } = useUserId();
+  const { isAuth, isLoading, error, userId } = useSelector(getUser);
+  const dispatch = useAppDispatch();
   const [isOpen, setIsOpen] = useState<boolean>(false);
   const { width } = useResize();
   const currentPathname = usePathname();
   const router = useRouter();
+
+  useEffect(() => {
+    dispatch(userActions.getUserIdFromCookie());
+    dispatch(fetchUserAuth());
+  }, [dispatch]);
 
   //TODO: решить баг с переходом на страницу при выходе из личного кабинета
   //TODO: убрать перерисовки при изменении ширина окна
 
   const onLogout = useCallback(() => {
     router.replace("/");
-    setUserId(null);
-    setIsAuth(false);
+    dispatch(userActions.logout());
     setIsOpen(false);
     localStorage.removeItem("token");
     Cookies.remove("access_token");
-  }, [router, setIsAuth, setUserId]);
+  }, [dispatch, router]);
 
   const onOpenDrawer = useCallback(() => {
     setIsOpen(true);
