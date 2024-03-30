@@ -45,8 +45,9 @@
   display: flex;
   justify-content: space-between;
   align-items: center;
-  width: 378px;
+  width: auto;
   position: relative;
+  column-gap: 40px;
   :hover,
   :active {
     cursor: pointer;

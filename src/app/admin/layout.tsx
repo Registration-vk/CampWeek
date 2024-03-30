@@ -24,27 +24,42 @@ import {
   fetchEventsBySpeakerId,
 } from "@/core/store/services/fetchEventsByVisitorId";
 import { getEventByVisitor } from "@/core/store/slices/eventByVisitorIdSlice";
-import { getUser } from "@/core/store/slices/userAuthSlice";
+import { getUser, getUserId, getUserIsAdmin } from "@/core/store/slices/userAuthSlice";
+import { fetchAdminRole } from "@/core/store/services/fetchAdminRole";
 
 export default function MeetingsPage() {
   const { error, isLoading, roleFilters, datesFilters, limit, hasMore } = useSelector(getAllEvents);
   const { storedCities } = useSelector(getUser);
+  const userId = useSelector(getUserId);
   const { eventsBySpeakerId, eventsByVisitorId } = useSelector(getEventByVisitor);
   const filteredEvents = useSelector(getEvents.selectAll);
   const tabs = useMemo<Tab[]>(
-    () => [{ title: "Все мероприятия" }, { title: "Участвую" }, { title: "Провожу" }],
+    () => [{ title: "Заявки" }, { title: "Активные" }, { title: "Архив" }],
     [],
   );
   const [selectedTab, setSelectedTab] = useState(tabs[0].title);
   const [currentPage, setCurrentPage] = useState(1);
   const [isOpenFilter, setIsOpenFilter] = useState(false);
+  const [approvedEvents, setApprovedEvents] = useState(
+    filteredEvents.filter((event) => {
+      return event.approved === true;
+    }),
+  );
+  const [noApprovedEvents, setNoApprovedEvents] = useState(
+    filteredEvents.filter((event) => {
+      return event.approved === false;
+    }),
+  );
   const dispatch = useAppDispatch();
   const offset = (currentPage - 1) * limit;
 
   useEffect(() => {
     dispatch(fetchEventsByVisitorId());
     dispatch(fetchEventsBySpeakerId());
-  }, [dispatch]);
+    if (userId) {
+      dispatch(fetchAdminRole(userId));
+    }
+  }, [dispatch, userId]);
 
   const clickHandleTab = useCallback((title: string) => {
     setSelectedTab(title);
@@ -68,12 +83,24 @@ export default function MeetingsPage() {
 
   const showedEvents = () => {
     if (selectedTab === tabs[0].title && filteredEvents) {
-      return filteredEvents.map((event) => <SmallCard event={event} key={event.id} />);
+      return filteredEvents.map((event) => (
+        <SmallCard event={event} key={event.id} isAdmin={true} isApproved={false} />
+      ));
     } else if (selectedTab === tabs[1].title && eventsByVisitorId) {
-      return eventsByVisitorId.map((event) => <SmallCard event={event} key={event.id} />);
+      return eventsByVisitorId.map((event) => (
+        <SmallCard event={event} key={event.id} isAdmin={true} isApproved={false} />
+      ));
     } else if (selectedTab === tabs[2].title && eventsBySpeakerId) {
-      return eventsBySpeakerId.map((event) => <SmallCard event={event} key={event.id} />);
+      return eventsBySpeakerId.map((event) => (
+        <SmallCard event={event} key={event.id} isAdmin={true} isApproved={false} />
+      ));
     }
+  };
+
+  const getApprovedEvents = (approve: boolean) => {
+    return filteredEvents.filter((event) => {
+      event.approved === approve;
+    });
   };
 
   return (
@@ -86,7 +113,7 @@ export default function MeetingsPage() {
             selected={selectedTab}
             onTabClick={clickHandleTab}
             numberSelected={[
-              filteredEvents.length,
+              noApprovedEvents.length,
               eventsByVisitorId.length,
               eventsBySpeakerId.length,
             ]}

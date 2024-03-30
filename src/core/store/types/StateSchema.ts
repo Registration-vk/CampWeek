@@ -11,6 +11,7 @@ export interface StateSchema {
 export interface UserSchema {
   userId?: number | null;
   isAuth: boolean;
+  isAdmin: boolean;
   isLoading: boolean;
   storedCities: string[];
   error?: string;

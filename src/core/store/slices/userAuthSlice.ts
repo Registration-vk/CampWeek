@@ -5,12 +5,14 @@ import { StateSchema, UserSchema } from "../types/StateSchema";
 import Cookies from "js-cookie";
 import jwt from "jsonwebtoken";
 import { getStoredCities } from "@/core/utils";
+import { fetchAdminRole } from "../services/fetchAdminRole";
 
 const initialState: UserSchema = {
   userId: undefined,
   storedCities: getStoredCities(),
   isAuth: false,
   isLoading: false,
+  isAdmin: false,
 };
 
 export const userAuthSlice = createSlice({
@@ -58,6 +60,20 @@ export const userAuthSlice = createSlice({
         state.error = action.payload;
         state.isLoading = false;
       });
+    builder
+      .addCase(fetchAdminRole.pending, (state, action) => {
+        state.error = undefined;
+        state.isLoading = true;
+      })
+      .addCase(fetchAdminRole.fulfilled, (state, action) => {
+        state.isLoading = false;
+        console.log(`Пользователь админ: ${action.payload}`);
+        state.isAdmin = action.payload;
+      })
+      .addCase(fetchAdminRole.rejected, (state, action) => {
+        state.error = action.payload;
+        state.isLoading = false;
+      });
   },
 });
 
@@ -67,3 +83,4 @@ export const { reducer: userReducer } = userAuthSlice;
 export const getUser = (state: StateSchema) => state.user;
 export const getUserId = (state: StateSchema) => state.user.userId;
 export const getUserIsAuth = (state: StateSchema) => state.user.isAuth;
+export const getUserIsAdmin = (state: StateSchema) => state.user.isAdmin;

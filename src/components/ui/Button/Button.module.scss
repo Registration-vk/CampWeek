@@ -119,6 +119,10 @@
     line-height: 24px;
     transition: $animation-hover;
 
+    svg {
+      margin-right: 8px;
+    }
+
     &:hover {
       background: $button-desktop-hover;
       color: rgba(255, 255, 255, 1);
@@ -147,11 +151,11 @@
     cursor: auto;
 
     &:hover {
-      background: rgba(244, 245, 246, 1);
+      background: inherit;
     }
 
     &:active {
-      background: rgba(244, 245, 246, 1);
+      background: inherit;
     }
   }
 }

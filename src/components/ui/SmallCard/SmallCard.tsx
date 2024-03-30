@@ -25,7 +25,8 @@ import { fetchRegisterAsVisitor } from "@/core/store/services/fetchRegisterAsVis
 import { Modal } from "../Modal/Modal";
 import { getEventByVisitor } from "@/core/store/slices/eventByVisitorIdSlice";
 import { useSelector } from "react-redux";
-import { getUserId, getUserIsAuth } from "@/core/store/slices/userAuthSlice";
+import { getUserId, getUserIsAdmin, getUserIsAuth } from "@/core/store/slices/userAuthSlice";
+import { fetchApproveEvent } from "@/core/store/services/fetchApproveEvent";
 
 export enum EventCardTheme {
   SmallCard = "smallCard",
@@ -42,6 +43,7 @@ type SmallCardProps = {
 export const SmallCard = memo((props: SmallCardProps) => {
   const { event, className, style, theme = EventCardTheme.SmallCard, ...otherProps } = props;
   const { eventsByVisitorId } = useSelector(getEventByVisitor);
+  const isAdmin = useSelector(getUserIsAdmin);
   const [isOpenSuccessModal, setIsOpenSuccessModal] = useState(false);
   const [isVisitor, setIsVisitor] = useState(false);
   const dispatch = useAppDispatch();
@@ -74,11 +76,21 @@ export const SmallCard = memo((props: SmallCardProps) => {
     console.log("ОТМЕНА РЕГИСТРАЦИИ");
   };
 
-  // className={styles.button_Big}
-  //           style={{ width: "600px" }}
+  const approveEvent = async () => {
+    await dispatch(fetchApproveEvent(event.id));
+  };
 
-  const registerAsVisitorButton = () => {
-    if (!isVisitor) {
+  const buttonForCard = () => {
+    if (isAdmin && event.approved === false) {
+      return (
+        <Button
+          onClick={approveEvent}
+          className={theme === EventCardTheme.SmallCard ? styles.button : styles.button_Big}
+        >
+          Одобрить
+        </Button>
+      );
+    } else if (!isVisitor) {
       return (
         <Button
           onClick={registerAsVisitor}
@@ -89,7 +101,7 @@ export const SmallCard = memo((props: SmallCardProps) => {
           Участвовать
         </Button>
       );
-    } else {
+    } else if (isVisitor) {
       return (
         <Button
           onClick={cancelRegisterVisitor}
@@ -100,6 +112,8 @@ export const SmallCard = memo((props: SmallCardProps) => {
           Отменить
         </Button>
       );
+    } else {
+      return;
     }
   };
 
@@ -154,11 +168,7 @@ export const SmallCard = memo((props: SmallCardProps) => {
           </div>
         )}
         <div className={styles.buttonWrapper}>
-          {/* <Button onClick={registerAsVisitor} disabled={!isAuth} className={styles.button}>
-            <Icon Svg={PlusIcon} />
-            Участвовать
-          </Button> */}
-          {registerAsVisitorButton()}
+          {buttonForCard()}
           <Button
             variant="clear"
             onClick={() => router.push(`/event/${event.id}`)}
@@ -242,7 +252,7 @@ export const SmallCard = memo((props: SmallCardProps) => {
           </div>
         </div>
 
-        <div className={styles.buttonWrapper}>{registerAsVisitorButton()}</div>
+        <div className={styles.buttonWrapper}>{buttonForCard()}</div>
       </section>
     );
   }

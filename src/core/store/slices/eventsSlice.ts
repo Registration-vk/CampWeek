@@ -5,6 +5,7 @@ import { fetchEvents } from "../services/fetchEvents";
 import { compareArrays, convertDate, getStoredCitiesIds } from "@/core/utils";
 import { createInitialCities } from "@/components/ui/FiltersProfileWrapper/ui/FiltersProfileWrapper";
 import { regionsId } from "@/feature/MeetingForm/static";
+import { fetchApproveEvent } from "../services/fetchApproveEvent";
 
 const eventsAdapter = createEntityAdapter({
   selectId: (event: Meeting) => event.id,

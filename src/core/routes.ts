@@ -19,5 +19,8 @@ export const ROUTES = {
     meetings: {
       path: "/meetings",
     },
+    admin: {
+      path: "/admin",
+    },
   },
 };

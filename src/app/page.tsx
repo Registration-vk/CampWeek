@@ -8,6 +8,7 @@ import { fetchEvents } from "@/core/store/services/fetchEvents";
 import { useEffect } from "react";
 import { useSelector } from "react-redux";
 import { getAllEvents, getEvents } from "@/core/store/slices/eventsSlice";
+import { Footer } from "@/components/ui/Footer/Footer";
 
 export default function Home() {
   // const { events, isError, isLoading } = useEventsAll();
@@ -19,7 +20,7 @@ export default function Home() {
   }, [dispatch]);
 
   return (
-    <div className={styles.Main}>
+    <div className={styles.main}>
       <Title />
       <MainBanner />
       <div className={styles.eventsWrapper}>
@@ -35,6 +36,7 @@ export default function Home() {
             </div>
           ))}
       </div>
+      <Footer />
     </div>
   );
 }
