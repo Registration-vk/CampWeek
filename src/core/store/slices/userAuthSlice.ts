@@ -66,3 +66,4 @@ export const { reducer: userReducer } = userAuthSlice;
 
 export const getUser = (state: StateSchema) => state.user;
 export const getUserId = (state: StateSchema) => state.user.userId;
+export const getUserIsAuth = (state: StateSchema) => state.user.isAuth;

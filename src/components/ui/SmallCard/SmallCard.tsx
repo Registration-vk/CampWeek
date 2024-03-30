@@ -1,5 +1,4 @@
 import styles from "./SmallCard.module.scss";
-import { Event } from "@/core/services/events";
 import { useUsersAll } from "@/core/hooks";
 import { useSpeakersAll } from "@/core/hooks/useSpeakers";
 import { convertDate, getParticipants } from "@/core/utils";
@@ -14,8 +13,7 @@ import SuccessfulIcon from "@/assets/icons/icons/successful.svg";
 import CheckIcon from "@/assets/icons/icons/Check.svg";
 import { title } from "process";
 import { Icon } from "../Icon/Icon";
-import { CSSProperties, memo, useCallback, useEffect, useState } from "react";
-import { useUserId } from "@/app/context/context";
+import { CSSProperties, memo, useEffect, useState } from "react";
 import { Button } from "../Button/Button";
 import clsx from "clsx";
 import { regionsId } from "@/feature/MeetingForm/static";
@@ -27,6 +25,7 @@ import { fetchRegisterAsVisitor } from "@/core/store/services/fetchRegisterAsVis
 import { Modal } from "../Modal/Modal";
 import { getEventByVisitor } from "@/core/store/slices/eventByVisitorIdSlice";
 import { useSelector } from "react-redux";
+import { getUserId, getUserIsAuth } from "@/core/store/slices/userAuthSlice";
 
 export enum EventCardTheme {
   SmallCard = "smallCard",
@@ -47,7 +46,8 @@ export const SmallCard = memo((props: SmallCardProps) => {
   const [isVisitor, setIsVisitor] = useState(false);
   const dispatch = useAppDispatch();
   const [isVisitorQueryEnabled, setIsVisitorQueryEnabled] = useState(false);
-  const { isAuth, userId } = useUserId();
+  const userId = useSelector(getUserId);
+  const isAuth = useSelector(getUserIsAuth);
   const { speakers } = useSpeakersAll();
   const { data } = useUsersAll();
   const router = useRouter();
@@ -59,14 +59,11 @@ export const SmallCard = memo((props: SmallCardProps) => {
   const onOpenSuccessRegister = () => {};
 
   const registerAsVisitor = async () => {
-    console.log("нажал кнопку");
     if (event.id && userId) {
       const result = await dispatch(
         fetchRegisterAsVisitor({ event_id: event.id, visitor_id: userId }),
       );
-      console.log("запрос");
       if (result.meta.requestStatus === "fulfilled") {
-        console.log("успешно");
         setIsVisitor(true);
         setIsOpenSuccessModal(true);
       }

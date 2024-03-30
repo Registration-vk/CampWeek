@@ -1,16 +1,15 @@
 "use client";
-import { useUserId } from "@/app/context/context";
-
 import { InputField, MultipleSelectField, SingleSelectField } from "@/components/ui/form";
 import { withForm, WrappedComponentProps } from "@/core/hoc";
 import { useUserById } from "@/core/hooks";
 
 import { schema } from "./schema";
-import { optionsMeetings, optionsRoles } from "./static";
 import styles from "./styles.module.scss";
+import { useSelector } from "react-redux";
+import { getUserId } from "@/core/store/slices/userAuthSlice";
 
 export function Index(props: WrappedComponentProps) {
-  const { userId } = useUserId();
+  const userId = useSelector(getUserId);
   const { data: user, isLoading, isError } = useUserById(Number(userId), `/api/v1/user/${userId}`);
 
   return (

@@ -1,6 +1,5 @@
 "use client";
 import Loading from "@/app/account/loading";
-import { useUserId } from "@/app/context/context";
 import Cookies from "js-cookie";
 import { useRouter } from "next/navigation";
 
@@ -9,6 +8,9 @@ import { ButtonAuthorization } from "@/components/modules/ButtonAuthorization/Bu
 import { Button } from "../Button/Button";
 
 import classes from "./styles.module.scss";
+import { useSelector } from "react-redux";
+import { getUser, getUserIsAuth, userActions } from "@/core/store/slices/userAuthSlice";
+import { useAppDispatch } from "@/core/store/hooks/typingHooks";
 
 type Props = {
   isSignedIn: boolean;
@@ -17,7 +19,8 @@ type Props = {
 // TODO: удалить компонент полностью
 
 export default function AuthBlock(props: Props) {
-  const { setUserId, isLoading, isAuth, setIsAuth } = useUserId();
+  const { isAuth, isLoading } = useSelector(getUser);
+  const dispatch = useAppDispatch();
   const router = useRouter();
 
   const onLogin = () => {
@@ -26,8 +29,7 @@ export default function AuthBlock(props: Props) {
 
   const onLogout = () => {
     router.push("/");
-    setUserId(null);
-    setIsAuth(false);
+    dispatch(userActions.logout());
     localStorage.removeItem("token");
     Cookies.remove("access_token");
   };

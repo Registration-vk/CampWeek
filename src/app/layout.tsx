@@ -6,8 +6,6 @@ import { Manrope } from "next/font/google";
 
 import { QueryProvider } from "@/core/providers";
 
-import { UserProvider } from "./context/context";
-
 import styles from "./styles.module.scss";
 import "./styles/global.scss";
 import { Navbar } from "@/components/ui/Navbar/Navbar";
@@ -23,16 +21,14 @@ export const metadata: Metadata = {
 export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
     <StoreProvider>
-      <UserProvider>
-        <html lang="ru">
-          <body className={manrope.className}>
-            <Navbar />
-            <QueryProvider>
-              <div className={styles.Container}>{children}</div>
-            </QueryProvider>
-          </body>
-        </html>
-      </UserProvider>
+      <html lang="ru">
+        <body className={manrope.className}>
+          <Navbar />
+          <QueryProvider>
+            <div className={styles.Container}>{children}</div>
+          </QueryProvider>
+        </body>
+      </html>
     </StoreProvider>
   );
 }

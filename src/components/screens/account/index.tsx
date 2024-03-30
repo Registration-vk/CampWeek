@@ -3,17 +3,18 @@
 import { useCallback, useState } from "react";
 import { FieldValues } from "react-hook-form";
 
-import { useUserId } from "@/app/context/context";
 import UserForm from "@/feature/UserForm";
 
 import { Button } from "@/components/ui";
 import { Modal } from "@/components/ui/Modal/Modal";
 import { useUpdate } from "@/core/hooks";
 import { UserFormData } from "@/core/services/users";
+import { useSelector } from "react-redux";
+import { getUserId } from "@/core/store/slices/userAuthSlice";
 
 export default function AccountScreen() {
   const [isAuthModal, setIsAuthModal] = useState(false);
-  const { userId } = useUserId();
+  const userId = useSelector(getUserId);
   const mutation = useUpdate<UserFormData>(`/api/v1/user/${userId}`, { userId });
 
   const formSubmittedCallback = async (formData: UserFormData) => {

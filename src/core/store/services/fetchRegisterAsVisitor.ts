@@ -16,3 +16,17 @@ export const fetchRegisterAsVisitor = createAsyncThunk<
     return thunkApi.rejectWithValue(`error: ${error}`);
   }
 });
+
+export const fetchRegisterAsSpeaker = createAsyncThunk<
+  CreateVisitor,
+  CreateVisitor,
+  { rejectValue: string }
+>("user/fetchRegisterAsVisitor", async (ids, thunkApi) => {
+  try {
+    const response = await $api.post<CreateVisitor>("/api/v1/eventvisitor", ids);
+    return response.data;
+  } catch (error) {
+    console.log(error);
+    return thunkApi.rejectWithValue(`error: ${error}`);
+  }
+});
