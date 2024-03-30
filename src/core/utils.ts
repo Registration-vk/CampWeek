@@ -57,12 +57,16 @@ export const convertDate = (date: string) => {
   return formattedDateStr;
 };
 
-export const getStoredCitiesIds = (): string => {
+export const getStoredCities = () => {
   const storedCities = localStorage.getItem("cities");
+  return storedCities ? JSON.parse(storedCities) : [];
+};
+
+export const getStoredCitiesIds = (): string => {
+  const storedCities = getStoredCities();
 
   if (storedCities) {
-    const parsedStoredCities = JSON.parse(storedCities);
-    const ids = parsedStoredCities.map((value: string) => {
+    const ids = storedCities.map((value: string) => {
       return Object.keys(regionsId).find((key) => regionsId[key as unknown as number] === value);
     });
     console.log(ids.join(";"));

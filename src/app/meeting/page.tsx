@@ -9,14 +9,13 @@ import { useCreateEvent } from "@/core/hooks";
 import { useCreateSpeaker } from "@/core/hooks/useSpeakers";
 import { ROUTES } from "@/core/routes";
 import { EventFormData } from "@/core/services/events";
-
-import { useUserId } from "../context/context";
+import { useSelector } from "react-redux";
+import { getUserId } from "@/core/store/slices/userAuthSlice";
 
 export default function MeetingPage() {
+  const userId = useSelector(getUserId);
   const [submittedData, setSubmittedData] = useState<EventFormData>({} as EventFormData);
   const [isQueryEnabled, setIsQueryEnabled] = useState(false);
-
-  const { userId } = useUserId();
   console.log("userId meeting", userId);
   const { event, isError, isSuccess } = useCreateEvent(submittedData, isQueryEnabled);
   const { speaker, isSuccessful } = useCreateSpeaker(

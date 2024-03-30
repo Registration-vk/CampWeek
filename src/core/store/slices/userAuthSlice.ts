@@ -4,9 +4,11 @@ import { createSlice } from "@reduxjs/toolkit";
 import { StateSchema, UserSchema } from "../types/StateSchema";
 import Cookies from "js-cookie";
 import jwt from "jsonwebtoken";
+import { getStoredCities } from "@/core/utils";
 
 const initialState: UserSchema = {
   userId: undefined,
+  storedCities: getStoredCities(),
   isAuth: false,
   isLoading: false,
 };

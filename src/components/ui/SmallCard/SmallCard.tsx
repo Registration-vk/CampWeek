@@ -73,6 +73,39 @@ export const SmallCard = memo((props: SmallCardProps) => {
     }
   };
 
+  const cancelRegisterVisitor = async () => {
+    console.log("ОТМЕНА РЕГИСТРАЦИИ");
+  };
+
+  // className={styles.button_Big}
+  //           style={{ width: "600px" }}
+
+  const registerAsVisitorButton = () => {
+    if (!isVisitor) {
+      return (
+        <Button
+          onClick={registerAsVisitor}
+          disabled={!isAuth}
+          className={theme === EventCardTheme.SmallCard ? styles.button : styles.button_Big}
+        >
+          <Icon Svg={PlusIcon} />
+          Участвовать
+        </Button>
+      );
+    } else {
+      return (
+        <Button
+          onClick={cancelRegisterVisitor}
+          disabled={!isAuth}
+          className={theme === EventCardTheme.SmallCard ? styles.button : styles.button_Big}
+          variant="loadMore"
+        >
+          Отменить
+        </Button>
+      );
+    }
+  };
+
   if (theme === EventCardTheme.SmallCard) {
     return (
       <section className={clsx(styles.card, {}, [className])} style={style} {...otherProps}>
@@ -124,10 +157,11 @@ export const SmallCard = memo((props: SmallCardProps) => {
           </div>
         )}
         <div className={styles.buttonWrapper}>
-          <Button onClick={registerAsVisitor} disabled={!isAuth} className={styles.button}>
+          {/* <Button onClick={registerAsVisitor} disabled={!isAuth} className={styles.button}>
             <Icon Svg={PlusIcon} />
             Участвовать
-          </Button>
+          </Button> */}
+          {registerAsVisitorButton()}
           <Button
             variant="clear"
             onClick={() => router.push(`/event/${event.id}`)}
@@ -211,17 +245,7 @@ export const SmallCard = memo((props: SmallCardProps) => {
           </div>
         </div>
 
-        <div className={styles.buttonWrapper}>
-          <Button
-            onClick={registerAsVisitor}
-            disabled={isAuth}
-            className={styles.button_Big}
-            style={{ width: "600px" }}
-          >
-            <Icon Svg={PlusIcon} />
-            Участвовать
-          </Button>
-        </div>
+        <div className={styles.buttonWrapper}>{registerAsVisitorButton()}</div>
       </section>
     );
   }

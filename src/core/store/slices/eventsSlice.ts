@@ -27,7 +27,6 @@ export const eventsSlice = createSlice({
     isLoading: false,
     roleFilters: [],
     datesFilters: [],
-    storedCities: [],
     offset: 0,
     limit: 6,
     hasMore: true,

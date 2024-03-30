@@ -24,10 +24,11 @@ import {
   fetchEventsBySpeakerId,
 } from "@/core/store/services/fetchEventsByVisitorId";
 import { getEventByVisitor } from "@/core/store/slices/eventByVisitorIdSlice";
+import { getUser } from "@/core/store/slices/userAuthSlice";
 
 export default function MeetingsPage() {
-  const { error, isLoading, roleFilters, datesFilters, storedCities, limit, hasMore } =
-    useSelector(getAllEvents);
+  const { error, isLoading, roleFilters, datesFilters, limit, hasMore } = useSelector(getAllEvents);
+  const { storedCities } = useSelector(getUser);
   const { eventsBySpeakerId, eventsByVisitorId } = useSelector(getEventByVisitor);
   const filteredEvents = useSelector(getEvents.selectAll);
   const tabs = useMemo<Tab[]>(
@@ -37,7 +38,6 @@ export default function MeetingsPage() {
   const [selectedTab, setSelectedTab] = useState(tabs[0].title);
   const [currentPage, setCurrentPage] = useState(1);
   const [isOpenFilter, setIsOpenFilter] = useState(false);
-  const [tabsCounter, setTabsCounter] = useState(0);
   const dispatch = useAppDispatch();
   const offset = (currentPage - 1) * limit;
 
@@ -75,6 +75,8 @@ export default function MeetingsPage() {
       return eventsBySpeakerId.map((event) => <SmallCard event={event} key={event.id} />);
     }
   };
+
+  console.log(`STOREDCITY ${storedCities}`);
 
   return (
     <section>

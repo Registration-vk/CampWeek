@@ -12,6 +12,7 @@ export interface UserSchema {
   userId?: number | null;
   isAuth: boolean;
   isLoading: boolean;
+  storedCities: string[];
   error?: string;
 }
 
@@ -22,7 +23,6 @@ export interface EventsSchema extends EntityState<Meeting, number> {
   regionIds: string;
   roleFilters: string[];
   datesFilters: string[];
-  storedCities: string[];
   isLoading: boolean;
   error?: string;
   offset: number;
