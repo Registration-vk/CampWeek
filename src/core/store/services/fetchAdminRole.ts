@@ -6,7 +6,7 @@ export const fetchAdminRole = createAsyncThunk<boolean, number, { rejectValue: s
   "login/fetchAdminRole",
   async (userId, thunkApi) => {
     try {
-      const response = await $api.post<number>(`/api/v1/userrole/check_admin_role/${userId}`);
+      const response = await $api.get<number>(`/api/v1/userrole/check_admin_role/${userId}`);
       if (response.status === 200) {
         return true;
       } else {

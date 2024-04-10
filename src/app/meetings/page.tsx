@@ -24,20 +24,27 @@ import {
   fetchEventsBySpeakerId,
 } from "@/core/store/services/fetchEventsByVisitorId";
 import { getEventByVisitor } from "@/core/store/slices/eventByVisitorIdSlice";
-import { getUser } from "@/core/store/slices/userAuthSlice";
+import { getUser, getUserIsAdmin } from "@/core/store/slices/userAuthSlice";
 
 export default function MeetingsPage() {
   const { error, isLoading, roleFilters, datesFilters, limit, hasMore } = useSelector(getAllEvents);
   const { storedCities } = useSelector(getUser);
+  const isAdmin = useSelector(getUserIsAdmin);
   const { eventsBySpeakerId, eventsByVisitorId } = useSelector(getEventByVisitor);
   const filteredEvents = useSelector(getEvents.selectAll);
   const tabs = useMemo<Tab[]>(
     () => [{ title: "Все мероприятия" }, { title: "Участвую" }, { title: "Провожу" }],
     [],
   );
-  const [selectedTab, setSelectedTab] = useState(tabs[0].title);
+  const tabsAdmin = useMemo<Tab[]>(
+    () => [{ title: "Заявки" }, { title: "Активные" }, { title: "Все мероприятия" }],
+    [],
+  );
+  const [ordersLength, setIsOrdersLength] = useState();
+  const [selectedTab, setSelectedTab] = useState(isAdmin ? tabsAdmin[0].title : tabs[0].title);
   const [currentPage, setCurrentPage] = useState(1);
   const [isOpenFilter, setIsOpenFilter] = useState(false);
+  const [passedEvents, setPassedEvents] = useState([]);
   const dispatch = useAppDispatch();
   const offset = (currentPage - 1) * limit;
 
@@ -63,16 +70,46 @@ export default function MeetingsPage() {
   }, []);
 
   useEffect(() => {
-    dispatch(fetchEvents({ offset }));
+    if (isAdmin) {
+      dispatch(fetchEvents({ actualType: "all", offset, approved: true }));
+    } else {
+      dispatch(fetchEvents({ offset, approved: true }));
+    }
   }, [dispatch, offset]);
 
   const showedEvents = () => {
-    if (selectedTab === tabs[0].title && filteredEvents) {
-      return filteredEvents.map((event) => <SmallCard event={event} key={event.id} />);
-    } else if (selectedTab === tabs[1].title && eventsByVisitorId) {
-      return eventsByVisitorId.map((event) => <SmallCard event={event} key={event.id} />);
-    } else if (selectedTab === tabs[2].title && eventsBySpeakerId) {
-      return eventsBySpeakerId.map((event) => <SmallCard event={event} key={event.id} />);
+    if (isAdmin) {
+      if (selectedTab === tabsAdmin[0].title && filteredEvents) {
+        return filteredEvents
+          .filter((event) => {
+            return event.approved === false;
+          })
+          .map((event) => <SmallCard event={event} key={event.id} isAdmin={isAdmin} />);
+      } else if (selectedTab === tabsAdmin[1].title && eventsByVisitorId) {
+        return filteredEvents
+          .filter((event) => {
+            return event.approved === true;
+          })
+          .map((event) => <SmallCard event={event} key={event.id} isAdmin={isAdmin} />);
+      } else if (selectedTab === tabsAdmin[2].title && eventsBySpeakerId) {
+        return filteredEvents.map((event) => (
+          <SmallCard event={event} key={event.id} isAdmin={isAdmin} />
+        ));
+      }
+    } else {
+      if (selectedTab === tabs[0].title && filteredEvents) {
+        return filteredEvents.map((event) => (
+          <SmallCard event={event} key={event.id} isAdmin={isAdmin} />
+        ));
+      } else if (selectedTab === tabs[1].title && eventsByVisitorId) {
+        return eventsByVisitorId.map((event) => (
+          <SmallCard event={event} key={event.id} isAdmin={isAdmin} />
+        ));
+      } else if (selectedTab === tabs[2].title && eventsBySpeakerId) {
+        return eventsBySpeakerId.map((event) => (
+          <SmallCard event={event} key={event.id} isAdmin={isAdmin} />
+        ));
+      }
     }
   };
 
@@ -81,16 +118,34 @@ export default function MeetingsPage() {
       <FiltersEventsWrapper isOpen={isOpenFilter} onClose={onCloseFilters}></FiltersEventsWrapper>
       <div className={cls.filtersWrapper}>
         <div className={cls.buttonWrapper}>
-          <Tabs
-            tabs={tabs}
-            selected={selectedTab}
-            onTabClick={clickHandleTab}
-            numberSelected={[
-              filteredEvents.length,
-              eventsByVisitorId.length,
-              eventsBySpeakerId.length,
-            ]}
-          />
+          {!isAdmin && (
+            <Tabs
+              tabs={tabs}
+              selected={selectedTab}
+              onTabClick={clickHandleTab}
+              numberSelected={[
+                filteredEvents.length,
+                eventsByVisitorId.length,
+                eventsBySpeakerId.length,
+              ]}
+            />
+          )}
+          {isAdmin && (
+            <Tabs
+              tabs={tabsAdmin}
+              selected={selectedTab}
+              onTabClick={clickHandleTab}
+              numberSelected={[
+                filteredEvents.filter((event) => {
+                  return event.approved === false;
+                }).length,
+                filteredEvents.filter((event) => {
+                  return event.approved === true;
+                }).length,
+                filteredEvents.length,
+              ]}
+            />
+          )}
           <button onClick={onOpenFilters} className={cls.counterWrapper}>
             <Icon Svg={FiltersIcon} />
             <div className={cls.counterText}>Настройка фильтров</div>

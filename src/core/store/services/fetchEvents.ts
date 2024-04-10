@@ -6,23 +6,28 @@ import { getCitiesIdsEvents, getLimitForEvents, getOffsetForEvents } from "../sl
 
 interface FetchEventsProps {
   offset: number;
+  actualType?: "actual" | "all" | "passed";
+  approved?: boolean;
 }
 
 export const fetchEvents = createAsyncThunk<Meeting[], FetchEventsProps, ThunkConfig<string>>(
   "events/fetchEvents",
   async (props, thunkApi) => {
     const { rejectWithValue, getState } = thunkApi;
-    const { offset } = props;
+    const { actualType = "actual", offset, approved } = props;
     const limit = getLimitForEvents(getState());
     const citiesIds = getCitiesIdsEvents(getState());
     try {
       const response = await $api.get<Meeting[]>("/api/v1/event/", {
         params: {
+          actual_type: actualType,
           offset,
           limit,
           region_ids: citiesIds,
+          approved,
         },
       });
+      console.log(response.data);
       return response.data;
     } catch (error) {
       console.log(error);

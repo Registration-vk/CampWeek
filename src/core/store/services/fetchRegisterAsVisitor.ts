@@ -30,3 +30,20 @@ export const fetchRegisterAsSpeaker = createAsyncThunk<
     return thunkApi.rejectWithValue(`error: ${error}`);
   }
 });
+
+export const removeRegisterAsVisitor = createAsyncThunk<
+  any,
+  CreateVisitor,
+  { rejectValue: string }
+>("user/fetchRegisterAsVisitor", async (props, thunkApi) => {
+  const { event_id, visitor_id } = props;
+  try {
+    const response = await $api.delete(`/api/v1/eventvisitor/${event_id}/${visitor_id}/`);
+    if (response.status === 200) {
+      return "Удаление прошло успешно";
+    }
+  } catch (error) {
+    console.log(error);
+    return thunkApi.rejectWithValue(`error: ${error}`);
+  }
+});

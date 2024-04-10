@@ -10,6 +10,7 @@ import MicrophoneIcon from "@/assets/icons/icons/microphone.svg";
 import ForWhomIcon from "@/assets/icons/icons/forWhome.svg";
 import PlusIcon from "@/assets/icons/icons/plus.svg";
 import SuccessfulIcon from "@/assets/icons/icons/successful.svg";
+import RejectIcon from "@/assets/icons/icons/Cancel.svg";
 import CheckIcon from "@/assets/icons/icons/Check.svg";
 import { title } from "process";
 import { Icon } from "../Icon/Icon";
@@ -21,12 +22,16 @@ import { useRouter } from "next/navigation";
 import { Meeting } from "@/core/store/types/StateSchema";
 import Link from "next/link";
 import { useAppDispatch } from "@/core/store/hooks/typingHooks";
-import { fetchRegisterAsVisitor } from "@/core/store/services/fetchRegisterAsVisitor";
+import {
+  fetchRegisterAsVisitor,
+  removeRegisterAsVisitor,
+} from "@/core/store/services/fetchRegisterAsVisitor";
 import { Modal } from "../Modal/Modal";
 import { getEventByVisitor } from "@/core/store/slices/eventByVisitorIdSlice";
 import { useSelector } from "react-redux";
 import { getUserId, getUserIsAdmin, getUserIsAuth } from "@/core/store/slices/userAuthSlice";
 import { fetchApproveEvent } from "@/core/store/services/fetchApproveEvent";
+import { fetchAdminRole } from "@/core/store/services/fetchAdminRole";
 
 export enum EventCardTheme {
   SmallCard = "smallCard",
@@ -38,13 +43,22 @@ type SmallCardProps = {
   theme?: EventCardTheme;
   className?: string;
   style?: CSSProperties;
+  isAdmin?: boolean;
 };
 
 export const SmallCard = memo((props: SmallCardProps) => {
-  const { event, className, style, theme = EventCardTheme.SmallCard, ...otherProps } = props;
+  const {
+    event,
+    className,
+    style,
+    theme = EventCardTheme.SmallCard,
+    isAdmin,
+    ...otherProps
+  } = props;
   const { eventsByVisitorId } = useSelector(getEventByVisitor);
-  const isAdmin = useSelector(getUserIsAdmin);
+  // const isAdmin = useSelector(getUserIsAdmin);
   const [isOpenSuccessModal, setIsOpenSuccessModal] = useState(false);
+  const [isOpenRejectModal, setIsOpenRejectModal] = useState(false);
   const [isVisitor, setIsVisitor] = useState(false);
   const dispatch = useAppDispatch();
   const [isVisitorQueryEnabled, setIsVisitorQueryEnabled] = useState(false);
@@ -74,14 +88,26 @@ export const SmallCard = memo((props: SmallCardProps) => {
 
   const cancelRegisterVisitor = async () => {
     console.log("ОТМЕНА РЕГИСТРАЦИИ");
+    if (event.id && userId) {
+      const result = await dispatch(
+        removeRegisterAsVisitor({ event_id: event.id, visitor_id: userId }),
+      );
+      if (result.meta.requestStatus === "fulfilled") {
+        setIsVisitor(false);
+        setIsOpenRejectModal(true);
+      }
+    }
   };
 
   const approveEvent = async () => {
     await dispatch(fetchApproveEvent(event.id));
   };
 
+  console.log(isAdmin);
+
   const buttonForCard = () => {
-    if (isAdmin && event.approved === false) {
+    //TODO: изменить approved на false
+    if (isAdmin && event.approved === true) {
       return (
         <Button
           onClick={approveEvent}
@@ -128,6 +154,12 @@ export const SmallCard = memo((props: SmallCardProps) => {
               Мы напомним об этом мероприятии перед началом, а также будем держать в курсе, если
               что‑то поменяется.
             </div>
+          </div>
+        </Modal>
+        <Modal isOpen={isOpenRejectModal} onClose={() => setIsOpenRejectModal(false)}>
+          <div>
+            <Icon Svg={RejectIcon} />
+            <h3>Вы успешно отменили регистрацию на мероприятие</h3>
           </div>
         </Modal>
         <div className={styles.cardTitleWrapper}>
