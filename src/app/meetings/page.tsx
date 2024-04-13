@@ -32,16 +32,11 @@ export default function MeetingsPage() {
   const isAdmin = useSelector(getUserIsAdmin);
   const { eventsBySpeakerId, eventsByVisitorId } = useSelector(getEventByVisitor);
   const filteredEvents = useSelector(getEvents.selectAll);
-  const tabs = useMemo<Tab[]>(
-    () => [{ title: "Все мероприятия" }, { title: "Участвую" }, { title: "Провожу" }],
-    [],
-  );
-  const tabsAdmin = useMemo<Tab[]>(
-    () => [{ title: "Заявки" }, { title: "Активные" }, { title: "Все мероприятия" }],
-    [],
-  );
+  const tabs = [{ title: "Все мероприятия" }, { title: "Участвую" }, { title: "Провожу" }];
+  const tabsAdmin = [{ title: "Заявки" }, { title: "Активные" }, { title: "Все мероприятия" }];
   const [ordersLength, setIsOrdersLength] = useState();
-  const [selectedTab, setSelectedTab] = useState(isAdmin ? tabsAdmin[0].title : tabs[0].title);
+  const [selectedTab, setSelectedTab] = useState(tabs[0].title);
+  const [selectedTabAdmin, setSelectedTabAdmin] = useState(tabsAdmin[0].title);
   const [currentPage, setCurrentPage] = useState(1);
   const [isOpenFilter, setIsOpenFilter] = useState(false);
   const [passedEvents, setPassedEvents] = useState([]);
@@ -55,6 +50,10 @@ export default function MeetingsPage() {
 
   const clickHandleTab = useCallback((title: string) => {
     setSelectedTab(title);
+  }, []);
+
+  const clickHandleTabAdmin = useCallback((title: string) => {
+    setSelectedTabAdmin(title);
   }, []);
 
   const onLoadMore = () => {
@@ -71,54 +70,133 @@ export default function MeetingsPage() {
 
   useEffect(() => {
     if (isAdmin) {
-      dispatch(fetchEvents({ actualType: "all", offset, approved: true }));
+      dispatch(fetchEvents({ actualType: "all", offset, approved: false }));
     } else {
       dispatch(fetchEvents({ offset, approved: true }));
     }
-  }, [dispatch, offset]);
+  }, [dispatch, isAdmin, offset]);
+
+  function timeToMinutes(timeString: string) {
+    const [hours, minutes] = timeString.split(":").map(Number);
+    return hours * 60 + minutes;
+  }
+  const currentTime = new Date();
+  const currentHours = currentTime.getHours();
+  const currentMinutes = currentTime.getMinutes();
+  const currentTotalMinutes = currentHours * 60 + currentMinutes;
 
   const showedEvents = () => {
-    if (isAdmin) {
-      if (selectedTab === tabsAdmin[0].title && filteredEvents) {
-        return filteredEvents
-          .filter((event) => {
-            return event.approved === false;
-          })
-          .map((event) => <SmallCard event={event} key={event.id} isAdmin={isAdmin} />);
-      } else if (selectedTab === tabsAdmin[1].title && eventsByVisitorId) {
-        return filteredEvents
-          .filter((event) => {
-            return event.approved === true;
-          })
-          .map((event) => <SmallCard event={event} key={event.id} isAdmin={isAdmin} />);
-      } else if (selectedTab === tabsAdmin[2].title && eventsBySpeakerId) {
-        return filteredEvents.map((event) => (
-          <SmallCard event={event} key={event.id} isAdmin={isAdmin} />
-        ));
-      }
-    } else {
-      if (selectedTab === tabs[0].title && filteredEvents) {
-        return filteredEvents.map((event) => (
-          <SmallCard event={event} key={event.id} isAdmin={isAdmin} />
-        ));
-      } else if (selectedTab === tabs[1].title && eventsByVisitorId) {
-        return eventsByVisitorId.map((event) => (
-          <SmallCard event={event} key={event.id} isAdmin={isAdmin} />
-        ));
-      } else if (selectedTab === tabs[2].title && eventsBySpeakerId) {
-        return eventsBySpeakerId.map((event) => (
-          <SmallCard event={event} key={event.id} isAdmin={isAdmin} />
-        ));
-      }
+    if (selectedTab === tabs[0].title && filteredEvents) {
+      return filteredEvents.map((event) => (
+        <SmallCard event={event} key={event.id} isAdmin={isAdmin} />
+      ));
+    } else if (selectedTab === tabs[1].title && eventsByVisitorId) {
+      return eventsByVisitorId.map((event) => (
+        <SmallCard event={event} key={event.id} isAdmin={isAdmin} />
+      ));
+    } else if (selectedTab === tabs[2].title && eventsBySpeakerId) {
+      return eventsBySpeakerId.map((event) => (
+        <SmallCard event={event} key={event.id} isAdmin={isAdmin} />
+      ));
     }
   };
 
-  return (
-    <section>
-      <FiltersEventsWrapper isOpen={isOpenFilter} onClose={onCloseFilters}></FiltersEventsWrapper>
-      <div className={cls.filtersWrapper}>
-        <div className={cls.buttonWrapper}>
-          {!isAdmin && (
+  const showedEventsAdmin = () => {
+    if (selectedTabAdmin === tabsAdmin[0].title) {
+      return filteredEvents
+        .filter((event) => {
+          const eventTime = event.time_start;
+          const eventTotalMinutes = timeToMinutes(eventTime);
+          return event.approved === false && currentTotalMinutes <= eventTotalMinutes;
+        })
+        .map((event) => <SmallCard event={event} key={event.id} isAdmin={isAdmin} />);
+    } else if (selectedTabAdmin === tabsAdmin[1].title) {
+      return filteredEvents
+        .filter((event) => {
+          const eventTime = event.time_start;
+          const eventTotalMinutes = timeToMinutes(eventTime);
+          return event.approved === true && currentTotalMinutes <= eventTotalMinutes;
+        })
+        .map((event) => <SmallCard event={event} key={event.id} isAdmin={isAdmin} />);
+    } else if (selectedTabAdmin === tabsAdmin[2].title) {
+      return filteredEvents.map((event) => (
+        <SmallCard event={event} key={event.id} isAdmin={isAdmin} />
+      ));
+    }
+  };
+
+  if (isAdmin) {
+    return (
+      <section>
+        <FiltersEventsWrapper isOpen={isOpenFilter} onClose={onCloseFilters}></FiltersEventsWrapper>
+        <div className={cls.filtersWrapper}>
+          <div className={cls.buttonWrapper}>
+            <Tabs
+              tabs={tabsAdmin}
+              selected={selectedTabAdmin}
+              onTabClick={clickHandleTabAdmin}
+              numberSelected={[
+                filteredEvents.filter((event) => {
+                  const eventTime = event.time_start;
+                  const eventTotalMinutes = timeToMinutes(eventTime);
+                  return event.approved === false && currentTotalMinutes <= eventTotalMinutes;
+                }).length,
+                filteredEvents.filter((event) => {
+                  const eventTime = event.time_start;
+                  const eventTotalMinutes = timeToMinutes(eventTime);
+                  return event.approved === true && currentTotalMinutes <= eventTotalMinutes;
+                }).length,
+                filteredEvents.length,
+              ]}
+            />
+            <button onClick={onOpenFilters} className={cls.counterWrapper}>
+              <Icon Svg={FiltersIcon} />
+              <div className={cls.counterText}>Настройка фильтров</div>
+              <div className={cls.counter}>{roleFilters.length}</div>
+            </button>
+          </div>
+          <div className={cls.filtersCitiesWrapper}>
+            <NotifyPopup
+              className={cls.citiesWrapper}
+              text="Для изменения списка отслеживаемых конференций перейдите в профиль"
+            >
+              {storedCities &&
+                storedCities.map((city) => (
+                  <PlaceFilter
+                    text={city}
+                    key={city}
+                    disabled
+                    Svg={city === "Онлайн" ? OnlineIcon : CityIcon}
+                  />
+                ))}
+            </NotifyPopup>
+            {roleFilters &&
+              roleFilters.map((role) => (
+                <PlaceFilter text={role} key={`${role} - filtersRole`} editable />
+              ))}
+          </div>
+        </div>
+        <div className={cls.eventsWrapper}>
+          {isLoading && <h5>Загрузка данных...</h5>}
+          {error && <h5>При загрузке данных произошла ошибка</h5>}
+          {showedEventsAdmin()}
+        </div>
+        {hasMore &&
+          !roleFilters.length &&
+          !datesFilters.length &&
+          (selectedTabAdmin === tabs[0].title || selectedTabAdmin === tabs[1].title) && (
+            <Button onClick={onLoadMore} variant="loadMore" className={cls.eventsLoadMoreButton}>
+              Показать еще
+            </Button>
+          )}
+      </section>
+    );
+  } else {
+    return (
+      <section>
+        <FiltersEventsWrapper isOpen={isOpenFilter} onClose={onCloseFilters}></FiltersEventsWrapper>
+        <div className={cls.filtersWrapper}>
+          <div className={cls.buttonWrapper}>
             <Tabs
               tabs={tabs}
               selected={selectedTab}
@@ -129,60 +207,48 @@ export default function MeetingsPage() {
                 eventsBySpeakerId.length,
               ]}
             />
-          )}
-          {isAdmin && (
-            <Tabs
-              tabs={tabsAdmin}
-              selected={selectedTab}
-              onTabClick={clickHandleTab}
-              numberSelected={[
-                filteredEvents.filter((event) => {
-                  return event.approved === false;
-                }).length,
-                filteredEvents.filter((event) => {
-                  return event.approved === true;
-                }).length,
-                filteredEvents.length,
-              ]}
-            />
-          )}
-          <button onClick={onOpenFilters} className={cls.counterWrapper}>
-            <Icon Svg={FiltersIcon} />
-            <div className={cls.counterText}>Настройка фильтров</div>
-            <div className={cls.counter}>{roleFilters.length}</div>
-          </button>
-        </div>
-        <div className={cls.filtersCitiesWrapper}>
-          <NotifyPopup
-            className={cls.citiesWrapper}
-            text="Для изменения списка отслеживаемых конференций перейдите в профиль"
-          >
-            {storedCities &&
-              storedCities.map((city) => (
-                <PlaceFilter
-                  text={city}
-                  key={city}
-                  disabled
-                  Svg={city === "Онлайн" ? OnlineIcon : CityIcon}
-                />
+
+            <button onClick={onOpenFilters} className={cls.counterWrapper}>
+              <Icon Svg={FiltersIcon} />
+              <div className={cls.counterText}>Настройка фильтров</div>
+              <div className={cls.counter}>{roleFilters.length}</div>
+            </button>
+          </div>
+          <div className={cls.filtersCitiesWrapper}>
+            <NotifyPopup
+              className={cls.citiesWrapper}
+              text="Для изменения списка отслеживаемых конференций перейдите в профиль"
+            >
+              {storedCities &&
+                storedCities.map((city) => (
+                  <PlaceFilter
+                    text={city}
+                    key={city}
+                    disabled
+                    Svg={city === "Онлайн" ? OnlineIcon : CityIcon}
+                  />
+                ))}
+            </NotifyPopup>
+            {roleFilters &&
+              roleFilters.map((role) => (
+                <PlaceFilter text={role} key={`${role} - filtersRole`} editable />
               ))}
-          </NotifyPopup>
-          {roleFilters &&
-            roleFilters.map((role) => (
-              <PlaceFilter text={role} key={`${role} - filtersRole`} editable />
-            ))}
+          </div>
         </div>
-      </div>
-      <div className={cls.eventsWrapper}>
-        {isLoading && <h5>Загрузка данных...</h5>}
-        {error && <h5>При загрузке данных произошла ошибка</h5>}
-        {showedEvents()}
-      </div>
-      {hasMore && !roleFilters.length && !datesFilters.length && selectedTab === tabs[0].title && (
-        <Button onClick={onLoadMore} variant="loadMore" className={cls.eventsLoadMoreButton}>
-          Показать еще
-        </Button>
-      )}
-    </section>
-  );
+        <div className={cls.eventsWrapper}>
+          {isLoading && <h5>Загрузка данных...</h5>}
+          {error && <h5>При загрузке данных произошла ошибка</h5>}
+          {showedEvents()}
+        </div>
+        {hasMore &&
+          !roleFilters.length &&
+          !datesFilters.length &&
+          selectedTab === tabs[0].title && (
+            <Button onClick={onLoadMore} variant="loadMore" className={cls.eventsLoadMoreButton}>
+              Показать еще
+            </Button>
+          )}
+      </section>
+    );
+  }
 }

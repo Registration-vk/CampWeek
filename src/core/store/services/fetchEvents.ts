@@ -5,7 +5,7 @@ import { Meeting, ThunkConfig } from "../types/StateSchema";
 import { getCitiesIdsEvents, getLimitForEvents, getOffsetForEvents } from "../slices/eventsSlice";
 
 interface FetchEventsProps {
-  offset: number;
+  offset?: number;
   actualType?: "actual" | "all" | "passed";
   approved?: boolean;
 }
@@ -14,7 +14,7 @@ export const fetchEvents = createAsyncThunk<Meeting[], FetchEventsProps, ThunkCo
   "events/fetchEvents",
   async (props, thunkApi) => {
     const { rejectWithValue, getState } = thunkApi;
-    const { actualType = "actual", offset, approved } = props;
+    const { actualType = "actual", offset = 10, approved = true } = props;
     const limit = getLimitForEvents(getState());
     const citiesIds = getCitiesIdsEvents(getState());
     try {
@@ -27,7 +27,6 @@ export const fetchEvents = createAsyncThunk<Meeting[], FetchEventsProps, ThunkCo
           approved,
         },
       });
-      console.log(response.data);
       return response.data;
     } catch (error) {
       console.log(error);

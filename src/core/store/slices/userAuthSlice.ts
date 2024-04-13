@@ -29,12 +29,9 @@ export const userAuthSlice = createSlice({
           // Извлекаем ID пользователя из декодированного токена
           const userId = decodedToken?.sub || "";
           state.userId = Number(userId);
-
-          console.log("ID пользователя:", userId);
         } catch (error) {
           console.error("Ошибка при декодировании токена", error);
         }
-        console.log("Успешная авторизация");
       } else {
         console.error("Ошибка авторизации");
       }
@@ -53,7 +50,6 @@ export const userAuthSlice = createSlice({
       })
       .addCase(fetchUserAuth.fulfilled, (state, action) => {
         state.isLoading = false;
-        console.log(`Пользователь авторизован: ${action.payload.access}`);
         state.isAuth = action.payload.access;
       })
       .addCase(fetchUserAuth.rejected, (state, action) => {
@@ -67,7 +63,6 @@ export const userAuthSlice = createSlice({
       })
       .addCase(fetchAdminRole.fulfilled, (state, action) => {
         state.isLoading = false;
-        console.log(`Пользователь админ: ${action.payload}`);
         state.isAdmin = action.payload;
       })
       .addCase(fetchAdminRole.rejected, (state, action) => {

@@ -87,7 +87,6 @@ export const SmallCard = memo((props: SmallCardProps) => {
   };
 
   const cancelRegisterVisitor = async () => {
-    console.log("ОТМЕНА РЕГИСТРАЦИИ");
     if (event.id && userId) {
       const result = await dispatch(
         removeRegisterAsVisitor({ event_id: event.id, visitor_id: userId }),
@@ -100,14 +99,11 @@ export const SmallCard = memo((props: SmallCardProps) => {
   };
 
   const approveEvent = async () => {
-    await dispatch(fetchApproveEvent(event.id));
+    await dispatch(fetchApproveEvent(event));
   };
 
-  console.log(isAdmin);
-
   const buttonForCard = () => {
-    //TODO: изменить approved на false
-    if (isAdmin && event.approved === true) {
+    if (isAdmin && event.approved === false) {
       return (
         <Button
           onClick={approveEvent}

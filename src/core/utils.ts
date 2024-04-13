@@ -1,3 +1,4 @@
+"use client";
 import { SelectOption } from "@/components/ui/SelectField/SelectField";
 import { User } from "@/services/users";
 
@@ -58,8 +59,10 @@ export const convertDate = (date: string) => {
 };
 
 export const getStoredCities = () => {
-  const storedCities = localStorage.getItem("cities");
-  return storedCities ? JSON.parse(storedCities) : [];
+  if (typeof window !== "undefined") {
+    const storedCities = localStorage.getItem("cities");
+    return storedCities ? JSON.parse(storedCities) : [];
+  }
 };
 
 export const getStoredCitiesIds = (): string => {
@@ -69,7 +72,6 @@ export const getStoredCitiesIds = (): string => {
     const ids = storedCities.map((value: string) => {
       return Object.keys(regionsId).find((key) => regionsId[key as unknown as number] === value);
     });
-    console.log(ids.join(";"));
     return ids.join(";");
   } else {
     return "";

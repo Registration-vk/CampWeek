@@ -16,16 +16,12 @@ export default function MeetingPage() {
   const userId = useSelector(getUserId);
   const [submittedData, setSubmittedData] = useState<EventFormData>({} as EventFormData);
   const [isQueryEnabled, setIsQueryEnabled] = useState(false);
-  console.log("userId meeting", userId);
   const { event, isError, isSuccess } = useCreateEvent(submittedData, isQueryEnabled);
   const { speaker, isSuccessful } = useCreateSpeaker(
     { event_id: event?.id || 0, speaker_id: userId! },
     isSuccess,
   );
   const router = useRouter();
-
-  console.log("created event", event, isSuccess);
-  console.log("created speaker", speaker);
 
   useEffect(() => {
     if (isSuccessful) router.push(ROUTES.application.path);
@@ -42,7 +38,7 @@ export default function MeetingPage() {
       time_end: formData.meetingEnd,
       // is_reg_needed: formData.isRegNeeded,
       is_reg_needed: false,
-      approved: true,
+      
       description: formData.meetingDsc,
       add_info: formData.meetingAddInfo,
       notes: formData.meetingNotes,
@@ -50,7 +46,6 @@ export default function MeetingPage() {
       region_id: Number(formData.meetingLocation),
       creator_id: userId!, // Здесь передаем id авторизованного пользователя
     });
-    console.log(formData);
     setIsQueryEnabled(true);
   };
 

@@ -16,26 +16,6 @@ export default function EventPage({ params }: { params: { id: string } }) {
   const { event, isLoading, error } = useSelector(getEventById);
   const dispatch = useAppDispatch();
 
-  // const [isSpeakerQueryEnabled, setIsSpeakerQueryEnabled] = useState(false);
-  // const [isVisitorQueryEnabled, setIsVisitorQueryEnabled] = useState(false);
-
-  // const { isAuth, userId } = useUserId();
-  // console.log("userId speaker", userId);
-
-  // const { isError } = useCreateSpeaker(
-  //   { speaker_id: userId!, event_id: Number(params.id) }, // Здесь передаем id авторизованного пользователя
-  //   isSpeakerQueryEnabled,
-  // );
-
-  // const { visitor } = useCreateVisitor(
-  //   { visitor_id: userId!, event_id: Number(params.id) }, // Здесь передаем id авторизованного пользователя
-  //   isVisitorQueryEnabled,
-  // );
-
-  // const registerForEvent = (participant: "speaker" | "visitor") => {
-  //   participant === "speaker" ? setIsSpeakerQueryEnabled(true) : setIsVisitorQueryEnabled(true);
-  // };
-
   useEffect(() => {
     dispatch(fetchEventById(Number(params.id)));
 

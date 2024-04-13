@@ -11,13 +11,15 @@ import { getAllEvents, getEvents } from "@/core/store/slices/eventsSlice";
 import { Footer } from "@/components/ui/Footer/Footer";
 
 export default function Home() {
-  // const { events, isError, isLoading } = useEventsAll();
   const { error, isLoading, offset } = useSelector(getAllEvents);
-  const filteredEvents = useSelector(getEvents.selectAll);
+
   const dispatch = useAppDispatch();
+
   useEffect(() => {
-    dispatch(fetchEvents({ offset }));
-  }, [dispatch]);
+    dispatch(fetchEvents({ offset, approved: true }));
+  }, [dispatch, offset]);
+
+  const filteredEvents = useSelector(getEvents.selectAll);
 
   return (
     <div className={styles.main}>

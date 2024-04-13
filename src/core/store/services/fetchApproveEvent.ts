@@ -3,11 +3,15 @@ import { $api } from "@/core/axios";
 import { createAsyncThunk } from "@reduxjs/toolkit";
 import { Meeting } from "../types/StateSchema";
 
-export const fetchApproveEvent = createAsyncThunk<Meeting, number, { rejectValue: string }>(
+export const fetchApproveEvent = createAsyncThunk<Meeting, Meeting, { rejectValue: string }>(
   "event/fetchApproveEvent",
-  async (event_id, thunkApi) => {
+  async (event, thunkApi) => {
     try {
-      const response = await $api.get<Meeting>(`/api/v1/event/${event_id}/approve/`);
+      const response = await $api.patch<Meeting>(`/api/v1/event/${event.id}/`, {
+        ...event,
+        approved: true,
+      });
+      console.log(`APPROVE ${response.data}`);
       return response.data;
     } catch (error) {
       console.log(error);

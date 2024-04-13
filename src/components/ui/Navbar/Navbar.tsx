@@ -44,9 +44,6 @@ export const Navbar = memo(() => {
     }
   }, [dispatch, userId]);
 
-  //TODO: решить баг с переходом на страницу при выходе из личного кабинета
-  //TODO: убрать перерисовки при изменении ширина окна
-
   const onLogout = useCallback(() => {
     router.replace("/");
     dispatch(userActions.logout());

@@ -18,14 +18,9 @@ export const EventCard = (props: Props) => {
   const { speakers } = useSpeakersAll();
   const { visitors } = useVisitorsAll();
   const { data } = useUsersAll();
-
-  console.log(data);
-
   const matchedLocation = regions.find((region) => Number(region.value) === event?.region_id);
   const matchedSpeakers = speakers && data && getParticipants(speakers, data, props.eventId);
   const matchedVisitors = visitors && data && getParticipants(visitors, data, props.eventId);
-
-  console.log("Зарегистрированные спикеры", matchedSpeakers);
 
   return (
     event && (

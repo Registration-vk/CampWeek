@@ -1,21 +1,21 @@
-import { FC } from "react";
+// import { FC } from "react";
 
-interface SmallCardHOCProps {
-  SmallCard: FC;
-  SmallCardAdmin: FC;
-}
+// interface SmallCardHOCProps {
+//   SmallCard: FC;
+//   SmallCardAdmin: FC;
+// }
 
-export const SmallCardHOC = (
-  isAdmin: boolean,
-  { SmallCard, SmallCardAdmin }: SmallCardHOCProps,
-) => {
-  const WrappedComponent = (props) => {
-    if (isAdmin) {
-      return <SmallCard {...props}></SmallCard>;
-    } else {
-      return <SmallCardAdmin {...props}></SmallCardAdmin>;
-    }
-  };
+// export const SmallCardHOC = (
+//   isAdmin: boolean,
+//   { SmallCard, SmallCardAdmin }: SmallCardHOCProps,
+// ) => {
+//   const WrappedComponent = (props) => {
+//     if (isAdmin) {
+//       return <SmallCard {...props}></SmallCard>;
+//     } else {
+//       return <SmallCardAdmin {...props}></SmallCardAdmin>;
+//     }
+//   };
 
-  return WrappedComponent;
-};
+//   return WrappedComponent;
+// };

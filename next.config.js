@@ -2,7 +2,8 @@
 const nextConfig = {
   output: "standalone",
   sassOptions: {
-    additionalData: `@import "src/app/styles/variables.scss"; @import "src/app/styles/mixins.scss";`,
+    additionalData:
+      '@import "src/app/styles/variables.scss"; @import "src/app/styles/mixins.scss";',
   },
   webpack: (config) => {
     const fileLoaderRule = config.module.rules.find((rule) => rule.test?.test?.(".svg"));
