@@ -21,8 +21,9 @@
     "quotes": ["error", "double"],
     "@typescript-eslint/quotes": ["error", "double"],
     "react/react-in-jsx-scope": 0,
+    "endOfLine": "off",
     "prettier/prettier": [
-      "error",
+      "warn",
       {
         "endOfLine": "auto"
       }

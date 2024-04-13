@@ -1,23 +1,19 @@
 "use client";
-
 import { SmallCard } from "@/components/ui/SmallCard/SmallCard";
 import cls from "./styles.module.scss";
 import OnlineIcon from "@/assets/icons/icons/online.svg";
-import PenIcon from "@/assets/icons/icons/pen.svg";
 import FiltersIcon from "@/assets/icons/icons/filters.svg";
 import CityIcon from "@/assets/icons/icons/city.svg";
 import { Button } from "@/components/ui";
 import PlaceFilter from "@/components/ui/PlaceFilter/ui/PlaceFilter";
-import { Tab, Tabs } from "@/components/ui/Tabs/Tabs";
-import { useCallback, useEffect, useMemo, useState } from "react";
-import { createInitialCities } from "@/components/ui/FiltersProfileWrapper/ui/FiltersProfileWrapper";
+import { Tabs } from "@/components/ui/Tabs/Tabs";
+import { useCallback, useEffect, useState } from "react";
 import { FiltersEventsWrapper } from "@/components/ui/FiltersEventsWrapper/FiltersEventsWrapper";
 import { useSelector } from "react-redux";
 import { getAllEvents, getEvents } from "@/core/store/slices/eventsSlice";
 import { useAppDispatch } from "@/core/store/hooks/typingHooks";
 import { fetchEvents } from "@/core/store/services/fetchEvents";
 import { Icon } from "@/components/ui/Icon/Icon";
-import { regionsId } from "@/feature/MeetingForm/static";
 import { NotifyPopup } from "@/components/ui/Notification/NotifyPopup";
 import {
   fetchEventsByVisitorId,
@@ -70,7 +66,7 @@ export default function MeetingsPage() {
 
   useEffect(() => {
     if (isAdmin) {
-      dispatch(fetchEvents({ actualType: "all", offset, approved: false }));
+      dispatch(fetchEvents({ actualType: "all", offset }));
     } else {
       dispatch(fetchEvents({ offset, approved: true }));
     }

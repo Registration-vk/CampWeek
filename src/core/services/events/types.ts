@@ -6,7 +6,7 @@ export interface EventFormData {
   time_start: string;
   time_end: string;
   is_reg_needed: boolean;
-  approved: boolean;
+  approved?: boolean;
   description: string;
   add_info: string;
   notes: string;
