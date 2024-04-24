@@ -6,6 +6,7 @@ export interface StateSchema {
   eventById: EventSchema;
   visitor: CreateVisitorSchema;
   eventByVisitorId: EventsByUserSchema;
+  allUsers: UsersAdminSchemaAll;
 }
 
 export interface UserSchema {
@@ -14,6 +15,25 @@ export interface UserSchema {
   isAdmin: boolean;
   isLoading: boolean;
   storedCities: string[];
+  error?: string;
+}
+
+export interface UsersAdminSchema {
+  vk_id: number;
+  first_name: string;
+  last_name: string;
+  sex: number;
+  city: string;
+  bdate: string;
+  region_id: number;
+  vk_group: string;
+  archived: boolean;
+  id: number;
+}
+
+export interface UsersAdminSchemaAll {
+  users: UsersAdminSchema[];
+  isLoading?: boolean;
   error?: string;
 }
 
