@@ -2,7 +2,7 @@
 
 import { PageWrapper } from "@/components/ui/PageWrapper/PageWrapper";
 import { useAppDispatch } from "@/core/store/hooks/typingHooks";
-import { fetchAllUsers } from "@/core/store/services/fetchAllusers";
+import { fetchAllUsers } from "@/core/store/services/fetchAllUsers";
 import { getAllUsers } from "@/core/store/slices/allUsersSlice";
 import { useEffect, useState } from "react";
 import { useSelector } from "react-redux";
@@ -29,7 +29,7 @@ export default function AdminPage() {
   };
 
   const createRegion = () => {
-    console.log(inputValue)
+    console.log(inputValue);
     dispatch(createRegionOnServer(inputValue));
   };
 

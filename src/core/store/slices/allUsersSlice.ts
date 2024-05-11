@@ -1,17 +1,7 @@
 "use client";
-import { fetchUserAuth } from "../services/fetchUserAuth";
 import { createSlice } from "@reduxjs/toolkit";
-import {
-  StateSchema,
-  UserSchema,
-  UsersAdminSchema,
-  UsersAdminSchemaAll,
-} from "../types/StateSchema";
-import Cookies from "js-cookie";
-import jwt from "jsonwebtoken";
-import { getStoredCities } from "@/core/utils";
-import { fetchAdminRole } from "../services/fetchAdminRole";
-import { fetchAllUsers } from "../services/fetchAllusers";
+import { StateSchema, UsersAdminSchemaAll } from "../types/StateSchema";
+import { fetchAllUsers } from "../services/fetchAllUsers";
 
 const initialState: UsersAdminSchemaAll = {
   users: [],
