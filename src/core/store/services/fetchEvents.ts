@@ -14,7 +14,7 @@ export const fetchEvents = createAsyncThunk<Meeting[], FetchEventsProps, ThunkCo
   "events/fetchEvents",
   async (props, thunkApi) => {
     const { rejectWithValue, getState } = thunkApi;
-    const { actualType = "actual", offset = 10, approved = true } = props;
+    const { actualType = "actual", offset = 10, approved } = props;
     const limit = getLimitForEvents(getState());
     const citiesIds = getCitiesIdsEvents(getState());
     try {
